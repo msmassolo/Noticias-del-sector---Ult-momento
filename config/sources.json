@@ -301,7 +301,7 @@
   {
     "name": "Exame",
     "url": "https://exame.com/",
-    "rss": [],
+    "rss": ["https://exame.com/feed/"],
     "sections": ["https://exame.com/negocios/"],
     "country": "Brazil",
     "region": "Regional",
@@ -312,7 +312,7 @@
     "name": "Diario Financiero",
     "url": "https://www.df.cl/",
     "rss": [],
-    "sections": ["https://www.df.cl/empresas"],
+    "sections": ["https://www.df.cl/empresas", "https://www.df.cl/mercados"],
     "country": "Chile",
     "region": "Regional",
     "language": "es",
@@ -321,7 +321,7 @@
   {
     "name": "La Tercera",
     "url": "https://www.latercera.com/",
-    "rss": [],
+    "rss": ["https://www.latercera.com/feed/"],
     "sections": ["https://www.latercera.com/categoria/pulso/empresas/"],
     "country": "Chile",
     "region": "Regional",
@@ -331,8 +331,8 @@
   {
     "name": "Gestion",
     "url": "https://gestion.pe/",
-    "rss": [],
-    "sections": ["https://gestion.pe/economia/empresas/", "https://gestion.pe/g-de-gestion/"],
+    "rss": ["https://gestion.pe/feed/"],
+    "sections": ["https://gestion.pe/economia/empresas/", "https://gestion.pe/economia/"],
     "country": "Peru",
     "region": "Regional",
     "language": "es",
@@ -341,7 +341,7 @@
   {
     "name": "Portafolio",
     "url": "https://www.portafolio.co/",
-    "rss": [],
+    "rss": ["https://www.portafolio.co/rss/feed.xml"],
     "sections": ["https://www.portafolio.co/negocios/empresas", "https://www.portafolio.co/economia"],
     "country": "Colombia",
     "region": "Regional",
@@ -354,6 +354,36 @@
     "rss": [],
     "sections": ["https://www.elobservador.com.uy/economia-y-empresas", "https://www.elobservador.com.uy/negocios"],
     "country": "Uruguay",
+    "region": "Regional",
+    "language": "es",
+    "trade": false
+  },
+  {
+    "name": "Infomoney",
+    "url": "https://www.infomoney.com.br/",
+    "rss": ["https://www.infomoney.com.br/feed/"],
+    "sections": ["https://www.infomoney.com.br/negocios/"],
+    "country": "Brazil",
+    "region": "Regional",
+    "language": "pt",
+    "trade": false
+  },
+  {
+    "name": "La Republica Colombia",
+    "url": "https://www.larepublica.co/",
+    "rss": ["https://www.larepublica.co/rss/feed.xml"],
+    "sections": ["https://www.larepublica.co/empresas", "https://www.larepublica.co/consumo"],
+    "country": "Colombia",
+    "region": "Regional",
+    "language": "es",
+    "trade": false
+  },
+  {
+    "name": "El Mostrador",
+    "url": "https://www.elmostrador.cl/",
+    "rss": ["https://www.elmostrador.cl/feed/"],
+    "sections": ["https://www.elmostrador.cl/mercados/"],
+    "country": "Chile",
     "region": "Regional",
     "language": "es",
     "trade": false
