@@ -99,9 +99,13 @@ def run_pipeline(
     accepted = rank_items(accepted)
 
     # Prioritize direct-source URLs over Google News redirect URLs (which fail extraction)
+    # Also ensure Regional items get slots in the extraction queue
     direct = [item for item in accepted if "news.google.com" not in item["candidate"].url]
     gn = [item for item in accepted if "news.google.com" in item["candidate"].url]
-    extraction_queue = (direct + gn)[:limit]
+
+    regional_gn = [item for item in gn if item["candidate"].region == "Regional"]
+    other_gn = [item for item in gn if item["candidate"].region != "Regional"]
+    extraction_queue = (direct + regional_gn[:20] + other_gn)[:limit]
     _write_json(
         "accepted_candidates.json",
         [
