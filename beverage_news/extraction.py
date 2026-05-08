@@ -99,7 +99,7 @@ def extract_title_summary_body(html_text):
 
 def extract_article_item(item):
     candidate = item["candidate"]
-    html_text, status = fetch_text(candidate.url, timeout=4)
+    html_text, status = fetch_text(candidate.url, timeout=10, retries=1)
     if not html_text:
         return None, {"url": candidate.url, "reason": status}
 
