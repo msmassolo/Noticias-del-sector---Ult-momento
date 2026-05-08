@@ -1,3 +1,4 @@
+import time
 import requests
 
 
@@ -14,15 +15,20 @@ SESSION = requests.Session()
 SESSION.headers.update(HEADERS)
 
 
-def fetch_text(url, timeout=4):
-    try:
-        response = SESSION.get(url, timeout=timeout)
-        if response.status_code != 200:
-            return "", f"http_{response.status_code}"
-        if not response.encoding or response.encoding.lower() in {"iso-8859-1", "latin-1"}:
-            response.encoding = response.apparent_encoding or "utf-8"
-        return response.text, "ok"
-    except requests.exceptions.Timeout:
-        return "", "timeout"
-    except requests.exceptions.RequestException as exc:
-        return "", f"request_error:{exc.__class__.__name__}"
+def fetch_text(url, timeout=4, retries=1):
+    last_status = ""
+    for attempt in range(retries + 1):
+        try:
+            response = SESSION.get(url, timeout=timeout)
+            if response.status_code != 200:
+                return "", f"http_{response.status_code}"
+            if not response.encoding or response.encoding.lower() in {"iso-8859-1", "latin-1"}:
+                response.encoding = response.apparent_encoding or "utf-8"
+            return response.text, "ok"
+        except requests.exceptions.Timeout:
+            last_status = "timeout"
+        except requests.exceptions.RequestException as exc:
+            return "", f"request_error:{exc.__class__.__name__}"
+        if attempt < retries:
+            time.sleep(1.5)
+    return "", last_status
