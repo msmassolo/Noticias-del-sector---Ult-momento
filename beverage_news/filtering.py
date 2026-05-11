@@ -8,16 +8,16 @@ from .urls import domain_of, normalize_url
 
 # Segmentos de path que indican página de login / paywall / suscripción
 _LOGIN_PATH_RE = re.compile(
-    r'/(login|signin|sign-in|signup|sign-up|subscribe|subscription|register|account/login|auth)(/|\?|$)',
+    r'/(login|signin|sign-in|signup|sign-up|subscribe|subscription|subscriber|register|account/login|auth|newsletter)(/|\?|$)',
     re.IGNORECASE,
 )
 
 logger = logging.getLogger(__name__)
 
-MAX_AGE_HOURS_MUNDIAL = 48
-MAX_AGE_HOURS_LOCAL = 72
-MAX_AGE_HOURS_REGIONAL = 96
-MAX_PER_SOURCE = 10
+MAX_AGE_HOURS_MUNDIAL = 24 * 7
+MAX_AGE_HOURS_LOCAL = 24 * 14
+MAX_AGE_HOURS_REGIONAL = 24 * 14
+MAX_PER_SOURCE = 18
 
 
 def _is_too_old(published_str, region=None):
@@ -51,6 +51,8 @@ GENERIC_KEYWORDS = {
     "soft drinks",
     "soda",
     "bottled water",
+    "bottler",
+    "bottling",
     "coffee",
     "tea",
     "grape must",
@@ -66,9 +68,141 @@ GENERIC_KEYWORDS = {
     "cerveja",
     "vinho",
     "refrigerantes",
+    "engarrafadora",
+    "engarrafamento",
 }
 GENERIC_KEYWORDS_NORMALIZED = {normalize_text(item) for item in GENERIC_KEYWORDS}
 BEVERAGE_FOCUSED_SOURCES = {"Just Drinks", "Beverage Daily", "The Drinks Business"}
+INDUSTRY_INTENT_TERMS = {
+    "resultados",
+    "ventas",
+    "ingresos",
+    "ganancias",
+    "facturacion",
+    "mercado",
+    "negocio",
+    "empresa",
+    "compania",
+    "compañia",
+    "industria",
+    "inversion",
+    "adquisicion",
+    "fusion",
+    "planta",
+    "produccion",
+    "distribucion",
+    "lanzamiento",
+    "marca",
+    "consumo",
+    "precios",
+    "exportaciones",
+    "retail",
+    "canal",
+    "category",
+    "earnings",
+    "sales",
+    "revenue",
+    "profit",
+    "market",
+    "business",
+    "company",
+    "industry",
+    "investment",
+    "invests",
+    "investing",
+    "acquisition",
+    "merger",
+    "plant",
+    "production",
+    "distribution",
+    "launch",
+    "brand",
+    "consumer",
+    "pricing",
+    "regulation",
+    "tax",
+    "labeling",
+    "share",
+    "volume",
+    "volumes",
+    "margins",
+    "retailer",
+}
+STRONG_INDUSTRY_INTENT_TERMS = INDUSTRY_INTENT_TERMS - {"consumo", "consumer"}
+LOW_VALUE_CONTEXT_TERMS = {
+    "receta",
+    "recetas",
+    "salud",
+    "hidratacion",
+    "hidratan",
+    "ciencia",
+    "nutricion",
+    "dieta",
+    "medicos",
+    "medico",
+    "beneficios",
+    "riñones",
+    "rinones",
+    "oxalatos",
+    "higado",
+    "hígado",
+    "como preparar",
+    "que pasa si",
+    "viral",
+    "ranking de",
+    "curiosidad",
+    "curiosidades",
+    "lifestyle",
+    "horoscopo",
+    "clima",
+    "pronostico",
+    "health",
+    "wellness tips",
+    "recipe",
+    "recipes",
+    "nutrition",
+    "diet",
+    "doctor",
+    "doctors",
+    "benefits",
+    "how to make",
+}
+CHANNEL_CONTEXT_TERMS = {
+    "supermercado",
+    "supermercados",
+    "hipermercado",
+    "mayorista",
+    "mayoristas",
+    "distribuidor",
+    "distribuidora",
+    "distribuidores",
+    "transportadora",
+    "retail",
+    "varejo",
+    "atacarejo",
+    "franquia",
+    "franquias",
+    "restaurante",
+    "restaurantes",
+    "bar",
+    "bares",
+    "hotel",
+    "hoteles",
+    "horeca",
+    "foodservice",
+    "on premise",
+    "on-premise",
+    "off premise",
+    "off-premise",
+    "delivery",
+    "domicilios",
+    "ecommerce",
+    "e-commerce",
+    "marketplace",
+    "conveniencia",
+    "tienda de conveniencia",
+    "loja de conveniencia",
+}
 BUSINESS_CONTEXT_TERMS = {
     "resultados",
     "ventas",
@@ -164,6 +298,22 @@ def _has_business_context(text):
     return any(term_in_text(term, text) for term in BUSINESS_CONTEXT_TERMS)
 
 
+def _has_industry_intent(text):
+    return any(term_in_text(term, text) for term in INDUSTRY_INTENT_TERMS)
+
+
+def _has_strong_industry_intent(text):
+    return any(term_in_text(term, text) for term in STRONG_INDUSTRY_INTENT_TERMS)
+
+
+def _has_low_value_context(text):
+    return any(term_in_text(term, text) for term in LOW_VALUE_CONTEXT_TERMS)
+
+
+def _has_channel_context(text):
+    return any(term_in_text(term, text) for term in CHANNEL_CONTEXT_TERMS)
+
+
 def filter_candidates(candidates, companies, keywords, published_urls=None):
     published_urls = published_urls or {}
     diagnostics = {
@@ -174,6 +324,7 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
         "too_old": 0,
         "discarded": {},
         "accepted_reasons": {},
+        "by_source": {},
     }
     accepted = []
     seen_urls = set()
@@ -209,9 +360,15 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
             seen_titles.add(title_key)
             continue
         source_key = candidate.source if candidate.source != "Google News" else (domain_of(candidate.url) or "Google News")
+        source_stats = diagnostics["by_source"].setdefault(
+            source_key,
+            {"input": 0, "accepted": 0, "discarded": {}, "region": candidate.region},
+        )
+        source_stats["input"] += 1
         source_limit = MAX_PER_SOURCE * 4 if source_key == "news.google.com" else MAX_PER_SOURCE
         if source_counts.get(source_key, 0) >= source_limit:
             diagnostics["discarded"]["source_limit"] = diagnostics["discarded"].get("source_limit", 0) + 1
+            source_stats["discarded"]["source_limit"] = source_stats["discarded"].get("source_limit", 0) + 1
             continue
 
         text = _candidate_text(candidate)
@@ -225,21 +382,47 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
         beverage_context = _has_beverage_context(text) or candidate.source in BEVERAGE_FOCUSED_SOURCES
         title_beverage_context = _has_beverage_context(title_text) or candidate.source in BEVERAGE_FOCUSED_SOURCES
         business_context = _has_business_context(text)
+        industry_intent = _has_industry_intent(text)
+        low_value_context = _has_low_value_context(text)
+        channel_context = _has_channel_context(text)
+
+        strategic_categories = {
+            "financial_results",
+            "ma_and_strategy",
+            "distribution_execution",
+            "regulation_tax_policy",
+            "risk_crisis_reputation",
+            "packaging_sustainability",
+            "supply_chain_commodities",
+        }
+        has_strategic_category = bool(set(keyword_matches) & strategic_categories)
+        if (
+            low_value_context
+            and not candidate.trade_source
+            and not has_strategic_category
+            and not channel_context
+            and not _has_strong_industry_intent(text)
+        ):
+            diagnostics["discarded"]["low_value_context"] = diagnostics["discarded"].get("low_value_context", 0) + 1
+            source_stats["discarded"]["low_value_context"] = source_stats["discarded"].get("low_value_context", 0) + 1
+            seen_urls.add(url)
+            seen_titles.add(title_key)
+            continue
 
         reason = ""
-        if company_matches and (beverage_context or candidate.trade_source):
+        if company_matches and (beverage_context or candidate.trade_source or industry_intent or channel_context):
             reason = "company_match"
         elif (
             keyword_hit_count >= 2
             and non_generic_keyword_hit_count >= 1
             and beverage_context
-            and (candidate.region == "Mundial" or business_context)
+            and industry_intent
         ):
             reason = "strong_keyword_match"
         elif (
             title_non_generic_count >= 1
             and title_beverage_context
-            and (candidate.region == "Mundial" or business_context)
+            and industry_intent
         ):
             # Título suficientemente específico aunque el body sea corto
             reason = "title_keyword_match"
@@ -252,24 +435,39 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
             and business_context
         ):
             reason = "local_regional_beverage_section"
+        elif (
+            candidate.region in {"Local", "Regional"}
+            and (candidate.discovery.startswith("section:") or candidate.discovery.startswith("google_news:"))
+            and channel_context
+            and (beverage_context or business_context)
+        ):
+            reason = "local_regional_channel_context"
 
         if not reason:
             diagnostics["discarded"]["weak_match"] = diagnostics["discarded"].get("weak_match", 0) + 1
+            source_stats["discarded"]["weak_match"] = source_stats["discarded"].get("weak_match", 0) + 1
             seen_urls.add(url)
             seen_titles.add(title_key)
             continue
+
+        segments = segments_for(company_matches, keyword_matches)
+        keyword_categories = sorted(keyword_matches.keys())
+        if reason == "local_regional_channel_context" and not segments:
+            segments = ["distribution_execution"]
+            keyword_categories = ["distribution_execution"]
 
         accepted.append(
             {
                 "candidate": Candidate(**{**candidate.__dict__, "url": url}),
                 "companies": [company.name for company in company_matches],
-                "segments": segments_for(company_matches, keyword_matches),
-                "keyword_categories": sorted(keyword_matches.keys()),
+                "segments": segments,
+                "keyword_categories": keyword_categories,
                 "reason": reason,
             }
         )
         diagnostics["accepted"] += 1
         diagnostics["accepted_reasons"][reason] = diagnostics["accepted_reasons"].get(reason, 0) + 1
+        source_stats["accepted"] += 1
         source_counts[source_key] = source_counts.get(source_key, 0) + 1
         seen_urls.add(url)
         seen_titles.add(title_key)

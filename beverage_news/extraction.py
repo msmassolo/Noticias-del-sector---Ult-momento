@@ -1,11 +1,13 @@
 import json
 import logging
+from urllib.parse import parse_qs, unquote, urlsplit
 
 from bs4 import BeautifulSoup
 
 from .http import fetch_text
 from .models import Article
 from .text import clean_text, natural_trim
+from .urls import domain_of, normalize_url
 
 logger = logging.getLogger(__name__)
 
@@ -20,6 +22,31 @@ BOILERPLATE_PATTERNS = (
     "please complete this form",
     "experience unmatched clarity",
 )
+
+
+def _find_original_link(html_text):
+    soup = BeautifulSoup(html_text or "", "html.parser")
+    for rel_name in ("canonical", "amphtml"):
+        link = soup.find("link", rel=lambda value: value and rel_name in value)
+        href = normalize_url("", link.get("href") if link else "")
+        if href and "news.google.com" not in domain_of(href):
+            return href
+    for link in soup.find_all("a", href=True):
+        href = normalize_url("", link.get("href") or "")
+        if href and "news.google.com" not in domain_of(href):
+            return href
+    return ""
+
+
+def resolve_extraction_url(url):
+    if "news.google.com" not in domain_of(url):
+        return url, None
+
+    query_url = parse_qs(urlsplit(url).query).get("url", [""])[0]
+    if query_url:
+        return normalize_url("", unquote(query_url)), "google_query_url"
+
+    return url, "google_unresolved"
 
 def _iter_json_ld(data):
     if isinstance(data, dict):
@@ -102,7 +129,8 @@ def extract_title_summary_body(html_text):
 
 def extract_article_item(item, min_body_chars=80):
     candidate = item["candidate"]
-    html_text, status = fetch_text(candidate.url, timeout=10, retries=1)
+    extraction_url, resolve_status = resolve_extraction_url(candidate.url)
+    html_text, status = fetch_text(extraction_url, timeout=7, retries=0)
 
     body = ""
     extracted = {}
@@ -118,7 +146,12 @@ def extract_article_item(item, min_body_chars=80):
         else:
             reason = status if not html_text else "body_too_short"
             logger.debug("Extraction skipped: %s — %s", reason, candidate.url)
-            return None, {"url": candidate.url, "reason": reason}
+            return None, {
+                "url": candidate.url,
+                "extraction_url": extraction_url,
+                "reason": reason,
+                "resolve_status": resolve_status,
+            }
 
     from .validation import GENERIC_TITLES
     extracted_title = extracted.get("title", "").strip()
@@ -131,13 +164,13 @@ def extract_article_item(item, min_body_chars=80):
 
     article = Article(
         title=title,
-        url=candidate.url,
+        url=extraction_url,
         source=candidate.source,
         country=candidate.country,
         region=candidate.region,
         language=candidate.language,
-        published=extracted["published"] or candidate.published,
-        summary=extracted["summary"] or candidate.summary,
+        published=extracted.get("published") or candidate.published,
+        summary=extracted.get("summary") or candidate.summary,
         body=body,
         companies=item["companies"],
         segments=item["segments"],

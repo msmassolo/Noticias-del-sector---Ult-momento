@@ -40,6 +40,13 @@ def _xml_text(node, child_name):
     return ""
 
 
+def _xml_raw(node, child_name):
+    child = node.find(child_name)
+    if child is not None and child.text:
+        return child.text
+    return ""
+
+
 def _parse_date(value):
     if not value:
         return ""
@@ -211,6 +218,15 @@ def _google_news_url(query, region_key="mundial"):
     return GOOGLE_NEWS_RSS.format(query=quote_plus(query), hl=hl, gl=gl, ceid=ceid)
 
 
+def _original_url_from_google_description(description_html):
+    soup = BeautifulSoup(description_html or "", "html.parser")
+    for link in soup.find_all("a", href=True):
+        href = normalize_url("", link.get("href") or "")
+        if href and "news.google.com" not in domain_of(href):
+            return href
+    return ""
+
+
 def discover_from_google_news(companies, keywords, sources, diagnostics, max_queries=55):
     source_by_domain = {domain_of(source.url): source for source in sources}
     global_queries = []
@@ -341,8 +357,11 @@ def discover_from_google_news(companies, keywords, sources, diagnostics, max_que
 
             for item in root.findall(".//item"):
                 title = _xml_text(item, "title")
-                link = normalize_url("", _xml_text(item, "link"))
-                description = clean_text(BeautifulSoup(_xml_text(item, "description"), "html.parser").get_text(" "))
+                google_link = normalize_url("", _xml_text(item, "link"))
+                description_raw = _xml_raw(item, "description")
+                original_link = _original_url_from_google_description(description_raw)
+                link = original_link or google_link
+                description = clean_text(BeautifulSoup(description_raw, "html.parser").get_text(" "))
                 published = _parse_date(_xml_text(item, "pubDate"))
                 if not title or not link:
                     continue

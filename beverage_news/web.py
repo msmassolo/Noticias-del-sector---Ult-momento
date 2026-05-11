@@ -1,6 +1,9 @@
 from dataclasses import asdict
 from datetime import datetime, timezone
 from html import escape
+from pathlib import Path
+import shutil
+import time
 from zoneinfo import ZoneInfo
 
 
@@ -96,6 +99,7 @@ def _article_dict(article):
     data["companies"] = _uniq(data.get("companies") or [])
     data["keyword_categories"] = _uniq(data.get("keyword_categories") or [])
     data["region"] = data.get("region") or "Mundial"
+    data["primary_topic"] = data["segments"][0] if data["segments"] else "company_news"
     return data
 
 
@@ -117,6 +121,7 @@ def _article_html(article):
     segments = article["segments"]
     companies = article["companies"]
     keywords = article["keyword_categories"]
+    primary_topic = article["primary_topic"]
     search = " ".join(
         [
             article["title"],
@@ -134,7 +139,6 @@ def _article_html(article):
 
     region = article["region"] or "Mundial"
     region_color = REGION_COLORS.get(region, "#4c5fa3")
-    primary_topic = segments[0] if segments else "company_news"
     topic_color = TOPIC_COLORS.get(primary_topic, "#374151")
     body_html = escape(article["body"]).replace("\n", "<br>")
     summary = article["summary"] or "No source summary available."
@@ -146,6 +150,7 @@ def _article_html(article):
         <article class="news-card"
             data-search="{escape(search, quote=True)}"
             data-segments="{escape('|'.join(segments), quote=True)}"
+            data-topic="{escape(primary_topic, quote=True)}"
             data-companies="{escape('|'.join(companies), quote=True)}"
             data-region="{escape(region, quote=True)}"
             data-country="{escape(article['country'], quote=True)}"
@@ -177,8 +182,7 @@ def _sections_html(article_dicts):
 
     grouped = {}
     for article in article_dicts:
-        primary = article["segments"][0] if article["segments"] else "company_news"
-        grouped.setdefault(primary, []).append(article)
+        grouped.setdefault(article["primary_topic"], []).append(article)
 
     sections = []
     for topic in _sort_topics(grouped):
@@ -205,7 +209,7 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
     article_dicts = [_article_dict(article) for article in articles]
     now = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires"))
 
-    segments = _sort_topics(_uniq(segment for article in article_dicts for segment in article["segments"]))
+    primary_topics = _sort_topics(_uniq(article["primary_topic"] for article in article_dicts))
     companies = _uniq(company for article in article_dicts for company in article["companies"])
     regions = _sort_regions(_uniq(article["region"] for article in article_dicts))
     countries = _uniq(article["country"] for article in article_dicts)
@@ -551,7 +555,7 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
             </div>
             <div class="filter-row">
                 <span class="filter-row-label">Topic</span>
-                <div class="filters" id="topic-filters">{_filter_buttons("segments", segments, TOPIC_LABELS)}</div>
+                <div class="filters" id="topic-filters">{_filter_buttons("topic", primary_topics, TOPIC_LABELS)}</div>
             </div>
         </div>
     </header>
@@ -667,5 +671,20 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
 </html>
 """
 
-    with open(output_path, "w", encoding="utf-8") as handle:
+    output = Path(output_path).resolve()
+    temp_output = output.with_suffix(output.suffix + ".tmp")
+    with open(temp_output, "w", encoding="utf-8") as handle:
         handle.write(html)
+    for attempt in range(5):
+        try:
+            temp_output.replace(output)
+            break
+        except PermissionError:
+            if attempt == 4:
+                shutil.copyfile(temp_output, output)
+                try:
+                    temp_output.unlink()
+                except PermissionError:
+                    pass
+                break
+            time.sleep(0.2)

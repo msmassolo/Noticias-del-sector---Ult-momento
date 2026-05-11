@@ -1,11 +1,51 @@
 import logging
 import re
 
+from .text import term_in_text
+
 logger = logging.getLogger(__name__)
 
 MIN_TITLE_LEN = 15
 MIN_SUMMARY_LEN = 30
 MAX_TITLE_LEN = 250
+TRADE_SOURCES = {
+    "Just Drinks",
+    "FoodBev Media",
+    "The Drinks Business",
+    "The Spirits Business",
+    "Brewbound",
+    "VinePair",
+    "Wine Business",
+    "SevenFifty Daily",
+    "Beverage Industry",
+    "Beverage Daily",
+    "Harpers Wine & Spirit",
+    "Food Navigator",
+    "Food Navigator USA",
+    "Wines of Argentina",
+    "Coviar",
+    "Vinetur Argentina",
+}
+INDUSTRY_RELEVANCE_TERMS = {
+    "resultados", "ventas", "ingresos", "ganancias", "facturacion",
+    "mercado", "negocio", "empresa", "compania", "industria",
+    "inversion", "adquisicion", "fusion", "planta", "produccion",
+    "distribucion", "lanzamiento", "marca", "consumo", "precios",
+    "exportaciones", "regulacion", "impuesto", "etiquetado", "retail",
+    "canal", "earnings", "sales", "revenue", "profit", "market",
+    "business", "company", "industry", "investment", "acquisition",
+    "merger", "plant", "production", "distribution", "launch", "brand",
+    "consumer", "pricing", "regulation", "tax", "labeling", "volume",
+    "volumes", "category",
+}
+STRONG_INDUSTRY_RELEVANCE_TERMS = INDUSTRY_RELEVANCE_TERMS - {"consumo", "consumer"}
+LOW_VALUE_TERMS = {
+    "receta", "recetas", "salud", "hidratacion", "hidratan", "ciencia",
+    "nutricion", "dieta", "medico", "medicos", "beneficios",
+    "como preparar", "que pasa si", "curiosidad", "curiosidades",
+    "horoscopo", "clima", "pronostico", "recipe", "recipes", "health",
+    "hydration", "nutrition", "diet", "doctor", "benefits", "how to make",
+}
 
 # Patrones de paywall / boilerplate en el body
 PAYWALL_PATTERNS = (
@@ -118,6 +158,35 @@ def _is_repetitive_body(body):
     return (len(sentences) - len(unique)) / len(sentences) > 0.6
 
 
+def _has_industry_relevance(article, title, summary, body):
+    if article.companies:
+        return True
+    if article.source in TRADE_SOURCES:
+        return True
+
+    text = " ".join([title, summary, body[:1500]])
+    low_value = any(term_in_text(term, text) for term in LOW_VALUE_TERMS)
+    strategic_topics = {
+        "financial_results",
+        "ma_and_strategy",
+        "distribution_execution",
+        "regulation_tax_policy",
+        "risk_crisis_reputation",
+        "packaging_sustainability",
+        "supply_chain_commodities",
+    }
+    if set(article.segments or []) & strategic_topics and not low_value:
+        return True
+
+    if low_value:
+        return any(term_in_text(term, text) for term in STRONG_INDUSTRY_RELEVANCE_TERMS)
+
+    if any(term_in_text(term, text) for term in INDUSTRY_RELEVANCE_TERMS):
+        return True
+
+    return False
+
+
 def validate_article(article):
     """
     Valida un artículo post-extracción.
@@ -148,6 +217,9 @@ def validate_article(article):
     if _is_repetitive_body(body):
         return False, "repetitive_body"
 
+    if not _has_industry_relevance(article, title, summary, body):
+        return False, "not_industry_relevant"
+
     return True, None
 
 
@@ -170,4 +242,7 @@ def validate_articles(articles):
         "Validation: %d valid / %d rejected out of %d articles",
         len(valid), len(rejected), len(articles),
     )
-    return valid, {"valid": len(valid), "rejected": len(rejected), "rejections": rejected}
+    by_reason = {}
+    for item in rejected:
+        by_reason[item["reason"]] = by_reason.get(item["reason"], 0) + 1
+    return valid, {"valid": len(valid), "rejected": len(rejected), "by_reason": by_reason, "rejections": rejected}
