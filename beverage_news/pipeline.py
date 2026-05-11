@@ -11,7 +11,7 @@ from .config import load_companies, load_keywords, load_sources
 from .discovery import discover_candidates
 from .extraction import extract_article_item
 from .filtering import filter_candidates
-from .ranking import rank_items, select_balanced_articles
+from .ranking import build_extraction_queue, rank_items, select_balanced_articles
 from .validation import validate_articles
 from .web import generate_web
 
@@ -53,8 +53,22 @@ def _write_json(name, data):
         json.dump(data, handle, ensure_ascii=False, indent=2)
 
 
+def _merge_accepted_candidates(primary, fallback):
+    merged = []
+    seen = set()
+    for item in [*primary, *fallback]:
+        url = item["candidate"].url
+        title = item["candidate"].title
+        key = (url, title)
+        if key in seen:
+            continue
+        seen.add(key)
+        merged.append(item)
+    return merged
+
+
 def _extract_ranked_selection(extraction_queue, target_count, min_per_region, min_body_chars=80):
-    diagnostics = {"attempted": 0, "extracted": 0, "errors": []}
+    diagnostics = {"attempted": 0, "extracted": 0, "errors": [], "by_source": {}, "by_region": {}}
     articles = []
     item_by_url = {}
     deduped_queue = []
@@ -68,12 +82,23 @@ def _extract_ranked_selection(extraction_queue, target_count, min_per_region, mi
         futures = {executor.submit(extract_article_item, item, min_body_chars): item for item in deduped_queue}
         diagnostics["attempted"] = len(futures)
         for future in as_completed(futures):
+            item = futures[future]
+            candidate = item["candidate"]
+            source_stats = diagnostics["by_source"].setdefault(candidate.source, {"attempted": 0, "extracted": 0, "errors": {}})
+            region_stats = diagnostics["by_region"].setdefault(candidate.region or "Mundial", {"attempted": 0, "extracted": 0, "errors": {}})
+            source_stats["attempted"] += 1
+            region_stats["attempted"] += 1
             article, error = future.result()
             if error:
                 diagnostics["errors"].append(error)
+                reason = error.get("reason", "unknown")
+                source_stats["errors"][reason] = source_stats["errors"].get(reason, 0) + 1
+                region_stats["errors"][reason] = region_stats["errors"].get(reason, 0) + 1
                 continue
             articles.append(article)
             diagnostics["extracted"] += 1
+            source_stats["extracted"] += 1
+            region_stats["extracted"] += 1
 
     score_by_url = {item["candidate"].url: item.get("score", 0) for item in deduped_queue}
     articles.sort(key=lambda article: -score_by_url.get(article.url, 0))
@@ -107,10 +132,20 @@ def run_pipeline(
     accepted, filtering_diagnostics = filter_candidates(candidates, companies, keywords, published_urls)
     accepted = rank_items(accepted)
 
-    # Direct-source URLs come before Google News redirects (GN URLs already penalized -20 in ranking)
-    direct = [item for item in accepted if "news.google.com" not in item["candidate"].url]
-    gn = [item for item in accepted if "news.google.com" in item["candidate"].url]
-    extraction_queue = (direct + gn)[:limit]
+    recycled_accepted = []
+    recycled_filtering_diagnostics = None
+    recycle_threshold = max(limit, target_count * 3)
+    if len(accepted) < recycle_threshold and published_urls:
+        recycled_accepted, recycled_filtering_diagnostics = filter_candidates(candidates, companies, keywords, published_urls={})
+        recycled_accepted = rank_items(recycled_accepted)
+        accepted = rank_items(_merge_accepted_candidates(accepted, recycled_accepted))
+
+    extraction_queue, queue_diagnostics = build_extraction_queue(
+        accepted,
+        limit=limit,
+        target_count=target_count,
+        min_per_region=min_per_region,
+    )
     _write_json(
         "accepted_candidates.json",
         [
@@ -126,7 +161,7 @@ def run_pipeline(
         ],
     )
 
-    logger.info("Pipeline: extraction queue has %d items (direct=%d, gn=%d)", len(extraction_queue), len(direct), len(gn))
+    logger.info("Pipeline: extraction queue has %d items", len(extraction_queue))
     extracted_articles, extraction_diagnostics = _extract_ranked_selection(extraction_queue, target_count, min_per_region, min_body_chars)
     logger.info("Pipeline: extracted %d / %d articles", extraction_diagnostics["extracted"], extraction_diagnostics["attempted"])
     extracted_articles, validation_diagnostics = validate_articles(extracted_articles)
@@ -140,6 +175,8 @@ def run_pipeline(
     diagnostics = {
         "discovery": discovery_diagnostics,
         "filtering": filtering_diagnostics,
+        "recycled_filtering": recycled_filtering_diagnostics,
+        "queue": queue_diagnostics,
         "extraction": extraction_diagnostics,
         "validation": validation_diagnostics,
         "selection": selection_diagnostics,

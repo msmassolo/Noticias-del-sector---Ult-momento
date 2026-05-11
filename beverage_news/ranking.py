@@ -132,6 +132,59 @@ def rank_items(items):
     )
 
 
+def build_extraction_queue(items, limit=80, target_count=40, min_per_region=7):
+    """
+    Build an extraction queue that preserves ranking but reserves attempts by region.
+
+    Selection already balances the final output, but doing it only after extraction
+    lets global sources consume the whole extraction budget. This queue gives each
+    region enough first-pass attempts when candidates exist, then fills by score.
+    """
+    by_region = {"Local": [], "Regional": [], "Mundial": []}
+    for item in items:
+        by_region.setdefault(item["candidate"].region or "Mundial", []).append(item)
+
+    selected = []
+    used_urls = set()
+
+    def add(item):
+        url = item["candidate"].url
+        if url in used_urls or len(selected) >= limit:
+            return False
+        selected.append(item)
+        used_urls.add(url)
+        return True
+
+    regional_attempts = max(min_per_region * 3, min(target_count // 2, 20))
+    local_attempts = max(min_per_region * 2, min(target_count // 3, 14))
+    mundial_attempts = max(min_per_region * 2, min(target_count // 3, 14))
+    quotas = {
+        "Regional": regional_attempts,
+        "Local": local_attempts,
+        "Mundial": mundial_attempts,
+    }
+
+    for region in ("Regional", "Local", "Mundial"):
+        for item in by_region.get(region, [])[: quotas[region]]:
+            add(item)
+
+    for item in items:
+        if len(selected) >= limit:
+            break
+        add(item)
+
+    counts = Counter(item["candidate"].region or "Mundial" for item in selected)
+    available = Counter(item["candidate"].region or "Mundial" for item in items)
+    return selected, {
+        "queued_by_region": dict(counts),
+        "accepted_by_region": dict(available),
+        "limit": limit,
+        "regional_attempt_quota": regional_attempts,
+        "local_attempt_quota": local_attempts,
+        "mundial_attempt_quota": mundial_attempts,
+    }
+
+
 def select_balanced_articles(articles, target_count=40, min_per_region=7):
     by_region = {"Local": [], "Regional": [], "Mundial": []}
     for article in articles:

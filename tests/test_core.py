@@ -1,10 +1,14 @@
 import unittest
 
 from beverage_news.extraction import extract_title_summary_body
+from beverage_news.discovery import _original_url_from_google_description
 from beverage_news.filtering import filter_candidates, match_companies, match_keyword_categories
-from beverage_news.models import Candidate, Company
+from beverage_news.models import Article, Candidate, Company
+from beverage_news.ranking import build_extraction_queue, rank_items
 from beverage_news.text import normalize_text, term_in_text
 from beverage_news.urls import normalize_url
+from beverage_news.validation import validate_article
+from beverage_news.web import TOPIC_LABELS, _article_dict, _filter_buttons, _sort_topics, _uniq
 
 
 class CoreTest(unittest.TestCase):
@@ -56,6 +60,19 @@ class CoreTest(unittest.TestCase):
         self.assertEqual(diagnostics["duplicates"], 1)
         self.assertEqual(accepted[0]["reason"], "company_match")
 
+    def test_filter_accepts_company_with_business_context_without_generic_beverage_word(self):
+        candidates = [
+            Candidate(
+                title="Coca-Cola FEMSA arranca 2026 con impulso regional en retail",
+                url="https://example.com/kof",
+                region="Regional",
+                discovery='google_news:"Coca-Cola FEMSA" bebidas',
+            )
+        ]
+        accepted, _diagnostics = filter_candidates(candidates, self.companies, self.keywords)
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["reason"], "company_match")
+
     def test_filter_accepts_two_sector_keywords_without_company(self):
         candidates = [
             Candidate(title="Sugar tax regulation targets soft drinks", url="https://example.com/tax"),
@@ -69,6 +86,67 @@ class CoreTest(unittest.TestCase):
         accepted, diagnostics = filter_candidates(candidates, self.companies, self.keywords)
         self.assertEqual(accepted, [])
         self.assertEqual(diagnostics["discarded"]["weak_match"], 1)
+
+    def test_filter_rejects_low_value_health_context_without_industry_angle(self):
+        candidates = [
+            Candidate(
+                title="Bebidas calientes que hidratan segun la ciencia",
+                url="https://example.com/hydration",
+                summary="Consejos de salud y nutricion sobre te, cafe y consumo de liquidos.",
+                region="Local",
+                discovery="section:https://example.com/bebidas",
+            )
+        ]
+        accepted, diagnostics = filter_candidates(candidates, self.companies, self.keywords)
+        self.assertEqual(accepted, [])
+        self.assertEqual(diagnostics["discarded"]["low_value_context"], 1)
+
+    def test_filter_accepts_regional_channel_context(self):
+        candidates = [
+            Candidate(
+                title="Transportadora de cerveja vira supermercado regional",
+                url="https://example.com/retail",
+                source="Exame",
+                country="Brazil",
+                region="Regional",
+                language="pt",
+                discovery="section:https://example.com/negocios",
+            )
+        ]
+        accepted, _diagnostics = filter_candidates(candidates, self.companies, self.keywords)
+        self.assertEqual(len(accepted), 1)
+        self.assertEqual(accepted[0]["reason"], "local_regional_channel_context")
+
+    def test_google_news_description_prefers_original_article_link(self):
+        description = '<a href="https://news.google.com/rss/articles/abc">Google</a><a href="https://example.com/original?utm_source=x">Publisher</a>'
+        self.assertEqual(_original_url_from_google_description(description), "https://example.com/original")
+
+    def test_extraction_queue_reserves_regional_attempts(self):
+        candidates = []
+        for index in range(12):
+            candidates.append(
+                {
+                    "candidate": Candidate(title=f"Global beverage earnings {index}", url=f"https://g.example/{index}", region="Mundial"),
+                    "companies": [],
+                    "segments": ["financial_results"],
+                    "keyword_categories": ["financial_results"],
+                    "reason": "strong_keyword_match",
+                }
+            )
+        for index in range(3):
+            candidates.append(
+                {
+                    "candidate": Candidate(title=f"Brasil bebidas mercado {index}", url=f"https://br.example/{index}", region="Regional"),
+                    "companies": [],
+                    "segments": ["consumer_market_trends"],
+                    "keyword_categories": ["consumer_market_trends"],
+                    "reason": "local_regional_beverage_section",
+                }
+            )
+        ranked = rank_items(candidates)
+        queue, diagnostics = build_extraction_queue(ranked, limit=5, target_count=4, min_per_region=2)
+        self.assertEqual(diagnostics["queued_by_region"].get("Regional"), 3)
+        self.assertEqual([item["candidate"].region for item in queue[:3]], ["Regional", "Regional", "Regional"])
 
     def test_extracts_json_ld_article_body_summary_and_title(self):
         html = """
@@ -128,6 +206,49 @@ class CoreTest(unittest.TestCase):
         self.assertIn("demand improved", extracted["body"])
         self.assertIn("new capacity", extracted["body"])
         self.assertNotIn("Stay ahead", extracted["body"])
+
+    def test_validation_rejects_non_industry_lifestyle_article(self):
+        article = Article(
+            title="Bebidas calientes que hidratan segun la ciencia",
+            url="https://example.com/a",
+            source="Infobae",
+            country="Argentina",
+            region="Local",
+            language="es",
+            published="",
+            summary="Consejos de salud y nutricion sobre liquidos.",
+            body="El te y el cafe pueden hidratar segun medicos y nutricionistas. Es una nota de salud sin datos comerciales ni companias.",
+            companies=[],
+            segments=["consumer_market_trends"],
+            keyword_categories=["consumer_market_trends"],
+            discovery="section:https://example.com/bebidas",
+        )
+        ok, reason = validate_article(article)
+        self.assertFalse(ok)
+        self.assertEqual(reason, "not_industry_relevant")
+
+    def test_web_topic_filters_use_primary_topic_only(self):
+        article = Article(
+            title="Brand launches new beverage",
+            url="https://example.com/a",
+            source="Example",
+            country="Global",
+            region="Mundial",
+            language="en",
+            published="",
+            summary="A launch with financial context.",
+            body="The beverage company launched a product and discussed sales.",
+            companies=[],
+            segments=["product_innovation", "financial_results"],
+            keyword_categories=["product_innovation", "financial_results"],
+            discovery="rss",
+        )
+        article_dict = _article_dict(article)
+        primary_topics = _sort_topics(_uniq([article_dict["primary_topic"]]))
+        html = _filter_buttons("topic", primary_topics, TOPIC_LABELS)
+        self.assertEqual(article_dict["primary_topic"], "product_innovation")
+        self.assertIn('data-filter="topic" data-value="product_innovation"', html)
+        self.assertNotIn('data-filter="topic" data-value="financial_results"', html)
 
 
 if __name__ == "__main__":
