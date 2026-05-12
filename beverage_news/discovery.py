@@ -1,6 +1,8 @@
 import email.utils
 import logging
+import re
 import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from urllib.parse import quote_plus
 
@@ -47,13 +49,67 @@ def _xml_raw(node, child_name):
     return ""
 
 
+_REL_AGO_RE = re.compile(r"\b(\d{1,3})\s*(minutes?|hours?|days?)\s+ago\b", re.IGNORECASE)
+_REL_HACE_RE = re.compile(
+    r"\bhace\s+(\d{1,3})\s*(minutos?|min|horas?|hr|h|d[ií]as?)\b",
+    re.IGNORECASE,
+)
+_REL_KEYWORDS = (
+    ("anteayer", timedelta(days=2)),
+    ("ayer", timedelta(days=1)),
+    ("yesterday", timedelta(days=1)),
+    ("hace instantes", timedelta(minutes=5)),
+    ("just now", timedelta(minutes=0)),
+    ("esta manana", timedelta(hours=4)),
+    ("esta mañana", timedelta(hours=4)),
+    ("esta tarde", timedelta(hours=2)),
+    ("hoy", timedelta(hours=0)),
+    ("today", timedelta(hours=0)),
+)
+
+
+def _parse_relative_date(value):
+    lowered = value.lower().strip()
+    for kw, delta in _REL_KEYWORDS:
+        if kw in lowered:
+            return (datetime.now(timezone.utc) - delta).isoformat()
+    m = _REL_AGO_RE.search(lowered)
+    if m:
+        qty = int(m.group(1))
+        unit = m.group(2).lower()
+        delta = timedelta(minutes=qty) if unit.startswith("minute") else (
+            timedelta(hours=qty) if unit.startswith("hour") else timedelta(days=qty)
+        )
+        return (datetime.now(timezone.utc) - delta).isoformat()
+    m = _REL_HACE_RE.search(lowered)
+    if m:
+        qty = int(m.group(1))
+        unit = m.group(2).lower()
+        if unit.startswith("min"):
+            delta = timedelta(minutes=qty)
+        elif unit.startswith(("hor", "hr", "h")):
+            delta = timedelta(hours=qty)
+        else:
+            delta = timedelta(days=qty)
+        return (datetime.now(timezone.utc) - delta).isoformat()
+    return None
+
+
 def _parse_date(value):
     if not value:
         return ""
     try:
         return email.utils.parsedate_to_datetime(value).isoformat()
     except Exception:
-        return clean_text(value)
+        pass
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00")).isoformat()
+    except Exception:
+        pass
+    rel = _parse_relative_date(value)
+    if rel:
+        return rel
+    return clean_text(value)
 
 
 def parse_rss(xml_text, source):

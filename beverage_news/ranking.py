@@ -1,5 +1,22 @@
+import re
 from collections import Counter
 from datetime import datetime, timezone
+
+from .text import normalize_text
+
+CLICKBAIT_TITLE_PATTERNS = (
+    re.compile(r"^(como|cómo)\s", re.IGNORECASE),
+    re.compile(r"^(por que|por qué|porque)\s", re.IGNORECASE),
+    re.compile(r"^(que|qué)\s+(es|pasa|significa|hace)\s", re.IGNORECASE),
+    re.compile(r"^(guia|guía)\s+(para|de|completa)", re.IGNORECASE),
+    re.compile(r"\blas?\s+\d+\s+(claves|consejos|secretos|razones|tips|cosas|maneras)\b", re.IGNORECASE),
+    re.compile(r"\blos?\s+\d+\s+(mejores|peores|errores|trucos)\b", re.IGNORECASE),
+    re.compile(r"^(top|ranking)\s+\d+", re.IGNORECASE),
+    re.compile(r"\b(esto|esta|estos)\s+es\s+lo\s+que\b", re.IGNORECASE),
+    re.compile(r"\b(te contamos|asi es como|así es como)\b", re.IGNORECASE),
+)
+
+GENERALIST_AR_SOURCES = {"Infobae", "Clarin", "La Nacion", "Ambito", "Cronista", "Perfil"}
 
 
 REGION_ORDER = {"Local": 0, "Regional": 1, "Mundial": 2}
@@ -114,6 +131,18 @@ def score_item(item):
     if candidate.discovery.startswith("google_news"):
         # Google News redirect URLs fail extraction; deprioritize vs direct sources
         score -= 20
+
+    # Penalización: títulos listicle / clickbait / explainer son menos
+    # accionables para un dashboard de actualidad sectorial.
+    title_norm = candidate.title or ""
+    if any(pattern.search(title_norm) for pattern in CLICKBAIT_TITLE_PATTERNS):
+        score -= 18
+
+    # Penalización suave para diarios generalistas argentinos cuando NO hay
+    # match de empresa: tienden a aportar notas tangenciales (curiosidades,
+    # eventos sociales) que pasan los filtros pero no son negocio puro.
+    if candidate.source in GENERALIST_AR_SOURCES and not companies:
+        score -= 6
 
     return score
 

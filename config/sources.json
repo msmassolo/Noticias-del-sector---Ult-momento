@@ -145,7 +145,8 @@
     "country": "Argentina",
     "region": "Local",
     "language": "es",
-    "trade": false
+    "trade": false,
+    "require_section": true
   },
   {
     "name": "La Nacion",
@@ -155,7 +156,8 @@
     "country": "Argentina",
     "region": "Local",
     "language": "es",
-    "trade": false
+    "trade": false,
+    "require_section": true
   },
   {
     "name": "Clarin",
@@ -553,6 +555,66 @@
     "url": "https://www.foodnavigator-usa.com/",
     "rss": ["https://www.foodnavigator-usa.com/arc/outboundfeeds/rss/"],
     "sections": ["https://www.foodnavigator-usa.com/News/Beverage"],
+    "country": "United States",
+    "region": "Mundial",
+    "language": "en",
+    "trade": true
+  },
+  {
+    "name": "Mundo do Marketing",
+    "url": "https://www.mundodomarketing.com.br/",
+    "rss": ["https://www.mundodomarketing.com.br/feed/"],
+    "sections": [],
+    "country": "Brazil",
+    "region": "Regional",
+    "language": "pt",
+    "trade": false
+  },
+  {
+    "name": "Mercado e Consumo",
+    "url": "https://mercadoeconsumo.com.br/",
+    "rss": ["https://mercadoeconsumo.com.br/feed/"],
+    "sections": [],
+    "country": "Brazil",
+    "region": "Regional",
+    "language": "pt",
+    "trade": true
+  },
+  {
+    "name": "Merca 2.0",
+    "url": "https://www.merca20.com/",
+    "rss": ["https://www.merca20.com/feed/"],
+    "sections": [],
+    "country": "Mexico",
+    "region": "Regional",
+    "language": "es",
+    "trade": false
+  },
+  {
+    "name": "The Food Institute",
+    "url": "https://foodinstitute.com/",
+    "rss": ["https://foodinstitute.com/feed/"],
+    "sections": [],
+    "country": "United States",
+    "region": "Mundial",
+    "language": "en",
+    "trade": true
+  },
+  {
+    "name": "Beverage Industry News",
+    "url": "https://www.bevindustry.com/",
+    "rss": ["https://www.bevindustry.com/rss/topic/2632-news.xml"],
+    "sections": [],
+    "country": "United States",
+    "region": "Mundial",
+    "language": "en",
+    "trade": true
+  },
+  {
+    "name": "FoodDive Beverages",
+    "url": "https://www.fooddive.com/topic/beverage/",
+    "rss": ["https://www.fooddive.com/feeds/topic/beverage/"],
+    "sections": [],
     "country": "United States",
     "region": "Mundial",
     "language": "en",

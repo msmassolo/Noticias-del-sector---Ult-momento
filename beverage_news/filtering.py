@@ -14,9 +14,9 @@ _LOGIN_PATH_RE = re.compile(
 
 logger = logging.getLogger(__name__)
 
-MAX_AGE_HOURS_MUNDIAL = 24 * 7
-MAX_AGE_HOURS_LOCAL = 24 * 14
-MAX_AGE_HOURS_REGIONAL = 24 * 14
+MAX_AGE_HOURS_MUNDIAL = 36
+MAX_AGE_HOURS_LOCAL = 36
+MAX_AGE_HOURS_REGIONAL = 36
 MAX_PER_SOURCE = 18
 
 
@@ -167,6 +167,53 @@ LOW_VALUE_CONTEXT_TERMS = {
     "benefits",
     "how to make",
 }
+RETAIL_OPS_NOISE_TERMS = {
+    # Cambios operativos de retail genericos: horarios, aperturas/cierres
+    # puntuales, calendarios de tiendas. Aunque la cadena (Walmart, Sam's Club,
+    # Carrefour) este en companies, una nota de horarios no es relevante para
+    # noticias del sector de bebidas.
+    "cambia su horario", "cambian su horario", "modifica su horario",
+    "modifican su horario", "nuevos horarios", "nuevo horario",
+    "operara a partir", "operaran a partir", "abriran a partir",
+    "abrira a partir", "horario de atencion", "horario especial",
+    "horario extendido", "horario reducido", "atencion al publico",
+    "estaran cerrados", "estara cerrado", "permanecera cerrado",
+    "permaneceran cerrados", "feriado bancario",
+    "promocion del dia", "promociones del dia", "ofertas del dia",
+    "que tiendas abren", "que tiendas estan abiertas",
+    "changes its hours", "store hours", "holiday hours",
+}
+
+OFF_TOPIC_TERMS = {
+    # Automotor / repuestos / movilidad (caso "líderes mayoristas de repuestos")
+    "repuestos", "autopartes", "autoparte", "automotor", "automotriz",
+    "concesionaria", "concesionarias", "neumaticos", "neumático",
+    "lubricantes", "motos", "motocicleta", "motocicletas", "camiones",
+    "camionetas", "scooter", "scooters",
+    # Otros rubros que pueden compartir vocabulario (mayorista/distribución/marca)
+    "ferreteria", "electrodomesticos", "indumentaria", "calzado", "moda",
+    "juguetes", "cosmetica", "perfumeria", "farmacia", "farmacias",
+    "construccion", "inmobiliaria", "inmuebles", "muebles",
+    # Tecnología de consumo
+    "smartphone", "smartphones", "celulares", "videojuegos", "gaming",
+    "criptomonedas", "cripto", "bitcoin",
+    # Deportes / espectáculos
+    "futbol", "fútbol", "tenis", "boxeo", "automovilismo", "formula 1",
+    "espectaculo", "espectáculos", "farandula", "farándula",
+}
+
+HISTORICAL_CLICKBAIT_TITLE_TERMS = {
+    "sabias que", "sabías que", "asi nacio", "así nació", "así nacio",
+    "como nacio", "cómo nació", "como nació",
+    "la historia de", "la historia detras", "la historia detrás",
+    "el origen de", "el origen fronterizo", "el verdadero origen",
+    "conoce la historia", "conocé la historia", "conoce el origen",
+    "te contamos la historia", "te contamos como",
+    "hace anos", "hace años",  # plantillas tipo "hace 50 años..."
+    "efemerides", "efemérides", "un dia como hoy", "un día como hoy",
+    "remember when", "back in", "the story behind", "the origin of",
+}
+
 CHANNEL_CONTEXT_TERMS = {
     "supermercado",
     "supermercados",
@@ -314,6 +361,20 @@ def _has_channel_context(text):
     return any(term_in_text(term, text) for term in CHANNEL_CONTEXT_TERMS)
 
 
+def _has_off_topic_rubro(text):
+    return any(term_in_text(term, text) for term in OFF_TOPIC_TERMS)
+
+
+def _has_retail_ops_noise(text):
+    normalized = normalize_text(text)
+    return any(term in normalized for term in (normalize_text(t) for t in RETAIL_OPS_NOISE_TERMS))
+
+
+def _is_historical_clickbait_title(title):
+    normalized = normalize_text(title)
+    return any(term in normalized for term in HISTORICAL_CLICKBAIT_TITLE_TERMS)
+
+
 def filter_candidates(candidates, companies, keywords, published_urls=None):
     published_urls = published_urls or {}
     diagnostics = {
@@ -396,6 +457,37 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
             "supply_chain_commodities",
         }
         has_strategic_category = bool(set(keyword_matches) & strategic_categories)
+
+        # Rechazo por ruido operativo de retail: cambios de horario, aperturas
+        # puntuales, feriados, ofertas del dia, etc. No son noticias del sector
+        # de bebidas aun si la cadena (Walmart, Sam's Club, Carrefour) figura
+        # en companies.json. Se aplica antes del check de empresa.
+        if _has_retail_ops_noise(text):
+            diagnostics["discarded"]["retail_ops_noise"] = diagnostics["discarded"].get("retail_ops_noise", 0) + 1
+            source_stats["discarded"]["retail_ops_noise"] = source_stats["discarded"].get("retail_ops_noise", 0) + 1
+            seen_urls.add(url)
+            seen_titles.add(title_key)
+            continue
+
+        # Rechazo por rubro off-topic: la nota habla de otro rubro que comparte
+        # vocabulario (repuestos automotrices, ferretería, electrodomésticos, etc.)
+        # aun si el matcher disparó por "mayorista", "distribución" o "marca".
+        if _has_off_topic_rubro(text) and not company_matches and not candidate.trade_source:
+            diagnostics["discarded"]["off_topic_rubro"] = diagnostics["discarded"].get("off_topic_rubro", 0) + 1
+            source_stats["discarded"]["off_topic_rubro"] = source_stats["discarded"].get("off_topic_rubro", 0) + 1
+            seen_urls.add(url)
+            seen_titles.add(title_key)
+            continue
+
+        # Rechazo de títulos histórico/clickbait ("¿Sabías que...?", "La historia de...",
+        # "El origen de..."): no son noticias actuales, son curiosidades/efemérides.
+        if _is_historical_clickbait_title(candidate.title) and not candidate.trade_source:
+            diagnostics["discarded"]["historical_clickbait"] = diagnostics["discarded"].get("historical_clickbait", 0) + 1
+            source_stats["discarded"]["historical_clickbait"] = source_stats["discarded"].get("historical_clickbait", 0) + 1
+            seen_urls.add(url)
+            seen_titles.add(title_key)
+            continue
+
         if (
             low_value_context
             and not candidate.trade_source
@@ -408,6 +500,19 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
             seen_urls.add(url)
             seen_titles.add(title_key)
             continue
+
+        # Si TODAS las empresas matcheadas requieren contexto de industria
+        # explicito (alias ambiguo) y no hay industry_intent fuerte ni canal,
+        # tratar el match como no efectivo.
+        if (
+            company_matches
+            and all(getattr(c, "requires_industry_context", False) for c in company_matches)
+            and not _has_strong_industry_intent(text)
+            and not channel_context
+        ):
+            diagnostics["discarded"]["company_needs_context"] = diagnostics["discarded"].get("company_needs_context", 0) + 1
+            source_stats["discarded"]["company_needs_context"] = source_stats["discarded"].get("company_needs_context", 0) + 1
+            company_matches = []
 
         reason = ""
         if company_matches and (beverage_context or candidate.trade_source or industry_intent or channel_context):
@@ -471,6 +576,36 @@ def filter_candidates(candidates, companies, keywords, published_urls=None):
         source_counts[source_key] = source_counts.get(source_key, 0) + 1
         seen_urls.add(url)
         seen_titles.add(title_key)
+
+    # Deduplicación semántica: misma noticia tomada por varios medios suele
+    # compartir 6-8 palabras significativas iniciales del título. Quedarse con
+    # la primera ocurrencia (la mejor rankeada llegará desde rank_items igual,
+    # pero acá ya se reduce ruido temprano).
+    STOP = {
+        "el", "la", "los", "las", "un", "una", "unos", "unas", "de", "del",
+        "en", "y", "o", "a", "para", "por", "con", "sin", "que", "es", "se",
+        "su", "sus", "al", "lo", "the", "a", "an", "of", "in", "on", "for",
+        "and", "or", "to", "is", "as", "at",
+    }
+    def _semantic_key(title):
+        words = [w for w in normalize_text(title).split() if w and w not in STOP]
+        return " ".join(words[:7])
+    seen_semantic = {}
+    deduped = []
+    for entry in accepted:
+        key = _semantic_key(entry["candidate"].title)
+        if not key:
+            deduped.append(entry)
+            continue
+        if key in seen_semantic:
+            diagnostics["discarded"]["semantic_duplicate"] = diagnostics["discarded"].get("semantic_duplicate", 0) + 1
+            diagnostics["accepted"] -= 1
+            reason = entry["reason"]
+            diagnostics["accepted_reasons"][reason] = max(0, diagnostics["accepted_reasons"].get(reason, 0) - 1)
+            continue
+        seen_semantic[key] = True
+        deduped.append(entry)
+    accepted = deduped
 
     logger.info(
         "Filtering: %d accepted / %d input (already_published=%d, too_old=%d, duplicates=%d, weak=%d)",

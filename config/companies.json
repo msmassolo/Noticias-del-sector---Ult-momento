@@ -327,7 +327,8 @@
     "name": "Embotelladora Andina",
     "country": "Chile",
     "segments": ["bottling_distribution", "soft_drinks", "water"],
-    "aliases": ["Coca-Cola Andina", "Andina Bottling", "Andina"]
+    "aliases": ["Coca-Cola Andina", "Andina Bottling", "Andina"],
+    "requires_industry_context": true
   },
   {
     "name": "AJE Group",
@@ -387,7 +388,8 @@
     "name": "Coca-Cola Andina",
     "country": "Chile",
     "segments": ["soft_drinks", "water", "energy_drinks"],
-    "aliases": ["Embotelladora Andina", "Andina bebidas"]
+    "aliases": ["Embotelladora Andina", "Andina bebidas"],
+    "requires_industry_context": true
   },
   {
     "name": "CCU",

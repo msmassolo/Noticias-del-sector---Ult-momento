@@ -187,6 +187,33 @@ def _has_industry_relevance(article, title, summary, body):
     return False
 
 
+_HISTORICAL_BODY_PATTERNS = (
+    re.compile(r"\bhace\s+\d{2,3}\s+a[ñn]os\b", re.IGNORECASE),
+    re.compile(r"\b(fundad[ao]|nacid[ao])\s+en\s+(19\d{2}|18\d{2}|20[01]\d)\b", re.IGNORECASE),
+    re.compile(r"\b(en|del?)\s+el\s+(siglo|a[ñn]o)\s+(xix|xx|19\d{2}|18\d{2})\b", re.IGNORECASE),
+    re.compile(r"\b(comenz[oó]|empez[oó]|inici[oó])\s+(su\s+(historia|trayectoria)|en\s+(19|18)\d{2})", re.IGNORECASE),
+    re.compile(r"\b(more than|over|hace m[aá]s de)\s+\d{2,3}\s+(years|a[ñn]os)\s+ago\b", re.IGNORECASE),
+    re.compile(r"\b(the (origin|history|story)|origen|historia)\s+of\b", re.IGNORECASE),
+)
+_RECENT_NEWS_PATTERNS = (
+    re.compile(r"\b(anunci[oó]|anunci[oó]\s+hoy|esta\s+semana|este\s+a[ñn]o|este\s+mes|inform[oó])\b", re.IGNORECASE),
+    re.compile(r"\b(announced|reports?|reported|today|this\s+week|this\s+month|q[1-4]\s+20\d{2})\b", re.IGNORECASE),
+    re.compile(r"\b(resultados|ventas|ingresos|facturaci[oó]n|earnings|revenue)\b", re.IGNORECASE),
+)
+
+
+def _is_historical_body(body):
+    if not body or len(body) < 200:
+        return False
+    sample = body[:2000]
+    historical_hits = sum(1 for p in _HISTORICAL_BODY_PATTERNS if p.search(sample))
+    if historical_hits < 2:
+        return False
+    recent_hits = sum(1 for p in _RECENT_NEWS_PATTERNS if p.search(sample))
+    # >=2 marcadores historicos y casi ningun marcador de actualidad -> es nota historica
+    return recent_hits == 0
+
+
 def validate_article(article):
     """
     Valida un artículo post-extracción.
@@ -216,6 +243,9 @@ def validate_article(article):
 
     if _is_repetitive_body(body):
         return False, "repetitive_body"
+
+    if _is_historical_body(body):
+        return False, "historical_body"
 
     if not _has_industry_relevance(article, title, summary, body):
         return False, "not_industry_relevant"

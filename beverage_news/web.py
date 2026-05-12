@@ -176,6 +176,77 @@ def _article_html(article):
     """
 
 
+_HIGHLIGHT_TOPIC_WEIGHTS = {
+    "financial_results": 30,
+    "ma_and_strategy": 26,
+    "product_innovation": 24,
+    "marketing_innovation": 22,
+    "distribution_execution": 20,
+    "regulation_tax_policy": 19,
+    "risk_crisis_reputation": 18,
+    "packaging_sustainability": 16,
+    "consumer_market_trends": 14,
+    "supply_chain_commodities": 12,
+    "non_alcoholic_beverages": 12,
+    "alternative_ingredients": 10,
+    "company_news": 6,
+}
+_HIGHLIGHT_PRIORITY_COMPANIES = {
+    "Red Bull", "Monster Beverage", "Celsius Holdings", "Olipop", "Poppi",
+    "Fevertree Drinks", "AB InBev", "Diageo", "Campari Group",
+    "Constellation Brands", "The Coca-Cola Company", "PepsiCo",
+    "Coca-Cola FEMSA", "Arca Continental",
+}
+
+
+def _highlight_score(article):
+    score = 0
+    topics = article.get("segments") or []
+    if topics:
+        score += max(_HIGHLIGHT_TOPIC_WEIGHTS.get(t, 0) for t in topics)
+    companies = set(article.get("companies") or [])
+    if companies:
+        score += 18
+        score += sum(8 for c in companies if c in _HIGHLIGHT_PRIORITY_COMPANIES)
+    # Recencia
+    try:
+        dt = datetime.fromisoformat((article.get("published") or "").replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        hours = (datetime.now(timezone.utc) - dt).total_seconds() / 3600
+        if hours <= 12: score += 10
+        elif hours <= 24: score += 6
+        elif hours <= 36: score += 3
+    except Exception:
+        pass
+    return score
+
+
+def _pick_highlights(article_dicts, n=5):
+    if not article_dicts:
+        return []
+    ranked = sorted(article_dicts, key=_highlight_score, reverse=True)
+    return ranked[:n]
+
+
+def _highlights_html(article_dicts):
+    highlights = _pick_highlights(article_dicts, n=5)
+    if not highlights:
+        return ""
+    cards = "\n".join(_article_html(article) for article in highlights)
+    return f"""
+        <section class="highlights-section">
+            <div class="section-heading highlights-heading">
+                <h2>Destacados de hoy</h2>
+                <span>TOP {len(highlights)}</span>
+            </div>
+            <div class="grid">
+                {cards}
+            </div>
+        </section>
+    """
+
+
 def _sections_html(article_dicts):
     if not article_dicts:
         return '<p class="empty-state">No articles passed the current filters or extraction rules.</p>'
@@ -217,6 +288,19 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
     languages = _uniq(article["language"] for article in article_dicts)
 
     sections_html = _sections_html(article_dicts)
+    highlights_html = _highlights_html(article_dicts)
+
+    # Indicador de salud
+    disc = diagnostics.get("discovery", {}) if diagnostics else {}
+    source_errors = len(disc.get("source_errors", []) or [])
+    section_errors = len(disc.get("section_errors", []) or [])
+    total_errors = source_errors + section_errors
+    if total_errors == 0:
+        health_label, health_color = "OK", "#0e5f57"
+    elif total_errors <= 3:
+        health_label, health_color = "WARN", "#b45309"
+    else:
+        health_label, health_color = "DEGRADED", "#9f1239"
 
     # Pre-compute AUDIENCE_TOPICS as JS object literal (can't use nested f-strings with quotes)
     _aud_parts = []
@@ -392,6 +476,31 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
             font-weight: 700;
             text-transform: uppercase;
         }}
+        .highlights-section {{
+            margin-top: 24px;
+            padding: 14px 16px 18px;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            background: linear-gradient(180deg, #f0f7f5 0%, #ffffff 70%);
+        }}
+        .highlights-heading h2 {{
+            border-left-color: var(--accent) !important;
+            color: var(--accent);
+        }}
+        .health-pill {{
+            display: inline-block;
+            padding: 1px 7px;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }}
+        .health-detail {{
+            color: var(--muted);
+            font-size: 12px;
+        }}
         .topic-section {{
             margin-top: 32px;
         }}
@@ -561,6 +670,9 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
     </header>
     <main>
         <p class="result-count" id="count"></p>
+        <div id="highlights">
+            {highlights_html}
+        </div>
         <div id="sections">
             {sections_html}
         </div>

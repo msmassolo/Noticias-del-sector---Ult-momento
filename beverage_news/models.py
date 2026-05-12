@@ -20,6 +20,10 @@ class Company:
     country: str
     segments: list[str]
     aliases: list[str] = field(default_factory=list)
+    # Si True, el match por nombre/alias no alcanza por si solo: la nota tiene
+    # que tener tambien contexto fuerte de industria/negocio/canal. Util para
+    # empresas cuyo alias colisiona con palabras comunes.
+    requires_industry_context: bool = False
 
 
 @dataclass

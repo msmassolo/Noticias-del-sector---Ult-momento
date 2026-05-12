@@ -4,14 +4,20 @@ Guía técnica para trabajar en este repositorio.
 
 ## Propósito
 
-Este proyecto es un monitor automatizado de noticias del sector de bebidas. Genera un dashboard HTML estático con artículos relevantes para consumo masivo de bebidas en cobertura Local, Regional y Mundial.
+Monitor automatizado de noticias del sector de bebidas de consumo masivo. Recolecta artículos de fuentes Local (Argentina), Regional (LATAM) y Mundial, los filtra por relevancia industrial, los rankea y genera un dashboard HTML estático (`index.html`) listo para servir desde GitHub Pages.
 
-No hay backend ni base de datos. El estado operativo está en archivos:
+Está pensado para lectura rápida diaria del equipo: visión de actualidad e innovación del mercado y empresas competidoras, con foco en lo que efectivamente afecta el negocio.
+
+No hay backend ni base de datos. El estado operativo vive en archivos versionados:
 
 - `config/*.json`: fuentes, empresas y keywords.
-- `published_urls.json`: deduplicación rolling de URLs y títulos publicados.
-- `data/*.json`: intermedios y diagnósticos de cada corrida.
+- `published_urls.json`: deduplicación rolling (7 días) de URLs y títulos publicados.
+- `data/*.json`: intermedios y diagnósticos por corrida (no commiteado).
 - `index.html`: salida web generada.
+
+## Volumen esperado
+
+La salida razonable está entre **25 y 60 notas por corrida** según la actividad real del día. No se rellena para alcanzar un mínimo: si hay menos contenido relevante, se publican menos notas. `--target-count` (default 50) es solo un tope superior.
 
 ## Entrada principal
 
@@ -22,154 +28,114 @@ python main.py
 Argumentos:
 
 - `--output`: ruta del HTML generado. Default: `index.html`.
-- `--limit`: máximo de candidatos que se intentan extraer. Default: `80`.
-- `--target-count`: máximo editorial flexible de artículos finales. Default: `60`.
-- `--min-per-region`: cuota mínima por Local/Regional/Mundial si hay disponibilidad. Default: `7`.
-- `--max-search-queries`: límite de búsquedas globales por empresa en Google News. Default: `55`.
+- `--limit`: máximo de candidatos que se intentan extraer. Default: `120`.
+- `--target-count`: tope superior flexible. Default: `50`.
+- `--min-per-region`: piso por Local/Regional/Mundial cuando hay calidad. Default: `4`.
+- `--max-search-queries`: límite de búsquedas globales por empresa en Google News. Default: `90`.
 - `--no-search`: desactiva Google News RSS.
 - `--min-body-length`: mínimo de caracteres de body para publicar. Default: `80`.
 - `--debug`: logging debug.
 
 ## Pipeline
 
-La orquestación está en `beverage_news/pipeline.py`:
+Orquestación en [beverage_news/pipeline.py](beverage_news/pipeline.py):
 
 1. Carga `sources`, `companies` y `keywords`.
-2. Descubre candidatos con `discover_candidates`.
+2. `discover_candidates` recolecta candidatos.
 3. Escribe `data/candidates.json`.
-4. Filtra con `filter_candidates`.
-5. Rankea con `rank_items`.
-6. Crea una cola balanceada con `build_extraction_queue`.
+4. `filter_candidates` rechaza ruido, viejos, duplicados, off-topic, etc.
+5. `rank_items` calcula score por candidato.
+6. `build_extraction_queue` arma cola balanceada por región.
 7. Extrae artículos en paralelo con `extract_article_item`.
-8. Valida con `validate_articles`.
-9. Selecciona con `select_balanced_articles`.
+8. `validate_articles` filtra paywall / títulos genéricos / baja relevancia post-extracción.
+9. `select_balanced_articles` aplica cuota regional y `target-count`.
 10. Escribe `data/articles.json` y `data/diagnostics.json`.
 11. Actualiza `published_urls.json`.
-12. Genera `index.html` con `generate_web`.
+12. `generate_web` produce `index.html`.
 
 ## Módulos clave
 
 ### `discovery.py`
 
-Canales de discovery:
+Canales:
 
-- RSS explícitos de `sources.json`.
+- RSS explícitos declarados en `sources.json`.
 - RSS detectados desde `<link rel="alternate">`.
-- Secciones HTML configuradas, recorriendo links `<a>`.
-- Google News RSS con queries globales, locales, regionales ES y regionales PT/BR.
+- Secciones HTML configuradas (recorre `<a>`).
+- Google News RSS con queries globales, locales y regionales en español y portugués/BR.
 
-Mejora importante: para Google News se parsea el HTML de la descripción RSS y se prefiere el primer enlace del medio original antes que el redirect de `news.google.com`.
+Para Google News se parsea el HTML del item RSS y se prefiere el primer enlace al medio original antes que el redirect `news.google.com`.
 
 ### `filtering.py`
 
 Filtra antes de gastar extracción:
 
 - Deduplicación por URL y título normalizados.
-- Rechazo de URLs ya publicadas.
-- Rechazo de login, registro, newsletter, subscriber y suscripción.
-- Ventanas de antigüedad por región.
+- Rechazo de URLs ya publicadas (rolling 7 días).
+- Rechazo de paths de login, registro, newsletter, suscripción.
+- **Ventana de antigüedad 36 h** uniforme para Local, Regional y Mundial.
 - Límite por fuente para evitar que una sola fuente domine la cola.
-- Aceptación por empresa, keywords fuertes, título específico, fuente trade o contexto local/regional.
-- Rechazo de contextos de baja utilidad: salud, recetas, clima, curiosidades y lifestyle cuando no hay señales de industria.
+- **Rechazo por rubro off-topic**: notas de repuestos/autopartes, ferretería, electrodomésticos, indumentaria, farmacia, inmobiliaria, tecnología de consumo, deportes/espectáculos, cripto, etc. que disparan keywords genéricas (mayorista, distribución, marca) son descartadas si no hay match de empresa ni fuente trade.
+- **Rechazo de títulos histórico/clickbait**: "¿Sabías que…?", "La historia de…", "El origen de…", "Un día como hoy", "Así nació…" son rechazados salvo en fuentes trade.
+- Aceptación por: match de empresa con contexto de industria/canal; doble hit de keyword no genérica con contexto de bebidas + intención de industria; título suficientemente específico; fuente trade + keyword no genérica; sección local/regional con contexto de bebidas + negocio; sección local/regional con contexto de canal de distribución.
+- Rechazo de contextos de baja utilidad (salud, recetas, clima, lifestyle) cuando no hay señales fuertes de industria, canal ni categoría estratégica.
 
-El diagnóstico incluye `by_source`, motivos de descarte y motivos de aceptación.
+El diagnóstico devuelve `by_source`, motivos de descarte y motivos de aceptación.
 
 ### `ranking.py`
 
-Calcula score por:
+Score por: fuente, recencia, tópicos, empresas, prioridad estratégica, motivo de aceptación. Penaliza redirects de `news.google.com` que quedaron sin resolver.
 
-- Fuente.
-- Recencia.
-- Tópicos.
-- Empresas encontradas.
-- Empresas prioritarias.
-- Motivo de aceptación.
-- Penalización a redirects de Google News si todavía aparecen.
-
-`build_extraction_queue` reserva intentos por región antes de completar por score. Esto evita que la extracción quede monopolizada por fuentes globales cuando hay candidatos regionales disponibles.
+`build_extraction_queue` reserva intentos por región antes de completar por score para que los candidatos regionales no queden tapados por fuentes globales más prolíficas.
 
 ### `extraction.py`
 
-Extrae:
-
-- URL final, con resolución básica de Google News si todavía llega una URL de `news.google.com`.
-- Título, resumen, fecha y body desde JSON-LD.
-- Metadatos OpenGraph/Twitter.
-- Párrafos dentro de `<article>`, `<main>` o el documento.
-- Summary del candidato como fallback si el body no alcanza el mínimo.
-
-El body se recorta a `MAX_BODY_CHARS = 12000` y se remueve boilerplate conocido.
+- Resuelve URL final, incluyendo casos donde todavía llega `news.google.com`.
+- Lee JSON-LD para título, resumen, fecha y body.
+- OpenGraph/Twitter como fallback.
+- Recolecta párrafos dentro de `<article>`, `<main>` o el documento.
+- Usa el summary del candidato como fallback si el body no alcanza el mínimo.
+- Body recortado a `MAX_BODY_CHARS = 12000` con remoción de boilerplate.
 
 ### `validation.py`
 
-Valida después de extraer:
+Post-extracción rechaza:
 
 - Título vacío, corto, demasiado largo, genérico o truncado.
 - Body de paywall, login o newsletter.
-- Body repetitivo.
-- Relevancia industrial sobre título, resumen y body.
+- Body repetitivo (scraping fallido).
+- Falta de relevancia industrial sobre título + resumen + body.
 
-La validación permite publicar notas con empresa o fuente trade, pero exige señales de negocio/industria para notas generalistas.
+Permite publicar notas con empresa o fuente trade; exige señales de negocio/industria para notas generalistas.
 
 ### `web.py`
 
-Genera un HTML estático con:
-
-- Búsqueda client-side.
-- Filtros por cobertura y tópico.
-- Agrupación por tópico principal.
-- Enlaces a original y traducción.
-- Body expandible.
-
-No editar `index.html` a mano.
+HTML estático con: búsqueda client-side, filtros por cobertura y tópico, agrupación por tópico principal, enlaces a original y traducción, body expandible. No editar `index.html` a mano.
 
 ## Configuración
 
 ### `config/sources.json`
 
-Campos:
-
-- `name`
-- `url`
-- `rss`
-- `sections`
-- `country`
-- `region`: `Local`, `Regional` o `Mundial`
-- `language`
-- `trade`
-- `require_section` opcional
-
-Para mejorar cobertura regional conviene priorizar fuentes con RSS confiable o secciones estables de negocios, consumo, empresas, bebidas, alimentos y retail.
+Campos: `name`, `url`, `rss`, `sections`, `country`, `region` (`Local`/`Regional`/`Mundial`), `language`, `trade`, `require_section` (opcional).
 
 ### `config/companies.json`
 
-Campos:
-
-- `name`
-- `country`
-- `segments`
-- `aliases`
-
-Los aliases son críticos para Brasil/LATAM. Agregar nombres legales, marcas, embotelladoras, traducciones y variantes sin acentos.
+Campos: `name`, `country`, `segments`, `aliases`. Los aliases son críticos para Brasil/LATAM (nombres legales, marcas, embotelladoras, traducciones, variantes sin acentos).
 
 ### `config/keywords.json`
 
-Diccionario de categorías a términos. El matching es accent-insensitive y basado en límites de palabra.
-
-Evitar términos demasiado genéricos si no vienen acompañados por señales de industria. Si se agregan términos amplios, reforzar tests de falsos positivos.
+Diccionario `categoría → términos`. Matching accent-insensitive con límites de palabra.
 
 ## Diagnóstico operativo
 
-`target-count` no es una cuota fija. El objetivo es publicar todas las noticias relevantes dentro de un dashboard razonable: una corrida puede tener 40, 50 o 60 artículos según la actividad real del día. No rellenar con baja calidad solo para alcanzar un número.
-
 Después de cada corrida revisar:
 
-- `discovery.source_errors` y `discovery.section_errors`: fuentes rotas o bloqueadas.
-- `filtering.discarded`: filtros demasiado estrictos o candidatos de baja calidad.
-- `filtering.by_source`: fuentes que aportan basura o buenas señales.
-- `queue.queued_by_region`: distribución antes de extracción.
-- `extraction.by_source` y `extraction.by_region`: extractabilidad real.
-- `validation.by_reason`: paywalls, títulos genéricos o baja relevancia.
+- `discovery.source_errors` / `section_errors`: fuentes rotas o bloqueadas.
+- `filtering.discarded`: filtros demasiado estrictos o candidatos basura.
+- `filtering.by_source`: fuentes que aportan ruido o señal.
+- `queue.queued_by_region`: distribución pre-extracción.
+- `extraction.by_source` / `by_region`: extractabilidad real.
+- `validation.by_reason`: paywalls, títulos genéricos, baja relevancia.
 - `selection.selected_by_region`: balance final.
 
 ## Tests
@@ -178,19 +144,13 @@ Después de cada corrida revisar:
 python -m unittest discover -s tests -v
 ```
 
-Agregar tests cuando se cambien:
-
-- Reglas de aceptación/rechazo.
-- Keywords genéricas o aliases ambiguos.
-- Resolución de Google News.
-- Cola regional.
-- Extractores o validación post-extracción.
+Agregar tests cuando se modifiquen: reglas de aceptación/rechazo, keywords/aliases ambiguos, resolución de Google News, cola regional, extractores, validación post-extracción.
 
 ## Convenciones
 
-- No editar `index.html` manualmente.
+- No editar `index.html` a mano.
 - No commitear `data/`.
-- Mantener UTF-8.
+- UTF-8 en todo.
 - No hardcodear tokens.
-- Limpiar `__pycache__` después de correr pruebas si se generan.
-- Preservar diagnósticos porque son la herramienta principal para mejorar cobertura y calidad.
+- Limpiar `__pycache__` después de pruebas si quedan.
+- Preservar diagnósticos: son la herramienta principal para mejorar cobertura y calidad.
