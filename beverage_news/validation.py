@@ -1,7 +1,10 @@
 import logging
 import re
+from datetime import datetime, timezone, timedelta
 
 from .text import term_in_text
+
+MAX_AGE_HOURS_POST_EXTRACTION = 36
 
 logger = logging.getLogger(__name__)
 
@@ -24,7 +27,6 @@ TRADE_SOURCES = {
     "Food Navigator USA",
     "Wines of Argentina",
     "Coviar",
-    "Vinetur Argentina",
 }
 INDUSTRY_RELEVANCE_TERMS = {
     "resultados", "ventas", "ingresos", "ganancias", "facturacion",
@@ -225,6 +227,23 @@ def validate_article(article):
 
     if not title:
         return False, "empty_title"
+
+    # Doble check de antigüedad post-extracción: el candidato puede haber pasado
+    # el filtro de 36h en filtering.py con published="" (listings de sección sin
+    # fecha visible). Acá ya tenemos el published real de JSON-LD/OG.
+    published = (getattr(article, "published", "") or "").strip()
+    if published:
+        try:
+            parsed = datetime.fromisoformat(published.replace("Z", "+00:00"))
+            if parsed.tzinfo is None:
+                parsed = parsed.replace(tzinfo=timezone.utc)
+            age = datetime.now(timezone.utc) - parsed.astimezone(timezone.utc)
+            if age > timedelta(hours=MAX_AGE_HOURS_POST_EXTRACTION):
+                return False, f"too_old_post_extraction({int(age.total_seconds() // 3600)}h)"
+        except (ValueError, TypeError):
+            pass
+    else:
+        return False, "missing_publish_date"
 
     if len(title) < MIN_TITLE_LEN:
         return False, f"title_too_short({len(title)})"

@@ -337,7 +337,7 @@
     "country": "Argentina",
     "region": "Local",
     "language": "es",
-    "trade": true
+    "trade": false
   },
   {
     "name": "Valor Economico",

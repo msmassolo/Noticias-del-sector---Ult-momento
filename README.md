@@ -25,7 +25,7 @@ Config -> Discovery -> Filtering -> Ranking -> Balanced Queue -> Extraction -> V
 7. Rankea por fuente, recencia, tema, empresa, prioridad estratégica y motivo de aceptación.
 8. Construye una cola de extracción balanceada por región para que Regional y Local tengan intentos reales antes de completar con Global.
 9. Extrae contenido desde JSON-LD, metadatos y párrafos del artículo.
-10. Valida título, paywall, repetición y relevancia industrial post-extracción.
+10. Valida título, paywall, repetición, **antigüedad real (36 h con la fecha extraída de JSON-LD/OG)** y relevancia industrial post-extracción.
 11. Selecciona hasta `target-count` artículos respetando cuota regional cuando hay disponibilidad. El número es un tope flexible, no una obligación de relleno.
 12. Genera `index.html` y actualiza `published_urls.json` para evitar republicaciones durante 7 días.
 
@@ -35,7 +35,7 @@ La salida razonable es **25–60 notas por corrida** según la actividad real de
 
 ## Filtros clave (estado actual)
 
-- **Ventana de antigüedad: 36 h** uniforme para Local, Regional y Mundial.
+- **Ventana de antigüedad: 36 h** uniforme para Local, Regional y Mundial. Se aplica dos veces: en `filtering.py` con la fecha del candidato cuando existe, y en `validation.py` con la fecha real extraída del artículo (cubre listings de sección sin fecha visible). Si la extracción no devuelve fecha, el artículo se descarta con `missing_publish_date`.
 - **Rechazo por rubro off-topic**: repuestos/autopartes, ferretería, electrodomésticos, farmacia, indumentaria, inmobiliaria, tecnología de consumo, cripto, deportes/espectáculos — para evitar que keywords genéricas (mayorista, distribución, marca) traigan notas de rubros ajenos.
 - **Rechazo de títulos histórico/clickbait**: "¿Sabías que…?", "La historia de…", "El origen de…", "Un día como hoy", "Así nació…", "Hace X años…", "Efemérides" — salvo en fuentes trade.
 - Deduplicación rolling de 7 días por URL + título normalizado.

@@ -102,6 +102,8 @@ Score por: fuente, recencia, tópicos, empresas, prioridad estratégica, motivo 
 Post-extracción rechaza:
 
 - Título vacío, corto, demasiado largo, genérico o truncado.
+- **Antigüedad > 36 h** medida sobre la fecha real (`published`) extraída de JSON-LD/OG. Cubre candidatos descubiertos desde listings de sección sin fecha visible que pasaban el filtro temporal en `filtering.py` con `published=""`.
+- **`missing_publish_date`**: si la extracción no devuelve fecha, se descarta. Sin fecha no se puede garantizar frescura.
 - Body de paywall, login o newsletter.
 - Body repetitivo (scraping fallido).
 - Falta de relevancia industrial sobre título + resumen + body.

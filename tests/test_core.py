@@ -1,4 +1,5 @@
 import unittest
+from datetime import datetime, timezone
 
 from beverage_news.extraction import extract_title_summary_body
 from beverage_news.discovery import _original_url_from_google_description
@@ -215,7 +216,7 @@ class CoreTest(unittest.TestCase):
             country="Argentina",
             region="Local",
             language="es",
-            published="",
+            published=(datetime.now(timezone.utc)).isoformat(),
             summary="Consejos de salud y nutricion sobre liquidos.",
             body="El te y el cafe pueden hidratar segun medicos y nutricionistas. Es una nota de salud sin datos comerciales ni companias.",
             companies=[],
