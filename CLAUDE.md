@@ -80,6 +80,8 @@ Filtra antes de gastar extracción:
 - Aceptación por: match de empresa con contexto de industria/canal; doble hit de keyword no genérica con contexto de bebidas + intención de industria; título suficientemente específico; fuente trade + keyword no genérica; sección local/regional con contexto de bebidas + negocio; sección local/regional con contexto de canal de distribución.
 - Rechazo de contextos de baja utilidad (salud, recetas, clima, lifestyle) cuando no hay señales fuertes de industria, canal ni categoría estratégica.
 
+- **Deduplicación semántica**: al final del filtrado, candidatos aceptados con las mismas 7 primeras palabras significativas del título (stop words excluidas) se colapsan, conservando solo el primero (el mejor rankeado llega después desde `rank_items`).
+
 El diagnóstico devuelve `by_source`, motivos de descarte y motivos de aceptación.
 
 ### `ranking.py`
@@ -106,6 +108,7 @@ Post-extracción rechaza:
 - **`missing_publish_date`**: si la extracción no devuelve fecha, se descarta. Sin fecha no se puede garantizar frescura.
 - Body de paywall, login o newsletter.
 - Body repetitivo (scraping fallido).
+- **Body histórico**: ≥2 marcadores de historia/antigüedad (fundación, "hace X años") sin ningún marcador de actualidad (anunció, earnings, this week) → descartado como nota de archivo, no de actualidad.
 - Falta de relevancia industrial sobre título + resumen + body.
 
 Permite publicar notas con empresa o fuente trade; exige señales de negocio/industria para notas generalistas.
@@ -134,7 +137,7 @@ Campos: `name`, `url`, `rss`, `sections`, `country`, `region` (`Local`/`Regional
 
 ### `config/companies.json`
 
-Campos: `name`, `country`, `segments`, `aliases`. Los aliases son críticos para Brasil/LATAM (nombres legales, marcas, embotelladoras, traducciones, variantes sin acentos).
+Campos: `name`, `country`, `segments`, `aliases`, `requires_industry_context` (opcional). Los aliases son críticos para Brasil/LATAM (nombres legales, marcas, embotelladoras, traducciones, variantes sin acentos). `requires_industry_context: true` hace que el match por nombre/alias no alcance por sí solo: la nota necesita contexto fuerte de industria/negocio/canal. Útil para empresas cuyo nombre o alias colisiona con palabras comunes.
 
 ### `config/keywords.json`
 

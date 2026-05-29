@@ -23,13 +23,6 @@ TOPIC_LABELS = {
     "company_news":             "Company News",
 }
 
-AUDIENCE_TOPICS = {
-    "Marketing":  ["marketing_innovation", "product_innovation", "consumer_market_trends"],
-    "Finanzas":   ["financial_results", "ma_and_strategy"],
-    "I+D":        ["product_innovation", "alternative_ingredients", "packaging_sustainability"],
-    "Logística":  ["distribution_execution", "supply_chain_commodities"],
-    "Planning":   ["consumer_market_trends", "ma_and_strategy", "regulation_tax_policy", "risk_crisis_reputation"],
-}
 
 REGION_LABELS = {
     "Local":    "Local",
@@ -115,6 +108,7 @@ def _filter_buttons(name, values, labels=None):
             f'<button class="filter" type="button" data-filter="{name}" data-value="{escape(value, quote=True)}">{escape(label)}</button>'
         )
     return "".join(buttons)
+
 
 
 def _article_html(article):
@@ -301,13 +295,6 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
         health_label, health_color = "WARN", "#b45309"
     else:
         health_label, health_color = "DEGRADED", "#9f1239"
-
-    # Pre-compute AUDIENCE_TOPICS as JS object literal (can't use nested f-strings with quotes)
-    _aud_parts = []
-    for _k, _v in AUDIENCE_TOPICS.items():
-        _topics = ", ".join('"' + t + '"' for t in _v)
-        _aud_parts.append('"' + _k + '": [' + _topics + ']')
-    audience_topics_js = "{" + ", ".join(_aud_parts) + "}"
 
     diagnostics = diagnostics or {}
     discovery_count = diagnostics.get("discovery", {}).get("candidates_found", 0)
@@ -679,16 +666,15 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
         <p class="empty-state" id="empty" hidden>No articles match the current filters.</p>
     </main>
     <script>
-        const AUDIENCE_TOPICS = {audience_topics_js};
-
         const search = document.querySelector("#search");
         const clear = document.querySelector("#clear");
         const count = document.querySelector("#count");
         const empty = document.querySelector("#empty");
         const cards = Array.from(document.querySelectorAll(".news-card"));
+        const topicCards = Array.from(document.querySelectorAll(".topic-section .news-card"));
         const sections = Array.from(document.querySelectorAll(".topic-section"));
+        const highlightsSection = document.querySelector(".highlights-section");
         const activeFilters = new Map();
-        let activeAudience = null;
 
         function normalize(text) {{
             return (text || "").toLowerCase().normalize("NFD").replace(/[\\u0300-\\u036f]/g, "");
@@ -722,20 +708,18 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
                 const text = normalize(card.dataset.search || "");
                 const matchesSearch = terms.every((term) => text.includes(term));
                 const matchesFilters = Array.from(activeFilters.entries()).every(([filter, value]) => cardHas(card, filter, value));
-                let matchesAudience = true;
-                if (activeAudience) {{
-                    const allowed = AUDIENCE_TOPICS[activeAudience] || [];
-                    const segs = (card.dataset.segments || "").split("|");
-                    matchesAudience = allowed.some((t) => segs.includes(t));
-                }}
-                const show = matchesSearch && matchesFilters && matchesAudience;
+                const show = matchesSearch && matchesFilters;
                 card.hidden = !show;
-                if (show) visible += 1;
+                if (show && topicCards.includes(card)) visible += 1;
             }});
             sections.forEach((section) => {{
                 const sectionCards = Array.from(section.querySelectorAll(".news-card"));
                 section.hidden = sectionCards.every((card) => card.hidden);
             }});
+            if (highlightsSection) {{
+                const hlCards = Array.from(highlightsSection.querySelectorAll(".news-card"));
+                highlightsSection.hidden = hlCards.every((card) => card.hidden);
+            }}
             count.textContent = `${{visible}} ARTICLES`;
             empty.hidden = visible !== 0;
         }}
@@ -752,23 +736,11 @@ def generate_web(articles, diagnostics=None, output_path="index.html"):
             }});
         }});
 
-        document.querySelectorAll(".filter[data-audience]").forEach((button) => {{
-            button.addEventListener("click", () => {{
-                document.querySelectorAll(".filter[data-audience]").forEach((b) => b.classList.remove("active"));
-                button.classList.add("active");
-                const aud = button.dataset.audience;
-                activeAudience = aud === "ALL" ? null : aud;
-                applyFilters();
-            }});
-        }});
-
         search.addEventListener("input", applyFilters);
         clear.addEventListener("click", () => {{
             search.value = "";
             activeFilters.clear();
-            activeAudience = null;
             document.querySelectorAll(".filter[data-filter]").forEach((button) => button.classList.toggle("active", button.dataset.value === "ALL"));
-            document.querySelectorAll(".filter[data-audience]").forEach((button) => button.classList.toggle("active", button.dataset.audience === "ALL"));
             applyFilters();
         }});
 
