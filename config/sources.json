@@ -745,6 +745,54 @@
     "trade": false
   },
   {
+    "name": "Apertura",
+    "url": "https://www.apertura.com/",
+    "rss": [],
+    "sections": [
+      "https://www.apertura.com/negocios/",
+      "https://www.apertura.com/empresas/"
+    ],
+    "country": "Argentina",
+    "region": "Local",
+    "language": "es",
+    "trade": false
+  },
+  {
+    "name": "Hostelería y Negocios",
+    "url": "https://www.hoteleria-online.com.ar/",
+    "rss": [],
+    "sections": [
+      "https://www.hoteleria-online.com.ar/noticias/"
+    ],
+    "country": "Argentina",
+    "region": "Local",
+    "language": "es",
+    "trade": true
+  },
+  {
+    "name": "Vinetur",
+    "url": "https://www.vinetur.com/",
+    "rss": ["https://www.vinetur.com/feed/"],
+    "sections": [],
+    "country": "Argentina",
+    "region": "Local",
+    "language": "es",
+    "trade": true
+  },
+  {
+    "name": "La Maquina de Negocios",
+    "url": "https://www.lamaquinanegocios.com/",
+    "rss": ["https://www.lamaquinanegocios.com/feed/"],
+    "sections": [
+      "https://www.lamaquinanegocios.com/articulos-sobre-empresas/",
+      "https://www.lamaquinanegocios.com/articulos-sobre-bebidas/"
+    ],
+    "country": "Argentina",
+    "region": "Local",
+    "language": "es",
+    "trade": false
+  },
+  {
     "name": "Valor Economico",
     "url": "https://valor.globo.com/",
     "rss": ["https://valor.globo.com/rss/valor"],

@@ -130,7 +130,7 @@ def extract_title_summary_body(html_text):
 def extract_article_item(item, min_body_chars=80):
     candidate = item["candidate"]
     extraction_url, resolve_status = resolve_extraction_url(candidate.url)
-    html_text, status = fetch_text(extraction_url, timeout=7, retries=0)
+    html_text, status = fetch_text(extraction_url, timeout=10, retries=0)
 
     body = ""
     extracted = {}

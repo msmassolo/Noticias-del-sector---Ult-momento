@@ -237,6 +237,188 @@ def summarize_articles(articles: list) -> tuple[list, dict]:
     return classify_and_summarize(articles)
 
 
+# ── Area definitions ───────────────────────────────────────────────────────────
+
+AREA_CONFIG = {
+    "finanzas": {
+        "label": "Finanzas",
+        "topics": ["financial_results", "ma_and_strategy", "risk_crisis_reputation"],
+        "focus": "resultados financieros, M&A, adquisiciones, riesgos y crisis corporativas",
+    },
+    "marketing": {
+        "label": "Marketing",
+        "topics": ["product_innovation", "marketing_innovation", "consumer_market_trends", "non_alcoholic_beverages", "alternative_ingredients"],
+        "focus": "innovación de producto, campañas, tendencias del consumidor, bebidas sin alcohol y alternativas",
+    },
+    "supply_chain": {
+        "label": "Supply Chain",
+        "topics": ["supply_chain_commodities", "packaging_sustainability", "regulation_tax_policy"],
+        "focus": "materias primas, logística, packaging, sustentabilidad y regulación/política",
+    },
+    "ventas": {
+        "label": "Ventas / Comercial",
+        "topics": ["distribution_execution", "consumer_market_trends", "marketing_innovation"],
+        "focus": "distribución, canales (moderno/tradicional/HORECA), ejecución comercial y tendencias de consumo",
+    },
+}
+
+_AREA_BRIEFINGS_SYSTEM = """\
+Sos un analista de inteligencia de mercado senior para la industria de bebidas de consumo masivo \
+en Argentina. Generás briefings ejecutivos diarios para cuatro áreas de la empresa.
+
+Respondé SIEMPRE en español. Respondé SOLO con un JSON válido, sin texto adicional, sin markdown.
+
+El JSON debe tener exactamente esta estructura:
+{
+  "finanzas": "2-3 oraciones sobre los temas más relevantes del día para Finanzas: resultados, M&A, riesgo financiero o crisis corporativa.",
+  "marketing": "2-3 oraciones sobre los temas más relevantes del día para Marketing: lanzamientos, campañas, tendencias del consumidor, bebidas sin alcohol.",
+  "supply_chain": "2-3 oraciones sobre los temas más relevantes del día para Supply Chain: materias primas, packaging, regulación, logística.",
+  "ventas": "2-3 oraciones sobre los temas más relevantes del día para Ventas/Comercial: canales, distribución, ejecución en punto de venta, precio."
+}
+
+Si no hay noticias relevantes para un área en particular, escribí: "Sin novedades destacadas en este período."
+El tono es ejecutivo y directo. Sin rodeos, sin elogios vacíos.
+"""
+
+
+def generate_area_briefings(articles: list) -> dict:
+    """
+    Single Sonnet call: generates one briefing per business area from today's articles.
+    Returns dict: {area_key: briefing_text}. Falls back to empty strings on failure.
+    """
+    empty = {area: "" for area in AREA_CONFIG}
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if not api_key:
+        return empty
+
+    try:
+        client = _get_client()
+    except Exception:
+        return empty
+
+    # Build compact article list — title + topic + company only (no summary, to keep prompt short)
+    lines = []
+    for i, a in enumerate(articles, 1):
+        topics = ", ".join(getattr(a, "segments", [])[:2]) or "—"
+        companies = ", ".join(getattr(a, "companies", [])[:2]) or "—"
+        region = getattr(a, "region", "Mundial")
+        lines.append(f"{i}. [{region}] {a.title} | {topics} | {companies}")
+
+    articles_text = "\n".join(lines)
+    user_msg = f"Noticias del día ({len(articles)} en total):\n\n{articles_text}\n\nGenerá los briefings por área."
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1200,
+            system=[{"type": "text", "text": _AREA_BRIEFINGS_SYSTEM, "cache_control": {"type": "ephemeral"}}],
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        import re as _re
+        raw = response.content[0].text.strip()
+        # Strip markdown fences if present
+        if raw.startswith("```"):
+            raw = "\n".join(raw.split("\n")[1:])
+            if raw.endswith("```"):
+                raw = raw[:-3].strip()
+        result = json.loads(raw)
+        briefings = {area: result.get(area, "") for area in AREA_CONFIG}
+        logger.info("Area briefings generated for %d areas", sum(1 for v in briefings.values() if v))
+        return briefings
+    except Exception as exc:
+        logger.warning("Area briefings generation failed: %s", exc)
+        return empty
+
+
+# ── Weekly summary ─────────────────────────────────────────────────────────────
+
+_WEEKLY_SUMMARY_SYSTEM = """\
+Sos un analista de inteligencia competitiva senior para la industria de bebidas de consumo masivo \
+en Argentina. Generás el resumen semanal ejecutivo de las noticias más importantes del sector.
+
+Respondé SIEMPRE en español. Respondé SOLO con un JSON válido, sin texto adicional, sin markdown.
+
+El JSON debe tener exactamente esta estructura:
+{
+  "resumen_general": "3-4 oraciones con los temas que dominaron la semana a nivel global y regional.",
+  "finanzas": "2 oraciones sobre los eventos financieros, M&A o crisis de la semana.",
+  "marketing": "2 oraciones sobre los lanzamientos, campañas o tendencias de consumidor más destacados.",
+  "supply_chain": "2 oraciones sobre materias primas, regulación, packaging o logística de la semana.",
+  "ventas": "2 oraciones sobre movimientos en canales, distribución o ejecución comercial.",
+  "top_eventos": ["evento 1 en una oración", "evento 2", "evento 3", "evento 4", "evento 5"]
+}
+
+El tono es ejecutivo. Sin rodeos. Máximo 5 eventos destacados.
+"""
+
+
+def generate_weekly_summary(weekly_log: dict) -> dict:
+    """
+    Single Sonnet call per week. Generates a weekly summary from the accumulated article log.
+    weekly_log: {date_str: [{"title", "summary", "companies", "segments", "region"}]}
+    Returns dict with keys: resumen_general, finanzas, marketing, supply_chain, ventas, top_eventos.
+    """
+    empty = {
+        "resumen_general": "",
+        "finanzas": "",
+        "marketing": "",
+        "supply_chain": "",
+        "ventas": "",
+        "top_eventos": [],
+    }
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    if not api_key:
+        return empty
+
+    if not weekly_log:
+        return empty
+
+    try:
+        client = _get_client()
+    except Exception:
+        return empty
+
+    # Build compact summary of the week's articles
+    lines = []
+    total = 0
+    for day_date in sorted(weekly_log.keys(), reverse=True):
+        day_articles = weekly_log[day_date]
+        lines.append(f"\n--- {day_date} ({len(day_articles)} noticias) ---")
+        for a in day_articles[:20]:  # Max 20 per day for context
+            topics = ", ".join(a.get("segments", [])[:2]) or "—"
+            companies = ", ".join(a.get("companies", [])[:2]) or "—"
+            summary_text = (a.get("llm_summary") or a.get("summary") or "")[:150]
+            lines.append(f"  - [{a.get('region','?')}] {a.get('title','')} | {topics} | {companies}")
+            if summary_text:
+                lines.append(f"    {summary_text}")
+            total += 1
+
+    articles_text = "\n".join(lines)
+    days = len(weekly_log)
+    user_msg = f"Resumen de la semana: {days} días, {total} noticias publicadas.\n{articles_text}\n\nGenerá el resumen semanal ejecutivo."
+
+    try:
+        response = client.messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=1400,
+            system=[{"type": "text", "text": _WEEKLY_SUMMARY_SYSTEM, "cache_control": {"type": "ephemeral"}}],
+            messages=[{"role": "user", "content": user_msg}],
+        )
+        raw = response.content[0].text.strip()
+        if raw.startswith("```"):
+            raw = "\n".join(raw.split("\n")[1:])
+            if raw.endswith("```"):
+                raw = raw[:-3].strip()
+        result = json.loads(raw)
+        logger.info("Weekly summary generated from %d days / %d articles", days, total)
+        return result
+    except Exception as exc:
+        logger.warning("Weekly summary generation failed: %s", exc)
+        return empty
+
+
 # ── Semantic deduplication ────────────────────────────────────────────────────
 
 _DEDUP_SYSTEM = """\

@@ -11,7 +11,7 @@ from .config import load_companies, load_keywords, load_sources
 from .discovery import discover_candidates
 from .extraction import extract_article_item
 from .filtering import filter_candidates
-from .llm import summarize_articles, semantic_dedup_articles, review_dashboard
+from .llm import summarize_articles, semantic_dedup_articles, review_dashboard, generate_area_briefings, generate_weekly_summary
 from .source_discovery import record_and_suggest
 from .ranking import build_extraction_queue, rank_items, select_balanced_articles
 from .validation import validate_articles
@@ -21,6 +21,8 @@ from .web import generate_web
 DATA_DIR = Path("data")
 PUBLISHED_URLS_FILE = Path("published_urls.json")
 PUBLISHED_URLS_TTL_DAYS = 7
+WEEKLY_LOG_FILE = Path("weekly_log.json")
+WEEKLY_SUMMARY_FILE = Path("weekly_summary.json")
 
 
 def _load_published_urls():
@@ -47,6 +49,69 @@ def _update_published_urls(articles):
         title_key = f"title:{normalize_text(article.title)}"
         url_map[title_key] = now
     _save_published_urls(url_map)
+
+
+def _load_weekly_log() -> dict:
+    if not WEEKLY_LOG_FILE.exists():
+        return {}
+    try:
+        with open(WEEKLY_LOG_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _save_weekly_log(log: dict) -> None:
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=7)).date().isoformat()
+    pruned = {day: arts for day, arts in log.items() if day >= cutoff}
+    with open(WEEKLY_LOG_FILE, "w", encoding="utf-8") as f:
+        json.dump(pruned, f, ensure_ascii=False, indent=2)
+
+
+def _update_weekly_log(articles) -> dict:
+    """Append today's articles (compact format) to the rolling 7-day log."""
+    log = _load_weekly_log()
+    today = datetime.now(timezone.utc).date().isoformat()
+    compact = []
+    for a in articles:
+        compact.append({
+            "title": a.title,
+            "summary": (getattr(a, "llm_summary", "") or getattr(a, "summary", "") or "")[:200],
+            "companies": list(getattr(a, "companies", []))[:3],
+            "segments": list(getattr(a, "segments", []))[:2],
+            "region": getattr(a, "region", ""),
+        })
+    log[today] = compact
+    _save_weekly_log(log)
+    return log
+
+
+def _load_weekly_summary() -> dict:
+    if not WEEKLY_SUMMARY_FILE.exists():
+        return {}
+    try:
+        with open(WEEKLY_SUMMARY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def _save_weekly_summary(summary: dict) -> None:
+    with open(WEEKLY_SUMMARY_FILE, "w", encoding="utf-8") as f:
+        json.dump(summary, f, ensure_ascii=False, indent=2)
+
+
+def _should_regenerate_weekly_summary() -> bool:
+    """Regenerate on Fridays (weekday 4) or if no summary exists yet."""
+    today = datetime.now(timezone.utc)
+    if not WEEKLY_SUMMARY_FILE.exists():
+        return True
+    if today.weekday() == 4:  # Friday
+        existing = _load_weekly_summary()
+        generated_on = existing.get("generated_on", "")
+        if generated_on != today.date().isoformat():
+            return True
+    return False
 
 
 def _write_json(name, data):
@@ -352,6 +417,27 @@ def run_pipeline(
 
     _update_published_urls(articles)
     record_and_suggest(articles)  # Log domains not in sources.json for future review
-    generate_web(articles, diagnostics=diagnostics, output_path=output_path, qa=qa_result)
+
+    # 7. Area briefings — one Sonnet call covering all 4 areas
+    area_briefings = generate_area_briefings(articles)
+
+    # 8. Weekly log + summary (generates on Fridays or if summary missing)
+    weekly_log = _update_weekly_log(articles)
+    weekly_summary = _load_weekly_summary()
+    if _should_regenerate_weekly_summary():
+        new_summary = generate_weekly_summary(weekly_log)
+        if new_summary.get("resumen_general"):
+            new_summary["generated_on"] = datetime.now(timezone.utc).date().isoformat()
+            _save_weekly_summary(new_summary)
+            weekly_summary = new_summary
+
+    generate_web(
+        articles,
+        diagnostics=diagnostics,
+        output_path=output_path,
+        qa=qa_result,
+        area_briefings=area_briefings,
+        weekly_summary=weekly_summary,
+    )
     logger.info("Pipeline: done — %d articles published to %s", len(articles), output_path)
     return articles, diagnostics

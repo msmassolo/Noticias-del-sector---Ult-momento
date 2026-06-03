@@ -1,3 +1,4 @@
+import json
 from dataclasses import asdict
 from datetime import datetime, timezone
 from html import escape
@@ -53,6 +54,29 @@ REGION_COLORS = {
 }
 
 MONTHS_EN = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+
+AREA_PROFILES = {
+    "finanzas": {
+        "label": "Finanzas",
+        "topics": ["financial_results", "ma_and_strategy", "risk_crisis_reputation"],
+        "color": "#b45309",
+    },
+    "marketing": {
+        "label": "Marketing",
+        "topics": ["product_innovation", "marketing_innovation", "consumer_market_trends", "non_alcoholic_beverages", "alternative_ingredients"],
+        "color": "#7c3aed",
+    },
+    "supply_chain": {
+        "label": "Supply Chain",
+        "topics": ["supply_chain_commodities", "packaging_sustainability", "regulation_tax_policy"],
+        "color": "#0e5f57",
+    },
+    "ventas": {
+        "label": "Ventas / Comercial",
+        "topics": ["distribution_execution", "consumer_market_trends", "marketing_innovation"],
+        "color": "#1d4ed8",
+    },
+}
 
 
 def _format_date(iso_str):
@@ -290,7 +314,72 @@ def _sections_html(article_dicts):
     return "\n".join(sections)
 
 
-def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
+def _area_briefings_html(area_briefings: dict) -> str:
+    """Renders per-area briefing blocks, hidden by default, shown via JS."""
+    if not area_briefings or not any(area_briefings.values()):
+        return ""
+    parts = []
+    for area_key, area_cfg in AREA_PROFILES.items():
+        text = (area_briefings.get(area_key) or "").strip()
+        if not text:
+            text = "Sin novedades destacadas en este período."
+        color = area_cfg["color"]
+        parts.append(
+            f'<div class="area-briefing" id="briefing-{escape(area_key)}" hidden>'
+            f'<p class="area-briefing-label" style="color:{color}">Briefing para {escape(area_cfg["label"])}</p>'
+            f'<p class="area-briefing-text">{escape(text)}</p>'
+            f'</div>'
+        )
+    return '<div class="area-briefings-container">' + "".join(parts) + "</div>"
+
+
+def _weekly_summary_html(weekly_summary: dict) -> str:
+    """Renders the weekly summary section."""
+    if not weekly_summary or not weekly_summary.get("resumen_general"):
+        return ""
+
+    top_eventos = weekly_summary.get("top_eventos") or []
+    eventos_html = ""
+    if top_eventos:
+        items = "".join(f"<li>{escape(str(ev))}</li>" for ev in top_eventos[:5])
+        eventos_html = f'<div class="weekly-eventos"><p class="weekly-eventos-title">Top 5 eventos de la semana</p><ul>{items}</ul></div>'
+
+    by_area_parts = []
+    for area_key, area_cfg in AREA_PROFILES.items():
+        text = (weekly_summary.get(area_key) or "").strip()
+        if not text:
+            continue
+        color = area_cfg["color"]
+        by_area_parts.append(
+            f'<div class="weekly-area-block">'
+            f'<span class="weekly-area-label" style="color:{color}">{escape(area_cfg["label"])}</span>'
+            f'<p>{escape(text)}</p>'
+            f'</div>'
+        )
+    by_area_html = '<div class="weekly-by-area">' + "".join(by_area_parts) + "</div>" if by_area_parts else ""
+
+    resumen = escape(weekly_summary.get("resumen_general", ""))
+    generated_on = escape(weekly_summary.get("generated_on", ""))
+    date_label = f" · Generado el {generated_on}" if generated_on else ""
+
+    return f"""
+        <section class="weekly-summary-section">
+            <details>
+                <summary class="weekly-summary-toggle">
+                    <span class="weekly-summary-title">Resumen de la semana anterior</span>
+                    <span class="weekly-summary-meta">Ver eventos más importantes{date_label}</span>
+                </summary>
+                <div class="weekly-summary-body">
+                    <p class="weekly-resumen-general">{resumen}</p>
+                    {eventos_html}
+                    {by_area_html}
+                </div>
+            </details>
+        </section>
+    """
+
+
+def generate_web(articles, diagnostics=None, output_path="index.html", qa=None, area_briefings=None, weekly_summary=None):
     article_dicts = [_article_dict(article) for article in articles]
     now = datetime.now(ZoneInfo("America/Argentina/Buenos_Aires"))
 
@@ -303,6 +392,8 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
 
     sections_html = _sections_html(article_dicts)
     highlights_html = _highlights_html(article_dicts)
+    area_briefings_html = _area_briefings_html(area_briefings or {})
+    weekly_summary_html = _weekly_summary_html(weekly_summary or {})
 
     # Indicador de salud
     disc = diagnostics.get("discovery", {}) if diagnostics else {}
@@ -709,12 +800,160 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
             color: #b45309;
             font-size: 13px;
         }}
+        /* Area profiles */
+        .area-profiles-row {{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }}
+        .area-profiles-label {{
+            min-width: 80px;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }}
+        .area-btn {{
+            min-height: 29px;
+            border: 1.5px solid var(--border);
+            border-radius: 50px;
+            padding: 0 14px;
+            background: var(--bg);
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            transition: background 0.15s, color 0.15s, border-color 0.15s;
+        }}
+        .area-btn.active {{
+            color: #fff;
+        }}
+        /* Area briefings */
+        .area-briefings-container {{
+            margin-top: 14px;
+        }}
+        .area-briefing {{
+            padding: 12px 16px;
+            border-radius: 8px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+        }}
+        .area-briefing-label {{
+            margin: 0 0 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }}
+        .area-briefing-text {{
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--text);
+        }}
+        /* Weekly summary */
+        .weekly-summary-section {{
+            margin-top: 40px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background: var(--surface);
+            overflow: hidden;
+        }}
+        .weekly-summary-toggle {{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 16px 18px;
+            cursor: pointer;
+            list-style: none;
+            user-select: none;
+        }}
+        .weekly-summary-toggle::-webkit-details-marker {{ display: none; }}
+        .weekly-summary-toggle::marker {{ display: none; }}
+        .weekly-summary-title {{
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+        }}
+        .weekly-summary-title::before {{
+            content: "▶  ";
+            font-size: 11px;
+            color: var(--muted);
+        }}
+        details[open] .weekly-summary-title::before {{
+            content: "▼  ";
+        }}
+        .weekly-summary-meta {{
+            color: var(--muted);
+            font-size: 12px;
+            white-space: nowrap;
+        }}
+        .weekly-summary-body {{
+            padding: 0 18px 18px;
+            border-top: 1px solid var(--border);
+        }}
+        .weekly-resumen-general {{
+            margin: 16px 0 12px;
+            font-size: 15px;
+            line-height: 1.55;
+            color: var(--text);
+        }}
+        .weekly-eventos {{
+            margin-bottom: 16px;
+        }}
+        .weekly-eventos-title {{
+            margin: 0 0 6px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--muted);
+        }}
+        .weekly-eventos ul {{
+            margin: 0;
+            padding-left: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: var(--text);
+        }}
+        .weekly-by-area {{
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }}
+        .weekly-area-block {{
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            background: var(--bg);
+        }}
+        .weekly-area-label {{
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }}
+        .weekly-area-block p {{
+            margin: 0;
+            font-size: 13px;
+            line-height: 1.5;
+            color: var(--text);
+        }}
         @media (max-width: 860px) {{
             h1 {{ font-size: 28px; }}
             .toolbar {{ grid-template-columns: 1fr; }}
             .grid {{ grid-template-columns: 1fr; }}
             .filter-row {{ flex-direction: column; gap: 6px; }}
             .filter-row-label {{ min-width: unset; padding-top: 0; }}
+            .weekly-by-area {{ grid-template-columns: 1fr; }}
+            .area-profiles-row {{ flex-direction: column; align-items: flex-start; }}
         }}
     </style>
 </head>
@@ -729,7 +968,15 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
             <button class="clear-btn" type="button" id="clear">Limpiar</button>
         </div>
         <div class="filter-panel">
-            <p class="filter-panel-title">Filtrar noticias</p>
+            <div class="area-profiles-row">
+                <span class="area-profiles-label">Vista por área</span>
+                <button class="area-btn" type="button" data-area="finanzas" style="--area-color:#b45309">Finanzas</button>
+                <button class="area-btn" type="button" data-area="marketing" style="--area-color:#7c3aed">Marketing</button>
+                <button class="area-btn" type="button" data-area="supply_chain" style="--area-color:#0e5f57">Supply Chain</button>
+                <button class="area-btn" type="button" data-area="ventas" style="--area-color:#1d4ed8">Ventas / Comercial</button>
+            </div>
+            {area_briefings_html}
+            <p class="filter-panel-title" style="margin-top:14px">Filtrar noticias</p>
             <div class="filter-row">
                 <span class="filter-row-label">Cobertura</span>
                 <div class="filters">{_filter_buttons("region", regions, REGION_LABELS)}</div>
@@ -749,6 +996,7 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
             {sections_html}
         </div>
         <p class="empty-state" id="empty" hidden>Ninguna noticia coincide con los filtros seleccionados.</p>
+        {weekly_summary_html}
     </main>
     <script>
         const search = document.querySelector("#search");
@@ -779,6 +1027,13 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
 
         function cardHas(card, filter, value) {{
             if (value === "ALL") return true;
+            // area_topics: multi-value OR logic (set by area profile buttons)
+            if (filter === "area_topics") {{
+                const topicRaw = card.dataset.topic || "";
+                const segmentsRaw = card.dataset.segments || "";
+                const topics = segmentsRaw ? segmentsRaw.split("|") : [topicRaw];
+                return value.some((t) => topics.includes(t));
+            }}
             const raw = card.dataset[filter] || "";
             if (filter === "segments" || filter === "companies") {{
                 return raw.split("|").includes(value);
@@ -835,6 +1090,88 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
         }});
 
         applyFilters();
+
+        // Area profiles
+        const areaTopics = {{
+            "finanzas": ["financial_results", "ma_and_strategy", "risk_crisis_reputation"],
+            "marketing": ["product_innovation", "marketing_innovation", "consumer_market_trends", "non_alcoholic_beverages", "alternative_ingredients"],
+            "supply_chain": ["supply_chain_commodities", "packaging_sustainability", "regulation_tax_policy"],
+            "ventas": ["distribution_execution", "consumer_market_trends", "marketing_innovation"]
+        }};
+        const areaColors = {{
+            "finanzas": "#b45309",
+            "marketing": "#7c3aed",
+            "supply_chain": "#0e5f57",
+            "ventas": "#1d4ed8"
+        }};
+        let activeArea = null;
+
+        function showAreaBriefing(areaKey) {{
+            document.querySelectorAll(".area-briefing").forEach((el) => {{ el.hidden = true; }});
+            if (areaKey) {{
+                const el = document.getElementById("briefing-" + areaKey);
+                if (el) el.hidden = false;
+            }}
+        }}
+
+        function applyAreaFilter(areaKey) {{
+            if (areaKey === activeArea) {{
+                // Deactivate: reset to ALL topics
+                activeArea = null;
+                document.querySelectorAll(".area-btn").forEach((b) => {{
+                    b.classList.remove("active");
+                    b.style.background = "";
+                    b.style.borderColor = "";
+                    b.style.color = "";
+                }});
+                showAreaBriefing(null);
+                activeFilters.delete("area_topics");
+                // Reset topic filter to ALL
+                document.querySelectorAll('.filter[data-filter="topic"]').forEach((b) => {{
+                    b.classList.toggle("active", b.dataset.value === "ALL");
+                }});
+                activeFilters.delete("topic");
+            }} else {{
+                activeArea = areaKey;
+                const color = areaColors[areaKey] || "#374151";
+                document.querySelectorAll(".area-btn").forEach((b) => {{
+                    const isActive = b.dataset.area === areaKey;
+                    b.classList.toggle("active", isActive);
+                    b.style.background = isActive ? color : "";
+                    b.style.borderColor = isActive ? color : "";
+                    b.style.color = isActive ? "#fff" : "";
+                }});
+                showAreaBriefing(areaKey);
+                // Store area topics set for filtering
+                activeFilters.set("area_topics", areaTopics[areaKey] || []);
+                // Deactivate topic pills (area overrides them)
+                document.querySelectorAll('.filter[data-filter="topic"]').forEach((b) => {{
+                    b.classList.remove("active");
+                }});
+                activeFilters.delete("topic");
+            }}
+            applyFilters();
+        }}
+
+        document.querySelectorAll(".area-btn").forEach((btn) => {{
+            btn.addEventListener("click", () => applyAreaFilter(btn.dataset.area));
+        }});
+
+        // Reset area when clear button clicked
+        const _origClearListener = clear.onclick;
+        clear.addEventListener("click", () => {{
+            if (activeArea) {{
+                activeArea = null;
+                document.querySelectorAll(".area-btn").forEach((b) => {{
+                    b.classList.remove("active");
+                    b.style.background = "";
+                    b.style.borderColor = "";
+                    b.style.color = "";
+                }});
+                showAreaBriefing(null);
+                activeFilters.delete("area_topics");
+            }}
+        }});
     </script>
 </body>
 </html>
