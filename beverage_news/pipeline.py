@@ -114,6 +114,74 @@ def _dedup_and_merge(articles, threshold=0.60):
     return kept, n_merged
 
 
+MAX_ARTICLES_PER_COMPANY = 5  # Hard cap: no company may dominate the final dashboard
+
+
+def _apply_company_cap(articles, validated_pool, target_count, max_per_company=MAX_ARTICLES_PER_COMPANY):
+    """
+    Enforce a per-company article cap. If any company exceeds max_per_company,
+    remove the lowest-ranked excess articles and refill from the validated pool,
+    preferring articles NOT from the over-represented companies.
+    Returns (articles, was_capped).
+    """
+    from collections import Counter
+    company_counts = Counter()
+    for a in articles:
+        for c in (a.companies or []):
+            company_counts[c] += 1
+
+    excess_companies = {c for c, cnt in company_counts.items() if cnt > max_per_company}
+    if not excess_companies:
+        return articles, False
+
+    logger.info(
+        "Company cap: %s exceed %d articles — trimming and refilling",
+        {c: company_counts[c] for c in excess_companies}, max_per_company,
+    )
+
+    slots = {c: 0 for c in excess_companies}
+    kept, removed = [], []
+    for a in articles:
+        primaries = [c for c in (a.companies or []) if c in slots]
+        if not primaries:
+            kept.append(a)
+            continue
+        key = primaries[0]
+        if slots[key] < max_per_company:
+            slots[key] += 1
+            kept.append(a)
+        else:
+            removed.append(a)
+
+    if not removed:
+        return articles, False
+
+    kept_urls = {a.url for a in kept}
+    # First pass: prefer articles not from capped companies
+    for candidate in validated_pool:
+        if len(kept) >= target_count:
+            break
+        if candidate.url in kept_urls:
+            continue
+        if set(candidate.companies or []) & excess_companies:
+            continue
+        kept.append(candidate)
+        kept_urls.add(candidate.url)
+    # Second pass: allow capped companies if still short (but respect cap)
+    for candidate in validated_pool:
+        if len(kept) >= target_count:
+            break
+        if candidate.url in kept_urls:
+            continue
+        kept.append(candidate)
+        kept_urls.add(candidate.url)
+
+    logger.info(
+        "Company cap: removed %d excess, refilled to %d articles", len(removed), len(kept)
+    )
+    return kept, True
+
+
 def _refill_from_pool(articles, full_validated_pool, target_count):
     """
     After dedup+merge reduces the article count below target_count,
@@ -183,6 +251,7 @@ def run_pipeline(
     min_per_region=7,
     max_search_queries=55,
     min_body_chars=80,
+    region_targets=None,
 ):
     sources = load_sources()
     companies = load_companies()
@@ -239,18 +308,31 @@ def run_pipeline(
         extracted_articles,
         target_count=target_count,
         min_per_region=min_per_region,
+        region_targets=region_targets,
     )
     # 1. Jaccard dedup: same event, near-identical title (free, fast)
     articles, n_merged_jaccard = _dedup_and_merge(articles)
     # 2. Semantic dedup: same event, different title wording (LLM, per company+segment group)
     articles, n_merged_semantic = semantic_dedup_articles(articles)
     n_merged = n_merged_jaccard + n_merged_semantic
-    # 3. Refill gaps freed by both dedup passes
+    # 3. Enforce per-company cap (max 5 articles per company)
+    articles, was_capped = _apply_company_cap(articles, extracted_articles, target_count)
+    # 4. Refill gaps freed by dedup and cap
     articles = _refill_from_pool(articles, extracted_articles, target_count)
     _write_json("articles.json", [asdict(article) for article in articles])
 
+    # 5. LLM summarization — only articles without a cached summary
     articles, llm_diagnostics = summarize_articles(articles)
+
+    # 6. QA validation + automated correction loop (max 1 extra pass)
     qa_result = review_dashboard(articles)
+    articles, was_qa_corrected = _apply_company_cap(articles, extracted_articles, target_count)
+    if was_qa_corrected:
+        logger.info("QA correction pass: re-summarizing new articles and re-validating")
+        articles, extra_llm = summarize_articles(articles)
+        llm_diagnostics["generated"] += extra_llm.get("generated", 0)
+        llm_diagnostics["cached"] += extra_llm.get("cached", 0)
+        qa_result = review_dashboard(articles)  # Final QA
 
     diagnostics = {
         "discovery": discovery_diagnostics,

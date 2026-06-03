@@ -321,24 +321,7 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
     selected_by_region = diagnostics.get("selection", {}).get("selected_by_region", {})
     region_stats = " · ".join(f"{region}: {selected_by_region.get(region, 0)}" for region in ("Local", "Regional", "Mundial"))
 
-    qa = qa or {}
-    qa_briefing = escape(qa.get("briefing") or "")
-    qa_warnings = qa.get("warnings") or []
-    qa_score = qa.get("quality_score") or 0
-    qa_score_color = "#0e5f57" if qa_score >= 7 else ("#b45309" if qa_score >= 4 else "#9f1239")
-    qa_html = ""
-    if qa_briefing:
-        warnings_html = "".join(f'<li>{escape(w)}</li>' for w in qa_warnings)
-        warnings_block = f'<ul class="qa-warnings">{warnings_html}</ul>' if qa_warnings else ""
-        qa_html = f"""
-        <div class="qa-block">
-            <div class="qa-header">
-                <span class="qa-label">Briefing del día</span>
-                <span class="qa-score" style="background:{qa_score_color}" title="Calidad editorial del tablero">{qa_score}/10</span>
-            </div>
-            <p class="qa-briefing">{qa_briefing}</p>
-            {warnings_block}
-        </div>"""
+    # QA result is internal only — not rendered in the dashboard
 
     html = f"""<!doctype html>
 <html lang="es">
@@ -743,7 +726,6 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None):
             <input type="search" id="search" placeholder="Buscar por título, empresa, fuente o país…" aria-label="Buscar noticias">
             <button class="clear-btn" type="button" id="clear">Limpiar</button>
         </div>
-        {qa_html}
         <div class="filter-panel">
             <p class="filter-panel-title">Filtrar noticias</p>
             <div class="filter-row">

@@ -214,7 +214,15 @@ def build_extraction_queue(items, limit=80, target_count=40, min_per_region=7):
     }
 
 
-def select_balanced_articles(articles, target_count=40, min_per_region=7):
+def select_balanced_articles(articles, target_count=40, min_per_region=7, region_targets=None):
+    """
+    Select balanced articles by region.
+
+    region_targets: optional dict like {"Local": 5, "Regional": 5, "Mundial": 10}.
+    When provided, each region is capped at exactly that many articles (acts as both
+    min and max). Remaining slots after per-region caps are filled by score order.
+    When absent, falls back to min_per_region behaviour (minimum per region, fill rest by score).
+    """
     by_region = {"Local": [], "Regional": [], "Mundial": []}
     for article in articles:
         by_region.setdefault(article.region or "Mundial", []).append(article)
@@ -222,19 +230,35 @@ def select_balanced_articles(articles, target_count=40, min_per_region=7):
     selected = []
     used_urls = set()
 
-    for region in ("Local", "Regional", "Mundial"):
-        quota = min_per_region if isinstance(min_per_region, int) else MIN_REGION_QUOTA.get(region, 7)
-        for article in by_region.get(region, [])[:quota]:
+    if region_targets:
+        # Fill each region up to its specific target (cap)
+        for region in ("Local", "Regional", "Mundial"):
+            cap = region_targets.get(region, 0)
+            for article in by_region.get(region, [])[:cap]:
+                if article.url not in used_urls:
+                    selected.append(article)
+                    used_urls.add(article.url)
+        # Fill remaining slots with best-scored articles of any region
+        for article in articles:
+            if len(selected) >= target_count:
+                break
             if article.url not in used_urls:
                 selected.append(article)
                 used_urls.add(article.url)
-
-    for article in articles:
-        if len(selected) >= target_count:
-            break
-        if article.url not in used_urls:
-            selected.append(article)
-            used_urls.add(article.url)
+    else:
+        # Original behaviour: guarantee min per region, then fill by score
+        for region in ("Local", "Regional", "Mundial"):
+            quota = min_per_region if isinstance(min_per_region, int) else MIN_REGION_QUOTA.get(region, 7)
+            for article in by_region.get(region, [])[:quota]:
+                if article.url not in used_urls:
+                    selected.append(article)
+                    used_urls.add(article.url)
+        for article in articles:
+            if len(selected) >= target_count:
+                break
+            if article.url not in used_urls:
+                selected.append(article)
+                used_urls.add(article.url)
 
     counts = Counter(article.region or "Mundial" for article in selected)
     available = Counter(article.region or "Mundial" for article in articles)
