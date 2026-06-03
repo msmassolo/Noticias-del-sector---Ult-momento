@@ -333,16 +333,35 @@ def _area_briefings_html(area_briefings: dict) -> str:
     return '<div class="area-briefings-container">' + "".join(parts) + "</div>"
 
 
+_WEEKLY_MIN_DAYS = 4  # Mirror of llm.WEEKLY_SUMMARY_MIN_DAYS
+
+
 def _weekly_summary_html(weekly_summary: dict) -> str:
-    """Renders the weekly summary section."""
-    if not weekly_summary or not weekly_summary.get("resumen_general"):
+    """Renders the weekly summary section. Hidden until enough data accumulates."""
+    if not weekly_summary:
         return ""
+
+    days_available = weekly_summary.get("days_available", 0)
+
+    # Not enough data yet — show a subtle "building up" notice instead
+    if days_available < _WEEKLY_MIN_DAYS or not weekly_summary.get("resumen_general"):
+        if days_available == 0:
+            return ""
+        days_remaining = _WEEKLY_MIN_DAYS - days_available
+        return f"""
+            <section class="weekly-summary-section weekly-summary-pending">
+                <p class="weekly-pending-text">
+                    El resumen semanal estará disponible en {days_remaining} día{"s" if days_remaining != 1 else ""} más
+                    — se activa cuando hay al menos {_WEEKLY_MIN_DAYS} días de cobertura acumulada.
+                </p>
+            </section>
+        """
 
     top_eventos = weekly_summary.get("top_eventos") or []
     eventos_html = ""
     if top_eventos:
         items = "".join(f"<li>{escape(str(ev))}</li>" for ev in top_eventos[:5])
-        eventos_html = f'<div class="weekly-eventos"><p class="weekly-eventos-title">Top 5 eventos de la semana</p><ul>{items}</ul></div>'
+        eventos_html = f'<div class="weekly-eventos"><p class="weekly-eventos-title">Top 5 eventos del período</p><ul>{items}</ul></div>'
 
     by_area_parts = []
     for area_key, area_cfg in AREA_PROFILES.items():
@@ -360,14 +379,15 @@ def _weekly_summary_html(weekly_summary: dict) -> str:
 
     resumen = escape(weekly_summary.get("resumen_general", ""))
     generated_on = escape(weekly_summary.get("generated_on", ""))
-    date_label = f" · Generado el {generated_on}" if generated_on else ""
+    days_label = f"{days_available} días" if days_available else ""
+    date_label = f" · {days_label} · Actualizado {generated_on}" if generated_on else ""
 
     return f"""
         <section class="weekly-summary-section">
             <details>
                 <summary class="weekly-summary-toggle">
-                    <span class="weekly-summary-title">Resumen de la semana anterior</span>
-                    <span class="weekly-summary-meta">Ver eventos más importantes{date_label}</span>
+                    <span class="weekly-summary-title">Lo más importante de los últimos días</span>
+                    <span class="weekly-summary-meta">Ver resumen del período{date_label}</span>
                 </summary>
                 <div class="weekly-summary-body">
                     <p class="weekly-resumen-general">{resumen}</p>
@@ -945,6 +965,18 @@ def generate_web(articles, diagnostics=None, output_path="index.html", qa=None, 
             font-size: 13px;
             line-height: 1.5;
             color: var(--text);
+        }}
+        .weekly-summary-pending {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 18px;
+        }}
+        .weekly-pending-text {{
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px;
+            text-align: center;
         }}
         @media (max-width: 860px) {{
             h1 {{ font-size: 28px; }}

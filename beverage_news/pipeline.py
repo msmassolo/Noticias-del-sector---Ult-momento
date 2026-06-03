@@ -11,7 +11,7 @@ from .config import load_companies, load_keywords, load_sources
 from .discovery import discover_candidates
 from .extraction import extract_article_item
 from .filtering import filter_candidates
-from .llm import summarize_articles, semantic_dedup_articles, review_dashboard, generate_area_briefings, generate_weekly_summary
+from .llm import summarize_articles, semantic_dedup_articles, review_dashboard, generate_area_briefings, generate_weekly_summary, WEEKLY_SUMMARY_MIN_DAYS
 from .source_discovery import record_and_suggest
 from .ranking import build_extraction_queue, rank_items, select_balanced_articles
 from .validation import validate_articles
@@ -101,16 +101,20 @@ def _save_weekly_summary(summary: dict) -> None:
         json.dump(summary, f, ensure_ascii=False, indent=2)
 
 
-def _should_regenerate_weekly_summary() -> bool:
-    """Regenerate on Fridays (weekday 4) or if no summary exists yet."""
+def _should_regenerate_weekly_summary(weekly_log: dict) -> bool:
+    """Regenerate on Fridays or if summary is stale. Requires min days of data."""
+    if len(weekly_log) < WEEKLY_SUMMARY_MIN_DAYS:
+        return False  # Not enough data yet
     today = datetime.now(timezone.utc)
-    if not WEEKLY_SUMMARY_FILE.exists():
+    existing = _load_weekly_summary()
+    generated_on = existing.get("generated_on", "")
+    # Always regenerate on Fridays (if not already done today)
+    if today.weekday() == 4 and generated_on != today.date().isoformat():
         return True
-    if today.weekday() == 4:  # Friday
-        existing = _load_weekly_summary()
-        generated_on = existing.get("generated_on", "")
-        if generated_on != today.date().isoformat():
-            return True
+    # Also regenerate if we just crossed the minimum days threshold
+    existing_days = existing.get("days_available", 0)
+    if len(weekly_log) >= WEEKLY_SUMMARY_MIN_DAYS and existing_days < WEEKLY_SUMMARY_MIN_DAYS:
+        return True
     return False
 
 
@@ -424,12 +428,14 @@ def run_pipeline(
     # 8. Weekly log + summary (generates on Fridays or if summary missing)
     weekly_log = _update_weekly_log(articles)
     weekly_summary = _load_weekly_summary()
-    if _should_regenerate_weekly_summary():
+    if _should_regenerate_weekly_summary(weekly_log):
         new_summary = generate_weekly_summary(weekly_log)
         if new_summary.get("resumen_general"):
             new_summary["generated_on"] = datetime.now(timezone.utc).date().isoformat()
             _save_weekly_summary(new_summary)
             weekly_summary = new_summary
+    # Always pass days_available so web can decide whether to show the section
+    weekly_summary["days_available"] = len(weekly_log)
 
     generate_web(
         articles,

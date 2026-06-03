@@ -353,11 +353,15 @@ El tono es ejecutivo. Sin rodeos. Máximo 5 eventos destacados.
 """
 
 
+WEEKLY_SUMMARY_MIN_DAYS = 4  # Don't generate until we have at least this many days of data
+
+
 def generate_weekly_summary(weekly_log: dict) -> dict:
     """
     Single Sonnet call per week. Generates a weekly summary from the accumulated article log.
     weekly_log: {date_str: [{"title", "summary", "companies", "segments", "region"}]}
-    Returns dict with keys: resumen_general, finanzas, marketing, supply_chain, ventas, top_eventos.
+    Returns dict with keys: resumen_general, finanzas, marketing, supply_chain, ventas, top_eventos, days_available.
+    Only generates when log has >= WEEKLY_SUMMARY_MIN_DAYS days of data.
     """
     empty = {
         "resumen_general": "",
@@ -366,13 +370,24 @@ def generate_weekly_summary(weekly_log: dict) -> dict:
         "supply_chain": "",
         "ventas": "",
         "top_eventos": [],
+        "days_available": 0,
     }
+
+    if not weekly_log:
+        return empty
+
+    days_available = len(weekly_log)
+    empty["days_available"] = days_available
+
+    if days_available < WEEKLY_SUMMARY_MIN_DAYS:
+        logger.info(
+            "Weekly summary skipped: only %d/%d days of data available",
+            days_available, WEEKLY_SUMMARY_MIN_DAYS,
+        )
+        return empty
 
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
-        return empty
-
-    if not weekly_log:
         return empty
 
     try:
@@ -380,16 +395,31 @@ def generate_weekly_summary(weekly_log: dict) -> dict:
     except Exception:
         return empty
 
-    # Build compact summary of the week's articles
+    # Topic priority weights for selecting most important articles per day
+    _TOPIC_PRIORITY = {
+        "financial_results": 10, "ma_and_strategy": 9, "risk_crisis_reputation": 8,
+        "regulation_tax_policy": 7, "distribution_execution": 6, "product_innovation": 5,
+        "supply_chain_commodities": 5, "packaging_sustainability": 4,
+        "marketing_innovation": 3, "consumer_market_trends": 3,
+        "non_alcoholic_beverages": 2, "alternative_ingredients": 2, "company_news": 1,
+    }
+
+    def _article_importance(a):
+        topic_score = max((_TOPIC_PRIORITY.get(t, 0) for t in a.get("segments", [])), default=0)
+        company_bonus = 3 if a.get("companies") else 0
+        local_bonus = 2 if a.get("region") == "Local" else 0
+        return topic_score + company_bonus + local_bonus
+
+    # Build compact summary — take top 15 most important articles per day
     lines = []
     total = 0
     for day_date in sorted(weekly_log.keys(), reverse=True):
-        day_articles = weekly_log[day_date]
-        lines.append(f"\n--- {day_date} ({len(day_articles)} noticias) ---")
-        for a in day_articles[:20]:  # Max 20 per day for context
+        day_articles = sorted(weekly_log[day_date], key=_article_importance, reverse=True)[:15]
+        lines.append(f"\n--- {day_date} ({len(weekly_log[day_date])} noticias, mostrando top {len(day_articles)}) ---")
+        for a in day_articles:
             topics = ", ".join(a.get("segments", [])[:2]) or "—"
             companies = ", ".join(a.get("companies", [])[:2]) or "—"
-            summary_text = (a.get("llm_summary") or a.get("summary") or "")[:150]
+            summary_text = (a.get("llm_summary") or a.get("summary") or "")[:120]
             lines.append(f"  - [{a.get('region','?')}] {a.get('title','')} | {topics} | {companies}")
             if summary_text:
                 lines.append(f"    {summary_text}")
@@ -412,6 +442,7 @@ def generate_weekly_summary(weekly_log: dict) -> dict:
             if raw.endswith("```"):
                 raw = raw[:-3].strip()
         result = json.loads(raw)
+        result["days_available"] = days_available
         logger.info("Weekly summary generated from %d days / %d articles", days, total)
         return result
     except Exception as exc:
@@ -445,8 +476,8 @@ No extra text, no markdown.
 def semantic_dedup_articles(articles: list) -> tuple:
     """
     Detect articles covering the same event via ONE batch Haiku call.
-    Groups articles by primary company + primary segment, then sends ALL
-    groups in a single request — no per-group API calls.
+    Groups by company first; articles sharing a company name in the title
+    also get grouped together even if not formally tagged.
     Returns (deduplicated_articles, n_merged).
     """
     api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
@@ -458,23 +489,28 @@ def semantic_dedup_articles(articles: list) -> tuple:
     except Exception:
         return articles, 0
 
-    time.sleep(_CALL_DELAY_SECONDS)  # Respect rate limit before batch call
+    time.sleep(_CALL_DELAY_SECONDS)
 
     from collections import defaultdict
     groups = defaultdict(list)
     for idx, article in enumerate(articles):
-        # Group only by company — same event can have different segment tags
         company = article.companies[0] if article.companies else "__none__"
         groups[company].append(idx)
 
-    # Collect only groups with 2+ articles
-    active_groups = {k: v for k, v in groups.items() if len(v) >= 2}
+    # Also group articles that share a company name in the title but may be tagged differently
+    title_words = {}
+    for idx, article in enumerate(articles):
+        for company, indices in groups.items():
+            if company != "__none__" and company.lower() in article.title.lower():
+                if idx not in indices:
+                    indices.append(idx)
+
+    active_groups = {k: sorted(set(v)) for k, v in groups.items() if len(set(v)) >= 2}
     if not active_groups:
         return articles, 0
 
-    # Build one prompt with all groups
     lines = []
-    group_keys = []  # ordered list matching prompt sections
+    group_keys = []
     for company, indices in active_groups.items():
         group_id = len(group_keys)
         group_keys.append((company, indices))
@@ -492,17 +528,33 @@ def semantic_dedup_articles(articles: list) -> tuple:
         "Si no hay duplicados: []"
     )
 
-    try:
+    def _try_call():
         response = client.messages.create(
             model="claude-haiku-4-5-20251001",
-            max_tokens=300,
+            max_tokens=400,
             system=[{"type": "text", "text": _DEDUP_SYSTEM, "cache_control": {"type": "ephemeral"}}],
             messages=[{"role": "user", "content": user_msg}],
         )
         raw = response.content[0].text.strip()
-        dup_pairs = json.loads(raw)
-    except Exception as exc:
-        logger.warning("Semantic dedup batch call failed: %s", exc)
+        if not raw:
+            raise ValueError("empty response from dedup LLM")
+        # Strip markdown fences
+        if raw.startswith("```"):
+            lines_r = raw.split("\n")
+            raw = "\n".join(lines_r[1:-1] if lines_r[-1].strip().startswith("```") else lines_r[1:]).strip()
+        return json.loads(raw)
+
+    dup_pairs = None
+    for attempt in range(2):  # 1 retry on failure
+        try:
+            if attempt > 0:
+                time.sleep(3)
+            dup_pairs = _try_call()
+            break
+        except Exception as exc:
+            logger.warning("Semantic dedup attempt %d failed: %s", attempt + 1, exc)
+
+    if dup_pairs is None:
         return articles, 0
 
     if not dup_pairs or not isinstance(dup_pairs, list):
