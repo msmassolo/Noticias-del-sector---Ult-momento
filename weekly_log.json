@@ -1729,5 +1729,324 @@
       ],
       "region": "Mundial"
     }
+  ],
+  "2026-06-09": [
+    {
+      "title": "Sin chofer y las 24 horas: la apuesta de PepsiCo que anticipa el fin de los camioneros",
+      "summary": "PepsiCo implementa a gran escala camiones autónomos en EE.UU. con la startup Gatik para abastecimiento de supermercados y distribuidoras, convirtiéndose en la primera empresa de consumo masivo en este",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Local"
+    },
+    {
+      "title": "Trivento, la filial argentina de Concha y Toro, aspira a liderar exportaciones de vino de ese país - MSN",
+      "summary": "Trivento, filial argentina de la vinatera chilena Concha y Toro, estableció como objetivo liderar las exportaciones de vino argentino. Esta estrategia posiciona a un competidor multinacional relevante",
+      "companies": [
+        "Concha y Toro"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Local"
+    },
+    {
+      "title": "Dueño de Riccadonna y Aperol se asocia con embotellador local de Pepsi: CBC y su nueva ‘fórmula’",
+      "summary": "Diageo (propietario de Riccadonna y Aperol) se asocia con CBC, embotellador multilatino de Pepsi presente en 20+ países, para fortalecer operaciones en Perú con 11 años de trayectoria local. CBC reenf",
+      "companies": [
+        "PepsiCo",
+        "Campari Group"
+      ],
+      "segments": [
+        "distribution_execution"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "La jugada de PepsiCo que podría cambiar y ponerle fin para siempre el trabajo de los camioneros",
+      "summary": "PepsiCo está implementando cambios estructurales en su logística de 'middle mile', rediseñando cómo conecta centros de distribución con puntos de venta minorista. Esta transformación en la cadena de s",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "distribution_execution",
+        "supply_chain_commodities"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Monster chases global energy drink growth with Coca-Cola distribution muscle",
+      "summary": "Monster Beverage aprovecha la red de distribución global de Coca-Cola para expandir en mercados clave como Sudeste Asiático, China e India. El mercado estadounidense de bebidas energéticas representa ",
+      "companies": [
+        "The Coca-Cola Company",
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Hennessy brings luxury to casual drinking occasions",
+      "summary": "LVMH-owned Hennessy lanza Hennessy Very Special Cocktails, una línea de bebidas listas para beber en botellas. La estrategia busca expandir el consumo de cognac hacia ocasiones casuales y menos formal",
+      "companies": [
+        "LVMH Wines & Spirits"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "product_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Is Carlsberg India considering an IPO?",
+      "summary": "Carlsberg considera un IPO de su negocio en India, potencialmente recaudando USD 700 millones, con apoyo de Kotak Mahindra Capital, JP Morgan y Citigroup. La operación refleja la confianza en el creci",
+      "companies": [
+        "Carlsberg Group"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "The secret duo shaping global FMCG innovation",
+      "summary": "Dos consultores de innovación en FMCG (Jonny Bingham y David Jones) han asesorado a gigantes como PepsiCo, Tesco y Oscar Mayer en el desarrollo de productos y estrategia de pipeline. Su trabajo detrás",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Diageo India to close manufacturing unit in Hyderabad",
+      "summary": "Diageo India (United Spirits) cierra su planta de manufactura en Hyderabad a fin de agosto de 2026, que representa el 2% de ingresos. La compañía trasferirá la licencia de impuestos especiales a un te",
+      "companies": [
+        "Diageo"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Ex-Bacardi exec joins Kirker Greer",
+      "summary": "Drinksology Kirker Greer (DKG), empresa de spirits de Belfast, designó a Mike Birch, ex ejecutivo de Bacardi, como director no ejecutivo. El movimiento busca fortalecer el board en el contexto de acel",
+      "companies": [
+        "Bacardi"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Monster Beverage stock (US61174X1090): investors focus on growth strategy after recent earnings - AD HOC NEWS",
+      "summary": "Monster Beverage reportó resultados financieros recientes que generaron enfoque en su estrategia de crecimiento entre inversores. La compañía, líder global en bebidas energéticas, sigue siendo un comp",
+      "companies": [
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Constellation Brands stock (US21036P1084): Beer strength and premium focus after latest earnings - AD HOC NEWS",
+      "summary": "Constellation Brands, principal productor de cerveza en EE.UU. con marcas como Corona y Modelo, mostró solidez operativa en últimos resultados reforzando su estrategia en segmentos premium. La compañí",
+      "companies": [
+        "Constellation Brands"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "PepsiCo partners with Gatik to roll out driverless trucks across North America supply chain | FoodBev Media",
+      "summary": "PepsiCo implementará camiones autónomos de Gatik en su cadena de suministro de América del Norte, representando el despliegue comercial más grande de carga autónoma hasta la fecha. Esta iniciativa red",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "supply_chain_commodities"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "The Coca-Cola Company stock (US1912161007): Solid Q1 results and dividend growth keep the story flow - AD HOC NEWS",
+      "summary": "The Coca-Cola Company reportó resultados sólidos en Q1 con crecimiento en dividendos, consolidando su desempeño financiero. Como competidor global de referencia en la industria de bebidas, su desempeñ",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Coca-Cola Bottlers Japan stock (JP3293200006): Stable earnings backdrop and regional growth focus - AD HOC NEWS",
+      "summary": "Coca-Cola Bottlers Japan mantiene un desempeño de ganancias estable en un contexto de enfoque en crecimiento regional. Como embotellador clave en Asia, su estabilidad operativa y estrategia de expansi",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Prestige Champagne sees surprising silver lining",
+      "summary": "La caída en ventas de champagnes de prestigio está generando oportunidades para restaurantes en programas de venta por copa y potencialmente mejorando la calidad de los vinos consumidos. Durante la úl",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Fever-Tree confident after ‘solid’ start to 2026",
+      "summary": "Fever-Tree, fabricante premium de tónics y mixers, reporta un inicio sólido en 2026 y mantiene confianza en alcanzar expectativas anuales a pesar de presiones inflacionarias en costos de inputs. La co",
+      "companies": [
+        "Fevertree Drinks"
+      ],
+      "segments": [
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Carlsberg acelera su salida a Bolsa en India con una operación de 645 millones",
+      "summary": "Carlsberg acelera la salida a Bolsa de su filial india con una operación de hasta 700 millones de dólares, una de las mayores IPO del sector de bebidas en mercados emergentes. La presentación del foll",
+      "companies": [
+        "Carlsberg Group"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Heineken acelera su recompra de acciones con 242 millones ejecutados en el segundo tramo",
+      "summary": "Heineken ejecutó la segunda fase de su programa de recompra de acciones, adquiriendo 168.429 títulos a 66,23 euros por acción entre el 1 y 5 de junio, totalizando 242 millones de euros. La operación f",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Heineken Report : Changing Consumer Tastes Push UK Pub Beer Sales to £14bn - Food & Beverage Outlook",
+      "summary": "El mercado de cerveza en pubs del Reino Unido alcanzó £14bn, impulsado por cambios en las preferencias de consumo. El reporte de Heineken documenta la evolución del comportamiento del consumidor britá",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Molson Coors Beverage stock (US60871R2094): earnings, dividend and brand strategy in focus - AD HOC NEWS",
+      "summary": "Molson Coors Beverage reporta resultados financieros y evalúa su estrategia de marcas y política de dividendos. Como uno de los mayores productores globales de bebidas alcohólicas y no alcohólicas, su",
+      "companies": [
+        "Molson Coors"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Teremana debuts limited design series",
+      "summary": "Teremana Tequila (marca de Dwayne Johnson) lanzó su primera línea de ediciones limitadas 'Craft Editions' con nuevos diseños de botellas para sus productos blanco y reposado. Las botellas azules y cob",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "marketing_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Top marketing moves from May 2026",
+      "summary": "En mayo de 2026, la industria de spirits registró movimientos de marketing significativos con celebridades de alto perfil: Sophie Turner continuó como imagen de St-Germain para su campaña estival, mie",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "marketing_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "'Its most significant period of growth': Northern Ireland spirits firm appoints former Bacardi executive to drive global expansion - Belfast News Letter",
+      "summary": "Una destilería de Irlanda del Norte contrató a un ejecutivo senior con experiencia en Bacardi para liderar su expansión global. Este movimiento refleja ambiciones de crecimiento internacional en el se",
+      "companies": [
+        "Bacardi"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Monster chases global energy drink growth with Coca-Cola distribution muscle - FoodNavigator-USA.com",
+      "summary": "Monster Beverage está acelerando su expansión global aprovechando la infraestructura de distribución de The Coca-Cola Company. Esta alianza estratégica le permite a Monster penetrar mercados internaci",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "distribution_execution"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Fevertree Drinks And 2 Other UK Stocks That May Be Priced Below Their Estimated Value - Yahoo Finance",
+      "summary": "Fevertree Drinks figura entre acciones británicas potencialmente infravaloradas según análisis de Yahoo Finance. La compañía, principal jugador en el segmento premium de mixers para bebidas alcohólica",
+      "companies": [
+        "Fevertree Drinks"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Coca-Cola launches BodyArmor Fit as it branches out in the 'better-for-you' category (KO:NYSE) - Seeking Alpha",
+      "summary": "Coca-Cola lanzó BodyArmor Fit, una nueva bebida funcional posicionada en la categoría de bebidas 'mejor-para-ti', reforzando su estrategia de diversificación hacia segmentos de mayor valor. Este movim",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Record Quarter And Bigger Buyback Could Be A Game Changer For Monster Beverage (MNST) - Yahoo Finance",
+      "summary": "Monster Beverage reportó un trimestre récord con resultados financieros excepcionales, acompañado por un programa ampliado de recompra de acciones. Esta combinación de desempeño operacional sólido y r",
+      "companies": [
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    }
   ]
 }
