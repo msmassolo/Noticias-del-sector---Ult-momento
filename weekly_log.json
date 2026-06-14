@@ -1627,7 +1627,7 @@
   "2026-06-14": [
     {
       "title": "Arca Continental, embotelladora de Coca-Cola, alista cambios en planta de Pucusana: los detalles",
-      "summary": "Arca Continental, principal embotelladora de Coca-Cola en Perú, ejecuta modificaciones operacionales en su planta Pucusana de Lima, enfocándose en mejoras logísticas y de mantenimiento de equipos. Est",
+      "summary": "Arca Continental, principal embotelladora de Coca-Cola en Perú, implementa modificaciones operacionales en su Planta Pucusana de Lima, uno de sus complejos industriales clave. El proyecto se enfoca en",
       "companies": [
         "The Coca-Cola Company",
         "Arca Continental"
@@ -1639,8 +1639,30 @@
       "region": "Regional"
     },
     {
+      "title": "Backus prepara novedades para Mike’s, su RTD en Perú: ¿qué contempla su nuevo proyecto?",
+      "summary": "Backus prepara una ampliación de capacidad productiva para Mike's Hard Seltzer en Perú, su línea de bebidas RTD (ready-to-drink). La cervecera peruana presentó ante el Ministerio de la Producción un p",
+      "companies": [
+        "Backus"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "La bodega de vinos peruana que conquista restaurantes Michelin en Europa y Asia",
+      "summary": "Bodega peruana boutique de vinos ha alcanzado presencia en restaurantes Michelin de Europa y Asia, con producción anual de 50,000 botellas desde su fundación en 2015. El caso evidencia oportunidades d",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Regional"
+    },
+    {
       "title": "Entropy Technologies LP Makes New $5.44 Million Investment in Monster Beverage Corporation $MNST - MarketBeat",
-      "summary": "Entropy Technologies LP realizó una inversión de $5.44 millones en Monster Beverage Corporation, indicando movimientos de capital significativos en la empresa. Esta transacción refleja confianza de in",
+      "summary": "Entropy Technologies LP realizó una nueva inversión de $5.44 millones en Monster Beverage Corporation, reflejando confianza institucional en la compañía. Este movimiento de inversión señala expectativ",
       "companies": [
         "Monster Beverage"
       ],
@@ -1652,7 +1674,7 @@
     },
     {
       "title": "Epoch Investment Partners Inc. Sells 536,000 Shares of Monster Beverage Corporation $MNST - MarketBeat",
-      "summary": "Epoch Investment Partners desinvirtió 536.000 acciones de Monster Beverage Corporation, señalando movimientos accionarios en uno de los mayores productores de bebidas energéticas globales. Este cambio",
+      "summary": "Epoch Investment Partners redujo su participación en Monster Beverage en 536.000 acciones. Este movimiento de desinversión institucional refleja cambios en las posiciones de accionistas clave en uno d",
       "companies": [
         "Monster Beverage"
       ],
@@ -1664,7 +1686,7 @@
     },
     {
       "title": "How Investors May Respond To Treasury Wine Estates (ASX:TWE) Luxury-Focused Portfolio And Supply Chain Overhaul - simplywall.st",
-      "summary": "Treasury Wine Estates (TWE), uno de los mayores productores de vino del mundo, está ejecutando una reestructuración estratégica hacia portafolio de lujo y optimización de cadena de suministro. Esta re",
+      "summary": "Treasury Wine Estates (TWE), productor australiano de bebidas alcohólicas de escala global, implementa una estrategia de reposicionamiento hacia el segmento premium y reestructura su cadena de suminis",
       "companies": [
         "Treasury Wine Estates"
       ],
@@ -1675,19 +1697,8 @@
       "region": "Mundial"
     },
     {
-      "title": "ASEANフォーカス：ハラール市場の成長、Carlsberg Malaysia 、ベトナムの食品安全",
-      "summary": "Southeast Asia emerge como mercado halal de alto crecimiento en alimentos y bebidas, liderado por Indonesia con 205+ millones de consumidores musulmanes. Carlsberg Malaysia reporta presión en ingresos",
-      "companies": [
-        "Carlsberg Group"
-      ],
-      "segments": [
-        "company_news"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Coca-Cola Europacific Partners (ENXTAM:CCEP) Stock After Lando Norris Monster Energy Launch Is The 6.2% Upside Realistic - simplywall.st",
-      "summary": "Coca-Cola Europacific Partners (CCEP) lanzó una línea de Monster Energy asociada al piloto de F1 Lando Norris, generando movimiento en la valuación del grupo. El análisis sugiere un potencial de suba ",
+      "summary": "Coca-Cola Europacific Partners (CCEP) lanzó una campaña con Monster Energy asociada al piloto de Fórmula 1 Lando Norris, generando expectativas de crecimiento en el valor de la acción del 6.2%. El mov",
       "companies": [
         "The Coca-Cola Company",
         "Monster Beverage",
@@ -1699,19 +1710,31 @@
       "region": "Mundial"
     },
     {
-      "title": "ThaiNamthip Coca-Cola and AirAsia Launch Exclusive Midnight Grape \"Coke\" Beverage - Mini Me Insights",
-      "summary": "Coca-Cola Thailand (ThaiNamthip) y AirAsia lanzaron una bebida exclusiva llamada Midnight Grape Coke, resultado de una alianza estratégica entre la industria de bebidas y aerolíneas. Este lanzamiento ",
+      "title": "ASEANフォーカス：ハラール市場の成長、Carlsberg Malaysia 、ベトナムの食品安全",
+      "summary": "El mercado halal en bebidas de Asia Sudoriental emerge como oportunidad estratégica con Indonesia liderando como país musulmán más poblado (205M de habitantes, 87% de la población). Carlsberg Malaysia",
       "companies": [
-        "The Coca-Cola Company"
+        "Carlsberg Group"
       ],
       "segments": [
-        "consumer_market_trends"
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Entropy Technologies LP Makes New $5.51 Million Investment in Molson Coors Beverage Company $TAP - MarketBeat",
+      "summary": "Entropy Technologies LP realizó una nueva inversión de $5.51 millones en Molson Coors Beverage Company, el segundo mayor cervecero de EE.UU. Este movimiento de inversión en un jugador clave del mercad",
+      "companies": [
+        "Molson Coors"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
       ],
       "region": "Mundial"
     },
     {
       "title": "Does Monster Beverage’s Board Shift Signal An Evolving Global Strategy For MNST Investors? - simplywall.st",
-      "summary": "Monster Beverage experimenta cambios en su estructura de gobierno corporativo que podrían indicar ajustes estratégicos globales. Los cambios en el directorio de una empresa de esta envergadura señalan",
+      "summary": "Monster Beverage realizó cambios en su estructura de gobierno corporativo que podrían señalar un giro estratégico global. Los ajustes en el directorio sugieren reposicionamiento en la estrategia inter",
       "companies": [
         "Monster Beverage"
       ],
@@ -1721,8 +1744,31 @@
       "region": "Mundial"
     },
     {
+      "title": "Constellation Brands (STZ) Stock Valuation After Analyst Updates And Strong Beer Segment In Fiscal 2026 Results - Yahoo Finance",
+      "summary": "Constellation Brands reportó resultados sólidos en su segmento de cerveza para el fiscal 2026, generando actualizaciones positivas de analistas sobre su valuación. La fortaleza en cerveza (marca Coron",
+      "companies": [
+        "Constellation Brands"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Chief Executive Officer for EMEA & OSP Guy Carling Sold A Bunch Of Shares In Monster Beverage - simplywall.st",
+      "summary": "Guy Carling, CEO de Monster Beverage para EMEA y OSP, realizó una venta significativa de acciones de la compañía. Este movimiento de insiders trading en Monster —uno de los principales competidores gl",
+      "companies": [
+        "Monster Beverage",
+        "Molson Coors"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "Molson Coors Beverage Stock (US60871R2094): Asset manager builds stake as income appeal stays in foc - AD HOC NEWS",
-      "summary": "Un gestor de activos incrementó su participación accionaria en Molson Coors, reflejando el atractivo de la compañía como instrumento de generación de ingresos. Este movimiento señala confianza institu",
+      "summary": "Un gestor de activos acumula participación en Molson Coors Beverage, uno de los mayores productores de bebidas alcohólicas de América del Norte. El movimiento refleja el atractivo de la compañía por s",
       "companies": [
         "Molson Coors"
       ],
