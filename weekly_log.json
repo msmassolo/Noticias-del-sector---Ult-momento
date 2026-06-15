@@ -1654,16 +1654,7 @@
   "2026-06-15": [
     {
       "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
-      "summary": "La cerveza artesanal enfrenta una crisis con caída significativa del consumo, presionando a productores a ajustar costos operativos. Este fenómeno refleja cambios estructurales en los hábitos de consu",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Local"
-    },
-    {
-      "title": "Vino a granel: Mendoza sentó las bases para expandir un negocio millonario de exportación - Infocampo",
-      "summary": "Mendoza estableció las bases para expandir las exportaciones de vino a granel, un segmento con potencial millonario en la industria vitivinícola argentina. Esta modalidad de comercialización represent",
+      "summary": "La cerveza artesanal enfrenta una crisis con caída del consumo y cambio de hábitos de los consumidores, obligando a los productores a ajustar costos. Esta tendencia impacta el segmento premium y de co",
       "companies": [],
       "segments": [
         "consumer_market_trends"
@@ -1672,7 +1663,7 @@
     },
     {
       "title": "Backus prepara novedades para Mike’s, su RTD en Perú: ¿qué contempla su nuevo proyecto?",
-      "summary": "Backus prepara una ampliación de capacidad productiva para Mike's Hard Seltzer en Perú, su línea de bebidas ready-to-drink (RTD). La cervecera peruana presentó ante Produce un proyecto de inversión pa",
+      "summary": "Backus prepara una ampliación de capacidad productiva para Mike's Hard Seltzer en Perú, su marca de ready-to-drink alcohólico. La iniciativa, presentada ante el Ministerio de la Producción peruano, bu",
       "companies": [
         "Backus"
       ],
@@ -1684,7 +1675,7 @@
     },
     {
       "title": "La estrategia de Walmart para aumentar ganancias sin subir precios: el crecimiento de Great Value, Equate y sus private brands",
-      "summary": "Walmart implementa estrategia agresiva de marcas privadas (Great Value, Equate) que crecen a doble dígito en EE.UU., aumentando su participación en la canasta 175 puntos base. Esta estrategia genera m",
+      "summary": "Walmart logró incrementar su rentabilidad bruta 5.6% en EE.UU. mediante el crecimiento acelerado de marcas privadas (Great Value, Equate), que expandieron su penetración 175 puntos base en general mer",
       "companies": [
         "Walmart"
       ],
@@ -1695,19 +1686,18 @@
       "region": "Regional"
     },
     {
-      "title": "Stella Artois and Bud Light add fruity brews for summer",
-      "summary": "AB InBev lanza nuevas cervezas frutales con sus marcas Stella Artois y Bud Light para capturar la demanda creciente en la categoría de cervezas con frutas. Stella Artois introduce Strawberries & Cream",
-      "companies": [
-        "AB InBev"
-      ],
+      "title": "La bodega de vinos peruana que conquista restaurantes Michelin en Europa y Asia",
+      "summary": "Bodega peruana boutique fundada en 2015 alcanzó producción de 50,000 botellas anuales y posicionamiento en restaurantes Michelin de Europa y Asia. Caso de éxito en internacionalización de bebidas de l",
+      "companies": [],
       "segments": [
-        "financial_results"
+        "consumer_market_trends",
+        "distribution_execution"
       ],
-      "region": "Mundial"
+      "region": "Regional"
     },
     {
       "title": "Two more Coca-Cola brands reach billion dollar status",
-      "summary": "Coca-Cola alcanzó 32 marcas con ventas superiores a mil millones de dólares anuales, sumando dos nuevas en el último año a su portafolio. Este hito refleja la fortaleza del portfolio de la compañía y ",
+      "summary": "Coca-Cola has added to its billion dollar brands with fruit juice Innocent and dairy brand Santa Clara",
       "companies": [
         "The Coca-Cola Company"
       ],
@@ -1717,20 +1707,20 @@
       "region": "Mundial"
     },
     {
-      "title": "Monster Beverage Stock (US61174X1090): Earnings momentum and sector backdrop in focus - AD HOC NEWS",
-      "summary": "Monster Beverage presenta resultados con momentum de ganancias en contexto de desempeño sectorial variable. Como competidor clave en el segmento de bebidas energéticas globales, la evolución de Monste",
+      "title": "Stella Artois serves up Wimbledon-inspired Strawberries & Cream beer | FoodBev Media",
+      "summary": "Stella Artois lanza una cerveza de edición limitada con sabor a fresas y crema, inspirada en la tradición de Wimbledon y alineada con su asociación histórica con el torneo. Esta iniciativa amplía el p",
       "companies": [
-        "Monster Beverage"
+        "AB InBev"
       ],
       "segments": [
         "consumer_market_trends",
-        "financial_results"
+        "ma_and_strategy"
       ],
       "region": "Mundial"
     },
     {
       "title": "Constellation Brands (STZ) Is Up 5.4% After Beer Drives 91% Of Sales In Fiscal 2026 - Yahoo Finance",
-      "summary": "Constellation Brands registró un desempeño accionario positivo (+5.4%) impulsado por sus negocios cerveceros, que representaron el 91% de las ventas en fiscal 2026. Este resultado refuerza la importan",
+      "summary": "Constellation Brands reportó que la cerveza representó el 91% de sus ventas en el fiscal 2026, impulsando un incremento accionario del 5.4%. Este desempeño subraya la concentración de ingresos en el s",
       "companies": [
         "Constellation Brands"
       ],
@@ -1741,20 +1731,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Stella Artois unveils new limited-edition beer",
-      "summary": "Stella Artois lanzará una cerveza edición limitada Strawberries & Cream en Wimbledon 2026, continuando su estrategia de innovación en portafolio y aprovechando su partnership con el torneo de tenis de",
-      "companies": [
-        "AB InBev"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Jack Daniel’s lanza una edición limitada con McLaren Fórmula 1 de solo 5.500 botellas",
-      "summary": "Jack Daniel's lanzó una edición limitada de 5.500 botellas en colaboración con McLaren F1, conmemorando el aniversario 1.000 del equipo y los 160 años de la destilería. La estrategia combina marketing",
+      "summary": "Jack Daniel's lanzó una edición limitada de 5.500 botellas en colaboración con McLaren F1, conmemorando el 1.000 GP de la escudería y los 160 años de la destilería. La estrategia combina marketing de ",
       "companies": [
         "Brown-Forman"
       ],
@@ -1764,8 +1742,20 @@
       "region": "Mundial"
     },
     {
+      "title": "Why PepsiCo Is Making Protein Central to Its Functional Beverage Strategy - Athletech News",
+      "summary": "PepsiCo posiciona las bebidas proteicas como eje central de su estrategia de bebidas funcionales, respondiendo a la demanda creciente de productos de alto valor agregado. Esta reorientación refleja la",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "product_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "Oatley Fine Wine set to distribute Casella’s premium wine",
-      "summary": "Casella Family Brands (productor de Yellow Tail) designó a Oatley Fine Wine Merchants como distribuidor de su cartera premium en Australia a partir de julio 2026. La estrategia busca fortalecer presen",
+      "summary": "Casella Family Brands (productor de Yellow Tail) designó a Oatley Fine Wine Merchants como distribuidor exclusivo de su cartera premium en Australia a partir de julio 2026. La estrategia incluye las m",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1775,7 +1765,7 @@
     },
     {
       "title": "Entropy Technologies LP Makes New $5.44 Million Investment in Monster Beverage Corporation $MNST - MarketBeat",
-      "summary": "Entropy Technologies LP realizó una inversión de $5.44 millones en Monster Beverage Corporation, indicando movimiento accionario relevante en uno de los principales competidores globales de bebidas en",
+      "summary": "Entropy Technologies LP realizó una inversión de $5.44 millones en Monster Beverage Corporation, reflejando confianza institucional en la empresa. Este movimiento de capital indica actividad de invers",
       "companies": [
         "Monster Beverage"
       ],
@@ -1787,7 +1777,7 @@
     },
     {
       "title": "Is Coca-Cola’s Planned India Bottler IPO Reshaping How Investors View KO’s Emerging Market Strategy? - simplywall.st",
-      "summary": "Coca-Cola planea una salida a bolsa (IPO) de su embotellador en India, movimiento estratégico que señala un cambio en cómo la compañía gestiona sus operaciones en mercados emergentes. Esta operación p",
+      "summary": "Coca-Cola planifica una IPO de su embotellador en India, uno de sus mercados emergentes más estratégicos. Esta operación señala un cambio en la estrategia de monetización de activos y desinversión par",
       "companies": [
         "The Coca-Cola Company"
       ],
@@ -1799,7 +1789,7 @@
     },
     {
       "title": "The 20 Most Popular Scotch Brands in the World for 2026",
-      "summary": "Las exportaciones globales de whisky escocés cayeron 4.3% en volumen el año pasado, con 13 de las 20 marcas principales registrando decrecimiento interanual. El deterioro se atribuye a conflictos aran",
+      "summary": "Las exportaciones globales de whisky escocés cayeron 4,3% en volumen el año pasado, con 13 de las 20 marcas principales registrando contracción año a año. La desaceleración se atribuye a conflictos ar",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1809,7 +1799,7 @@
     },
     {
       "title": "PepsiCo Targets Experiential Drinks And Regenerative Farming For Future Growth - Yahoo Finance",
-      "summary": "PepsiCo enfoca su estrategia de crecimiento futuro en bebidas experienciales e implementación de agricultura regenerativa. Esta iniciativa refleja un posicionamiento hacia innovación de producto y sus",
+      "summary": "PepsiCo apunta a dos pilares estratégicos para crecimiento futuro: bebidas experienciales e implementación de agricultura regenerativa en su cadena de suministro. La estrategia de bebidas experiencial",
       "companies": [
         "PepsiCo"
       ],
@@ -1820,8 +1810,20 @@
       "region": "Mundial"
     },
     {
+      "title": "PepsiCo Challenges Coca-Cola With “House of Treats” Beverage Platform Set to Disrupt Global Soda Market in 2026 - TTYBrand Africa",
+      "summary": "PepsiCo lanza 'House of Treats', una plataforma de bebidas diseñada para competir directamente con Coca-Cola en el mercado global de refrescos a partir de 2026. Esta iniciativa estratégica representa ",
+      "companies": [
+        "The Coca-Cola Company",
+        "PepsiCo"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "Boston Beer (SAM) Stock After Litigation Ruling Rethinks GAAP Earnings What Does The Valuation Signal Now - simplywall.st",
-      "summary": "Boston Beer enfrentas cambios en sus ganancias GAAP derivados de una sentencia judicial que impacta su valuación. Este caso afecta directamente la transparencia financiera y la confiabilidad de report",
+      "summary": "Boston Beer enfrenta un fallo de litigio que impacta su reporte de ganancias GAAP, generando revisión de su valuación de mercado. Este evento afecta la transparencia financiera de un jugador clave en ",
       "companies": [
         "Boston Beer Company"
       ],
@@ -1833,7 +1835,7 @@
     },
     {
       "title": "El Rayo expands RTD range",
-      "summary": "El Rayo, marca de tequila basada en Londres, amplía su portafolio RTD (ready-to-drink) con un nuevo producto de tequila, lima y soda en lata, sumándose a su lanzamiento anterior de Tequila Tonic & Gra",
+      "summary": "El Rayo, marca de tequila con base en Londres, expande su portafolio RTD (ready-to-drink) con un nuevo producto de tequila, lima y soda en lata, complementando su lanzamiento anterior de Tequila Tonic",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1842,20 +1844,8 @@
       "region": "Mundial"
     },
     {
-      "title": "How Investors May Respond To Treasury Wine Estates (ASX:TWE) Luxury-Focused Portfolio And Supply Chain Overhaul - simplywall.st",
-      "summary": "Treasury Wine Estates (ASX:TWE), uno de los mayores productores de vino del mundo, está implementando una reestructuración estratégica hacia el segmento premium y una reorganización de su cadena de su",
-      "companies": [
-        "Treasury Wine Estates"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "La Luna Mezcal partners with Charter Brands",
-      "summary": "Charter Brands, exportador de bebidas alcohólicas premium, incorporó La Luna Mezcal como socio exclusivo en su cartera de destilados de agave, complementando su portafolio junto a El Tequileño Tequila",
+      "summary": "La Luna Mezcal se asoció exclusivamente con Charter Brands, distribuidor especializado en destilados premium, para expandir su portafolio de agave junto a El Tequileño Tequila. El portafolio de La Lun",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1865,7 +1855,7 @@
     },
     {
       "title": "Wip Energy Pouches Now Available in Over 330 Walmart Fuel Centers Nationwide",
-      "summary": "Wip, marca líder en la categoría de cafeína limpia, expandió su presencia retail a más de 330 Walmart Fuel Centers en EE.UU., posicionando sus energy pouches en una red de distribución estratégica dir",
+      "summary": "Wip, marca líder en la categoría de cafeína limpia, expandió su distribución a más de 330 estaciones de combustible Walmart en EE.UU., alcanzando conductores, viajeros y consumidores en movimiento. Es",
       "companies": [
         "Walmart"
       ],
@@ -1875,8 +1865,19 @@
       "region": "Mundial"
     },
     {
+      "title": "Moët & Chandon refuerza en Barcelona su vínculo histórico con la Fórmula 1",
+      "summary": "Moët & Chandon refuerza su posicionamiento como Champagne Oficial de la Fórmula 1 en el Gran Premio de Barcelona 2026, aprovechando la alianza de diez años entre F1 y LVMH. La marca francesa mantiene ",
+      "companies": [
+        "LVMH Wines & Spirits"
+      ],
+      "segments": [
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "The Macallan targets Gen Z in latest social media campaign with Emmy-nominated actor",
-      "summary": "The Macallan lanzó una campaña en redes sociales dirigida a Gen Z con el actor James Marsden, enfocándose en posicionar sus expresiones ultra-añejadas (25 y 30 años) bajo la premisa de transmisión gen",
+      "summary": "The Macallan lanzó una campaña en redes sociales con el actor James Marsden para captar a Gen Z, posicionando sus expresiones ultra-envejecidas (Sherry Oak 25 y 30 años) bajo el concepto de 'generatio",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1886,7 +1887,7 @@
     },
     {
       "title": "Entropy Technologies LP Makes New $5.51 Million Investment in Molson Coors Beverage Company $TAP - MarketBeat",
-      "summary": "Entropy Technologies LP realizó una inversión de USD 5,51 millones en Molson Coors Beverage Company (TAP), reflejando movimientos de capital en una de las mayores cerveceras norteamericanas. Esta inve",
+      "summary": "Entropy Technologies LP realizó una inversión de $5,51 millones en Molson Coors Beverage Company, uno de los mayores productores cerveceros de EE.UU. Este movimiento de capital refleja confianza insti",
       "companies": [
         "Molson Coors"
       ],
@@ -1898,7 +1899,7 @@
     },
     {
       "title": "Angostura secures new UK retail listings",
-      "summary": "Angostura, marca trinidense, expandió su presencia en retail británico con listados en Marks & Spencer y Sainsbury's para su Orange Bitters, complementando su disponibilidad en Waitrose. La expansión ",
+      "summary": "Angostura, marca trinidadense, aseguró listados en dos principales cadenas minoristas británicas: Marks & Spencer y Sainsbury's, ampliando su presencia en el retail de bebidas alcohólicas premium. La ",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1908,7 +1909,7 @@
     },
     {
       "title": "Chief Executive Officer for EMEA & OSP Guy Carling Sold A Bunch Of Shares In Monster Beverage - simplywall.st",
-      "summary": "Guy Carling, CEO de Monster Beverage para EMEA y mercados emergentes (OSP), realizó una venta significativa de acciones de la compañía. Este movimiento de insider trading es indicativo de cambios en l",
+      "summary": "Guy Carling, CEO de Monster Beverage para Europa, Oriente Medio y Asia Pacífico, realizó una venta significativa de acciones de la compañía. Este movimiento de insiders en Monster —distribuidor clave ",
       "companies": [
         "Monster Beverage",
         "Molson Coors"
@@ -1920,7 +1921,7 @@
     },
     {
       "title": "McDonald’s Feels New Strain in Coca-Cola Partnership as It Pushes Into Specialty Drinks - Bez Kabli",
-      "summary": "McDonald's está generando tensiones en su alianza estratégica de décadas con Coca-Cola al expandir agresivamente su portafolio hacia bebidas de especialidad, desafiando la exclusividad tradicional del",
+      "summary": "McDonald's está diversificando su portafolio de bebidas más allá de su histórica alianza con Coca-Cola, generando tensiones en una de las asociaciones más duraderas del sector. La cadena de comidas rá",
       "companies": [
         "The Coca-Cola Company"
       ],
@@ -1930,29 +1931,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Trump threatens new 100% tariff on French wine",
-      "summary": "Trump amenaza con aranceles del 100% sobre vinos franceses si París no elimina su impuesto digital del 3% a empresas tecnológicas estadounidenses. Esta disputa comercial impactaría directamente las im",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "regulation_tax_policy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Anheuser-Busch InBev Stock (BE0974293251): UBS nudges price target higher as WM 2026 beer promotions - AD HOC NEWS",
-      "summary": "UBS elevó el precio objetivo de las acciones de Anheuser-Busch InBev (AB InBev), principal cervecero global, fundamentado en las oportunidades de promoción de cerveza asociadas al Mundial 2026. Esta r",
-      "companies": [
-        "AB InBev"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Why is Fevertree Drinks stock surging today? By Investing.com - Investing.com Nigeria",
-      "summary": "Las acciones de Fevertree Drinks experimentaron un repunte significativo. Fevertree es productor global de bebidas mixers premium (tónicas, aguas tónicas aromáticas y refrescos) con presencia relevant",
+      "summary": "Las acciones de Fevertree Drinks experimentan un repunte significativo, señalando movimientos importantes en el segmento premium de bebidas mixtas. Fevertree es un competidor clave en tónics y mixers ",
       "companies": [
         "Fevertree Drinks"
       ],
@@ -1962,19 +1942,18 @@
       "region": "Mundial"
     },
     {
-      "title": "PepsiCo expands farming work, partners with House of Treats for personalized drinks - TechStock²",
-      "summary": "PepsiCo expande sus operaciones agrícolas y establece una alianza estratégica con House of Treats para desarrollar bebidas personalizadas. Esta iniciativa refleja la estrategia corporativa de PepsiCo ",
-      "companies": [
-        "PepsiCo"
-      ],
+      "title": "Trump threatens new 100% tariff on French wine",
+      "summary": "Trump amenaza con aranceles del 100% sobre vinos franceses (incluyendo champagne) en respuesta a la tasa digital del 3% que Francia aplica a empresas tecnológicas estadounidenses. La medida afectaría ",
+      "companies": [],
       "segments": [
-        "consumer_market_trends"
+        "consumer_market_trends",
+        "regulation_tax_policy"
       ],
       "region": "Mundial"
     },
     {
       "title": "Press Clips: Tilray’s Portfolio Plans for UK BrewDog Locations, This Year’s Top New Products & The Importance of Beer Bars | Brewbound",
-      "summary": "Tilray, productor global de cannabis y bebidas, expande su portafolio en ubicaciones de BrewDog en el Reino Unido, marcando una estrategia de distribución en canales premium de bebidas. La iniciativa ",
+      "summary": "Tilray anuncia planes de distribución de su portafolio de bebidas en locales de BrewDog en el Reino Unido, expandiendo su presencia en canales de venta directa y experienciales. La estrategia incluye ",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1983,8 +1962,40 @@
       "region": "Mundial"
     },
     {
+      "title": "McDonald's Red Bull Drinks Test Brand Perception And Valuation Gap - Yahoo Finance",
+      "summary": "McDonald's está testeando bebidas Red Bull en sus locales, evaluando la percepción de marca y la brecha de valoración del portafolio. Esta iniciativa estratégica de co-branding entre una cadena de foo",
+      "companies": [
+        "Red Bull"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Monster Beverage (NASDAQ:MNST) Reaches New 12-Month High - Here's What Happened - MarketBeat",
+      "summary": "Monster Beverage alcanzó un nuevo máximo de 12 meses en cotización, reflejando un desempeño accionario positivo que indica confianza del mercado en la empresa. Este movimiento sugiere fortaleza operat",
+      "companies": [
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Functional Beverages: The New Soda Wars",
+      "summary": "La categoría de bebidas funcionales está redefiniendo la estructura tradicional del mercado, desplazando el liderazgo histórico de gaseosas hacia productos con propósitos específicos (prebióticos, ada",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "packaging_sustainability"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "UK sees lowest barley acreage in 16 years",
-      "summary": "Reino Unido registra la menor superficie de cultivo de cebada en 16 años debido a la reducción de demanda de cerveceros y destilerías. La caída del consumo de alcohol en el país —impulsada por preocup",
+      "summary": "El Reino Unido registra la menor siembra de cebada en 16 años debido a la caída en la demanda de cervecerías y destilerías. Consumo más bajo de alcohol en el país, junto con preocupaciones de salud y ",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -1994,7 +2005,7 @@
     },
     {
       "title": "Brebel relanza este verano la primera Hop Water elaborada en España",
-      "summary": "Brebel, cervecera artesana española, relanza su Hop Water como primera bebida de esta categoría producida en España. El producto posiciona a la empresa en el segmento de bebidas funcionales sin alcoho",
+      "summary": "Brebel, cervecera artesana española, relanza su Hop Water, una bebida sin alcohol elaborada con agua carbonatada y lúpulo natural. El producto se posiciona como innovación en la categoría de bebidas f",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2003,55 +2014,45 @@
       "region": "Mundial"
     },
     {
-      "title": "Britvic plc Stock (GB00B0N8QD54): Beverage group in focus after takeover interest and valuation deba - AD HOC NEWS",
-      "summary": "Britvic plc, importante grupo de bebidas británico, está bajo presión de mercado por especulación sobre potencial adquisición e interrogantes sobre su valuación. Este movimiento M&A señala actividad c",
-      "companies": [
-        "Britvic"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Healthcare of Ontario Pension Plan Trust Fund Purchases 893,986 Shares of Molson Coors Beverage Company $TAP - MarketBeat",
-      "summary": "El fondo de pensiones Healthcare of Ontario adquirió 893,986 acciones de Molson Coors Beverage Company (TAP), reflejando movimientos institucionales significativos en el capital de un player cervecero",
-      "companies": [
-        "Molson Coors"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Stella Artois serves up Wimbledon-inspired Strawberries & Cream beer | FoodBev Media",
-      "summary": "Stella Artois lanza Strawberries & Cream, una cerveza sabor limitada inspirada en la tradición de Wimbledon, expandiendo su portafolio de cervezas saborizadas. El lanzamiento aprovecha la asociación h",
+      "title": "Stella Artois unveils new limited-edition beer",
+      "summary": "Stella Artois lanza una cerveza limitada Strawberries & Cream en Wimbledon 2026, continuando su estrategia de innovación de producto y activaciones de marketing a través de partnerships deportivos pre",
       "companies": [
         "AB InBev"
       ],
       "segments": [
         "consumer_market_trends",
-        "ma_and_strategy"
+        "marketing_innovation"
       ],
       "region": "Mundial"
     },
     {
-      "title": "Can Dow Jones Consumer Giant Coca-Cola Eye Growth Through India IPO? - Kalkine Media",
-      "summary": "Coca-Cola explora la posibilidad de una salida a bolsa en India como estrategia para acelerar el crecimiento en ese mercado. La operación permitiría acceder a capital fresco y aumentar la visibilidad ",
+      "title": "The Coca-Cola Company Stock (US1912161007): Analyst views and valuation after India bottler IPO plan - AD HOC NEWS",
+      "summary": "Coca-Cola planea llevar a IPO a su embotellador en India, movimiento estratégico que busca optimizar capital y acelerar crecimiento en uno de los mercados más dinámicos de la compañía. Esta operación ",
       "companies": [
         "The Coca-Cola Company"
       ],
       "segments": [
+        "distribution_execution",
         "ma_and_strategy"
       ],
       "region": "Mundial"
     },
     {
       "title": "Constellation Brands (STZ) Stock Valuation After Analyst Updates And Strong Beer Segment In Fiscal 2026 Results - Yahoo Finance",
-      "summary": "Constellation Brands reportó resultados sólidos en su segmento cervecero para el fiscal 2026, generando actualizaciones positivas de analistas. La compañía, productora de marcas cerveceras líderes (Co",
+      "summary": "Constellation Brands reportó resultados sólidos en el segmento cervecero para el ejercicio fiscal 2026, generando actualizaciones positivas de analistas. La compañía, principal productor de cerveza en",
       "companies": [
         "Constellation Brands"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "PepsiCo expands farming work, partners with House of Treats for personalized drinks - TechStock²",
+      "summary": "PepsiCo avanza en agricultura sostenible y lanza una alianza estratégica con House of Treats para desarrollar bebidas personalizadas. Esta iniciativa combina control de cadena de suministro agrícola c",
+      "companies": [
+        "PepsiCo"
       ],
       "segments": [
         "consumer_market_trends"
