@@ -2138,18 +2138,8 @@
   ],
   "2026-06-21": [
     {
-      "title": "El consumo no frena su caída: el primer cuatrimestre cerró en rojo para súpers, mayoristas y shoppings",
-      "summary": "Las ventas en supermercados argentinos cayeron 3,7% interanual en abril, acumulando resultados negativos en el primer cuatrimestre según datos del INDEC. Esta contracción del consumo en canal retail i",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Local"
-    },
-    {
       "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
-      "summary": "La cerveza artesanal enfrenta una contracción significativa de consumo en el mercado argentino, forzando a productores a implementar ajustes de costos y restructuraciones operativas. Este segmento, qu",
+      "summary": "El segmento de cerveza artesanal enfrenta una contracción significativa por reducción del consumo, presión en costos operativos y cambios en preferencias de los consumidores. Esta crisis impacta direc",
       "companies": [],
       "segments": [
         "consumer_market_trends"
@@ -2157,22 +2147,19 @@
       "region": "Local"
     },
     {
-      "title": "Horas antes do jogo, clima de Copa movimenta bares paulistanos e impulsiona ativações de marcas",
-      "summary": "Eventos deportivos como la Copa del Mundo generan picos de consumo en bares y espacios de entretenimiento, activando estrategias de marketing de marcas de bebidas que aprovechan la concentración de co",
+      "title": "'O brasileiro descobriu o vinho', diz executivo da Concha y Toro - Folha de S.Paulo",
+      "summary": "Concha y Toro, principal productor de vinos de Chile, reporta un descubrimiento clave: el consumidor brasileño está incrementando significativamente su consumo de vino. Este posicionamiento del ejecut",
       "companies": [
-        "The Coca-Cola Company",
-        "AB InBev",
-        "Brown-Forman"
+        "Concha y Toro"
       ],
       "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
+        "consumer_market_trends"
       ],
       "region": "Regional"
     },
     {
       "title": "Mercado de bebidas: 4 de cada 10 jóvenes consumen a diario té listo para tomar - Agencia Peruana de Noticias | ANDINA",
-      "summary": "El 40% de jóvenes en Perú consume diariamente té listo para tomar, señalando una tendencia consolidada de consumo de bebidas preparadas en el segmento de ready-to-drink. Este dato es estratégico para ",
+      "summary": "El 40% de jóvenes consume té listo para tomar diariamente en Perú, evidenciando una oportunidad de mercado significativa en bebidas funcionales y ready-to-drink. Este comportamiento de consumo sugiere",
       "companies": [
         "Embotelladora Andina"
       ],
@@ -2183,7 +2170,7 @@
     },
     {
       "title": "RTD y conveniencia: el ‘match’ perfecto que enfrenta a la cerveza, ¿mercado se reconfigura?",
-      "summary": "Las bebidas alcohólicas listas para consumir (RTD) están ganando terreno en el segmento de entretenimiento y consumo social en Perú, desafiando la dominancia histórica de la cerveza. Con 8 de cada 10 ",
+      "summary": "Los RTD (Ready-to-Drink) están ganando tracción en el mercado de bebidas alcohólicas, desplazando participación de la cerveza tradicional en momentos de conveniencia y socialización. En Perú, 8 de cad",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2192,8 +2179,17 @@
       "region": "Regional"
     },
     {
+      "title": "Menos vino, más experiencias: la industria chilena se reinventa para enfrentar la caída histórica del consumo - Portafolio.co",
+      "summary": "La industria vinícola chilena enfrenta una caída histórica en el consumo y está pivoteando su estrategia hacia experiencias y turismo enológico para diversificar ingresos. Este cambio refleja una tran",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Regional"
+    },
+    {
       "title": "Coca-Cola Femsa Announces Board Changes Amid Falling First Quarter Revenue - HarianBasis.co",
-      "summary": "Coca-Cola Femsa reportó caída de ingresos en el primer trimestre y anunció cambios en su estructura de gobierno corporativo. Como principal embotellador de Coca-Cola en Latinoamérica (incluyendo Argen",
+      "summary": "Coca-Cola Femsa reportó caída de ingresos en el primer trimestre y anunció cambios en su estructura de gobierno corporativo. Estos movimientos en la junta directiva, combinados con el desempeño financ",
       "companies": [
         "The Coca-Cola Company",
         "Coca-Cola FEMSA"
@@ -2204,8 +2200,32 @@
       "region": "Mundial"
     },
     {
+      "title": "PepsiCo just debuted a new limited-edition soda that's guaranteed to sell out - MSN",
+      "summary": "PepsiCo lanzó una nueva bebida gaseosa de edición limitada con estrategia de scarcity marketing. Este movimiento responde a la tendencia de crear demanda mediante limitación de disponibilidad y exclus",
+      "companies": [
+        "PepsiCo"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "marketing_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Coca-Cola Europacific Partners Stock - Long-term bottling strategy in focus - AD HOC NEWS",
+      "summary": "Coca-Cola Europacific Partners enfatiza su estrategia de embotellamiento a largo plazo como foco central. Este movimiento es relevante para Argentina dado que CCEP es uno de los principales embotellad",
+      "companies": [
+        "The Coca-Cola Company",
+        "Coca-Cola Europacific Partners"
+      ],
+      "segments": [
+        "distribution_execution"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "WMS Group LLC Invests $1.11 Million in Monster Beverage Corporation $MNST - MarketBeat",
-      "summary": "WMS Group LLC realizó una inversión de $1.11 millones en Monster Beverage Corporation, señalando movimiento de capital institucional en uno de los mayores productores de bebidas energéticas del mercad",
+      "summary": "WMS Group LLC realizó una inversión de $1,11 millones en Monster Beverage Corporation, evidenciando el interés institucional continuado en la compañía. Este movimiento refleja confianza en los fundame",
       "companies": [
         "Monster Beverage"
       ],
@@ -2216,7 +2236,7 @@
     },
     {
       "title": "Vinos Q incorpora Paragraph a su selección de vinos desalcolizados",
-      "summary": "Vinos Q incorporará a su portafolio de distribución Paragraph, un vino desalcolizado tipo Tempranillo español a partir de julio de 2026. Esta adición responde a la creciente demanda de bebidas alcohól",
+      "summary": "Vinos Q incorporará Paragraph, un vino desalcolizado premium español (Tempranillo), a su portafolio de distribución a partir de julio 2026. El producto posiciona a la empresa en el segmento de bebidas",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2225,30 +2245,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Pernod Ricard Stock - long-term spirits strategy on a quiet news day - AD HOC NEWS",
-      "summary": "Pernod Ricard comunica sobre su estrategia de largo plazo en spirits en un contexto de mercado con pocas noticias relevantes. La noticia cubre movimientos estratégicos del segundo mayor grupo de bebid",
-      "companies": [
-        "Pernod Ricard"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Asahi Group partners with Varun Beverages to launch CALPIS dairy-based drinks in India - Dairy Business Middle East & Africa",
-      "summary": "Asahi Group expandió su portafolio de bebidas lácteas CALPIS en India a través de una alianza estratégica con Varun Beverages, uno de los mayores embotelladores del país. Esta asociación posiciona a C",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Suntory Beverage & Food (TSE:2587) Stock Could Be 56% Below Fair Value After Australia Launch - simplywall.st",
-      "summary": "Suntory Beverage & Food amplía su presencia geográfica con entrada al mercado australiano, operación que analistas valúan como significativamente subpreciada en bolsa (potencial upside de 56%). La exp",
+      "summary": "Suntory Beverage & Food evalúa una expansión significativa en Australia, mercado clave de bebidas. El análisis sugiere que la valuación de la compañía podría estar 56% por debajo de su valor justo con",
       "companies": [
         "Suntory Beverage & Food"
       ],
@@ -2258,19 +2256,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Ambev Stock: Don’t Ignore This High-Quality Beverage Leader (NYSE:ABEV) - Seeking Alpha",
-      "summary": "Análisis de valoración de Ambev (NYSE:ABEV), uno de los mayores productores de bebidas a nivel mundial, destacando su posición como empresa de alta calidad en el sector. La nota enfatiza la importanci",
-      "companies": [
-        "Ambev"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Brown-Forman Stock - long-term whiskey business under scrutiny after cash flow update - AD HOC NEWS",
-      "summary": "Brown-Forman enfrenta escrutinio del mercado tras un reporte de flujo de caja que cuestiona la sostenibilidad de su negocio de whisky a largo plazo. La noticia afecta a un competidor clave en spirits,",
+      "summary": "Brown-Forman, productor global de whiskey y bebidas alcohólicas, enfrenta escrutinio del mercado tras actualización de flujo de caja que cuestiona la sostenibilidad de su modelo de negocio a largo pla",
       "companies": [
         "Brown-Forman"
       ],
@@ -2281,7 +2268,7 @@
     },
     {
       "title": "Thai Beverage Stock - Saturday look at long-term strategy and earnings drivers - AD HOC NEWS",
-      "summary": "Thai Beverage presenta un análisis de su estrategia de largo plazo y drivers de ganancias. Como uno de los mayores productores de bebidas en Asia del Sureste, cualquier comunicación sobre estrategia c",
+      "summary": "Análisis de la estrategia de largo plazo y los impulsores de ganancias de Thai Beverage, productor global de bebidas alcohólicas y no alcohólicas con presencia en múltiples mercados. Este tipo de anál",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2291,7 +2278,7 @@
     },
     {
       "title": "Ireland's sugar tax on soft drinks worked — now it's time to make it even tougher, researchers say - The Journal",
-      "summary": "Irlanda reporta resultados positivos de su impuesto a bebidas azucaradas, con investigadores recomendando incrementar la presión fiscal. Este precedente regulatorio en Europa es crítico para empresas ",
+      "summary": "Investigadores irlandeses reportan que el impuesto a bebidas azucaradas implementado en Irlanda logró reducir el consumo de azúcar, generando evidencia de efectividad de esta política fiscal. El estud",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2301,31 +2288,10 @@
     },
     {
       "title": "Beta-Amylase Enzyme Market Forecast Points Higher Toward 2035, Driven by Beverage Processing Demand - IndexBox",
-      "summary": "El mercado global de enzimas beta-amilasa crecerá hacia 2035 impulsado por la demanda de procesamiento en bebidas. Esta enzima es crítica en la producción de bebidas fermentadas y destiladas, mejorand",
+      "summary": "El mercado de enzimas beta-amilasa muestra proyecciones de crecimiento hacia 2035, impulsado por la demanda en procesamiento de bebidas. Esta enzima es clave en la conversión de almidones en azúcares ",
       "companies": [],
       "segments": [
         "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Menos vino, más experiencias: la industria chilena se reinventa para enfrentar la caída histórica del consumo - Portafolio.co",
-      "summary": "La industria vinícola chilena enfrenta una caída histórica del consumo y pivota su estrategia hacia experiencias complementarias (enoturismo, eventos, educación) para retener valor y relevancia. Este ",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Coca-Cola Europacific Partners Stock - Long-term bottling strategy in focus - AD HOC NEWS",
-      "summary": "Coca-Cola Europacific Partners (CCEP) enfatiza su estrategia de embotellamiento a largo plazo como foco central. CCEP es el principal embotellador de Coca-Cola en Europa, Asia Pacífico y Sudáfrica, cu",
-      "companies": [
-        "The Coca-Cola Company",
-        "Coca-Cola Europacific Partners"
-      ],
-      "segments": [
-        "distribution_execution"
       ],
       "region": "Mundial"
     }
