@@ -1,303 +1,4 @@
 {
-  "2026-06-13": [
-    {
-      "title": "Arca Continental, embotelladora de Coca-Cola, alista cambios en planta de Pucusana: los detalles",
-      "summary": "Arca Continental, principal embotelladora de Coca-Cola en Perú, implementará modificaciones operativas en su planta Pucusana de Lima, enfocándose en optimizar su infraestructura logística y el taller ",
-      "companies": [
-        "The Coca-Cola Company",
-        "Arca Continental"
-      ],
-      "segments": [
-        "distribution_execution",
-        "ma_and_strategy"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Sparky, la IA de Walmart habla español y eleva el ticket promedio: así transforma la compra digital y física con datos",
-      "summary": "Walmart lanzó Sparky, un asistente de IA en español que incrementa el ticket promedio de usuarios 35% versus no usuarios. La herramienta se integra en la estrategia omnicanal de Walmart (tiendas físic",
-      "companies": [
-        "Walmart"
-      ],
-      "segments": [
-        "ma_and_strategy"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Innovación en bebidas: las marcas que apuestan por mocktails, energía y premiumización en 2026",
-      "summary": "Las marcas Mingle Mood, Tenzing, Cockburn's y Brisa Ardiente están impulsando tendencias clave en 2026: mocktails premium, bebidas energéticas innovadoras y premiumización del portafolio. Esta estrate",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Sazerac unveils Svedka Vodka Water RTDs",
-      "summary": "Sazerac lanza Svedka Vodka Water, una línea de bebidas RTD en latas completamente transparentes, posicionada como la primera vodka water enlatada transparente del mercado. El lanzamiento responde a la",
-      "companies": [
-        "Sazerac Company"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "packaging_sustainability"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Why Jack Daniel’s Halo MK1 is set to be ‘iconic’",
-      "summary": "Brown-Forman lanzó Halo MK1, una edición limitada de Jack Daniel's Tennessee whiskey con packaging innovador que replica la estructura de halo de seguridad de los monoplazas McLaren de Fórmula 1. La e",
-      "companies": [
-        "Brown-Forman"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Dad Grass Wins BevNET's New Beverage Showdown 31 | Brewbound",
-      "summary": "Dad Grass ganó la competencia BevNET New Beverage Showdown 31, un concurso bianual que reconoce innovación en bebidas. El premio lo posiciona junto a marcas consolidadas como Health-Ade y Poppi, indic",
-      "companies": [
-        "Poppi"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Supreme Brand Champion 2026: Royal Stag",
-      "summary": "Royal Stag, marca propiedad de Pernod Ricard, se convirtió en el whisky número uno de India en 2025 con 32.6 millones de cajas de 9 litros (crecimiento del 5%), desplazando a su competidor previo. El ",
-      "companies": [
-        "Pernod Ricard"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Absolut named vodka partner of Madonna’s new album",
-      "summary": "Pernod Ricard ha posicionado su marca Absolut como socio oficial de vodka del nuevo álbum de Madonna 'Confessions II', lanzado el 3 de julio. La asociación incluye una campaña estival enfocada en cóct",
-      "companies": [
-        "Pernod Ricard"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Coca-Cola bottler SLMG sees zero-calorie drinks contributing up to 6% of sales as demand surges - Moneycontrol.com",
-      "summary": "El embotellador de Coca-Cola SLMG proyecta que las bebidas sin calorías alcancen hasta el 6% de sus ventas totales, impulsadas por creciente demanda de productos saludables. Este cambio refleja un rep",
-      "companies": [
-        "The Coca-Cola Company"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "JAB completes exit from Keurig Dr Pepper with sale of remaining 4.3% stake | FoodBev Media",
-      "summary": "JAB Holding Company completó su salida de Keurig Dr Pepper (KDP) mediante la venta de su participación remanente del 4,3% (aproximadamente 59,1 millones de acciones). Este movimiento ocurre tras la ad",
-      "companies": [
-        "Keurig Dr Pepper"
-      ],
-      "segments": [
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Boston Beer Co Stock (US1124631004): Quarterly earnings put SAM in focus - AD HOC NEWS",
-      "summary": "Boston Beer Company reportó resultados trimestrales que posicionan a la compañía bajo escrutinio del mercado. La noticia es relevante para entender la dinámica de un competidor global clave en bebidas",
-      "companies": [
-        "Boston Beer Company"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Tetra Pak Updates Nature Strategy to Strengthen Responsible Sourcing and Water Resilience - Food & Beverage Outlook",
-      "summary": "Tetra Pak actualizó su estrategia de sustentabilidad enfocándose en aprovisionamiento responsable y resiliencia hídrica. Esta iniciativa es crítica para los fabricantes de bebidas argentinos dado que ",
-      "companies": [
-        "Tetra Pak"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Heinz x Heineken six-pack: limited-edition match of beer and ketchup - AD HOC NEWS",
-      "summary": "Heinz y Heineken lanzaron una edición limitada de six-pack que combina cerveza con ketchup, representando una estrategia de co-branding entre dos marcas globales de categorías adyacentes. Esta iniciat",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "SMI’s latest packaging innovations revealed at Interpack 2026 | FoodBev Media",
-      "summary": "SMI presentó en Interpack 2026 su máquina empacadora SFP 30 de película estirable, diseñada para reducir consumo de energía, materiales y costos operativos comparado con empaques de película termo-enc",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "The Coca-Cola Company Stock (US1912161007): Morgan Stanley flags KO as top beverage pick with Fairli - AD HOC NEWS",
-      "summary": "Morgan Stanley posicionó a The Coca-Cola Company (KO) como su principal recomendación en el sector de bebidas. Esta evaluación de analistas clave refleja confianza en la estrategia corporativa y persp",
-      "companies": [
-        "The Coca-Cola Company"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Constellation Brands (STZ) Is a Beer-Led Cash Engine, Not Just a Wine Reset Story - AlphaStreet",
-      "summary": "Constellation Brands (STZ), principal productor de cerveza en América del Norte y propietario de marcas como Corona y Modelo, demuestra ser un generador de flujo de caja robusto impulsado por su negoc",
-      "companies": [
-        "Constellation Brands"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Top Monster Beverage Executive Makes a Major Stock Move Investors Can’t Ignore - TipRanks",
-      "summary": "Un ejecutivo senior de Monster Beverage realizó una operación significativa de compra/venta de acciones de la compañía. Este tipo de movimientos de insiders son indicadores del sentimiento de la gesti",
-      "companies": [
-        "Monster Beverage"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Does Monster Beverage’s Board Shift Signal An Evolving Global Strategy For MNST Investors? - simplywall.st",
-      "summary": "Monster Beverage experimenta cambios en su estructura de board que podrían indicar una reorientación estratégica global. Los movimientos en la junta directiva suelen anticipar cambios en la dirección ",
-      "companies": [
-        "Monster Beverage"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Canned Wine Group unveils new head of sales Grant Allen - Harpers Wine & Spirit Trade News",
-      "summary": "Canned Wine Group nombró a Grant Allen como su primer Head of Sales, ejecutivo con 20 años de experiencia en la industria de bebidas que proviene de Carlsberg Britvic. El movimiento refleja la madurac",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "El vino italiano resiste en Estados Unidos pese al golpe arancelario",
-      "summary": "Las exportaciones de vino italiano a Estados Unidos registran caídas por aranceles, pero mantienen alta fidelidad de consumidores que absorben aumentos de precio. El mercado estadounidense sigue siend",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "BevNET Live Day Two Recap: The Intoxicating Hemp Beverage Industry's Next Move | Brewbound",
-      "summary": "BevNET Live 2026 presentó tendencias clave en la industria de bebidas: el crecimiento de bebidas de cáñamo con propiedades relajantes e intoxicantes, adopción de IA en estrategias de branding y perspe",
-      "companies": [],
-      "segments": [
-        "alternative_ingredients",
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "The changing fortunes of alcohol in a K-shaped economy",
-      "summary": "La industria de bebidas alcohólicas enfrenta una bifurcación de mercado acelerada por inflación y cambios de comportamiento de consumo. Mientras persiste la tendencia global de 'beber menos, pero mejo",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "FlavorSum acquires Beverage Flavors International",
-      "summary": "FlavorSum adquirió Beverage Flavors International, proveedor especializado en bases de sabores y soluciones edulcorantes para bebidas. Esta operación fortalece la cadena de suministro de ingredientes ",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "From Chengdu to the World, Pernod Ricard, the worldwide leader in the spirits industry showcases Chinese Whisky \"THE CHUAN\" through Hong Kong - Yahoo Finance",
-      "summary": "Pernod Ricard, líder mundial en bebidas espirituosas, lanza 'THE CHUAN', un whisky chino producido en Chengdu, a través de Hong Kong como puerta de distribución internacional. Esta estrategia de expan",
-      "companies": [
-        "Pernod Ricard"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Ambev SA (ADR) Stock (US02319V1035): Sector view on the Latin American brewer - AD HOC NEWS",
-      "summary": "Análisis sectorial de Ambev SA, principal cervecera de América Latina con cotización en ADR (NYSE). La noticia examina la posición competitiva y perspectivas de la empresa en su mercado regional clave",
-      "companies": [
-        "Ambev"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Brown-Forman Corp. Stock (US1170431092): valuation focus on premium spirits player - AD HOC NEWS",
-      "summary": "Brown-Forman, uno de los mayores productores de bebidas alcohólicas premium globales, es objeto de análisis de valuación enfocado en su posicionamiento en el segmento de destilados premium. La compañí",
-      "companies": [
-        "Brown-Forman"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Pernod Ricard S.A. Stock (FR0000130577): valuation focus as spirits group navigates slower demand - AD HOC NEWS",
-      "summary": "Pernod Ricard enfrenta una demanda más lenta en su negocio de destilados, lo que genera presión en su valuación de mercado. Este movimiento es relevante para la industria de bebidas alcohólicas premiu",
-      "companies": [
-        "Pernod Ricard"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    }
-  ],
   "2026-06-14": [
     {
       "title": "Arca Continental, embotelladora de Coca-Cola, alista cambios en planta de Pucusana: los detalles",
@@ -2430,6 +2131,200 @@
       "companies": [],
       "segments": [
         "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Mundial"
+    }
+  ],
+  "2026-06-21": [
+    {
+      "title": "El consumo no frena su caída: el primer cuatrimestre cerró en rojo para súpers, mayoristas y shoppings",
+      "summary": "Las ventas en supermercados argentinos cayeron 3,7% interanual en abril, acumulando resultados negativos en el primer cuatrimestre según datos del INDEC. Esta contracción del consumo en canal retail i",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Local"
+    },
+    {
+      "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
+      "summary": "La cerveza artesanal enfrenta una contracción significativa de consumo en el mercado argentino, forzando a productores a implementar ajustes de costos y restructuraciones operativas. Este segmento, qu",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Local"
+    },
+    {
+      "title": "Horas antes do jogo, clima de Copa movimenta bares paulistanos e impulsiona ativações de marcas",
+      "summary": "Eventos deportivos como la Copa del Mundo generan picos de consumo en bares y espacios de entretenimiento, activando estrategias de marketing de marcas de bebidas que aprovechan la concentración de co",
+      "companies": [
+        "The Coca-Cola Company",
+        "AB InBev",
+        "Brown-Forman"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Mercado de bebidas: 4 de cada 10 jóvenes consumen a diario té listo para tomar - Agencia Peruana de Noticias | ANDINA",
+      "summary": "El 40% de jóvenes en Perú consume diariamente té listo para tomar, señalando una tendencia consolidada de consumo de bebidas preparadas en el segmento de ready-to-drink. Este dato es estratégico para ",
+      "companies": [
+        "Embotelladora Andina"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "RTD y conveniencia: el ‘match’ perfecto que enfrenta a la cerveza, ¿mercado se reconfigura?",
+      "summary": "Las bebidas alcohólicas listas para consumir (RTD) están ganando terreno en el segmento de entretenimiento y consumo social en Perú, desafiando la dominancia histórica de la cerveza. Con 8 de cada 10 ",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "product_innovation"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Coca-Cola Femsa Announces Board Changes Amid Falling First Quarter Revenue - HarianBasis.co",
+      "summary": "Coca-Cola Femsa reportó caída de ingresos en el primer trimestre y anunció cambios en su estructura de gobierno corporativo. Como principal embotellador de Coca-Cola en Latinoamérica (incluyendo Argen",
+      "companies": [
+        "The Coca-Cola Company",
+        "Coca-Cola FEMSA"
+      ],
+      "segments": [
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "WMS Group LLC Invests $1.11 Million in Monster Beverage Corporation $MNST - MarketBeat",
+      "summary": "WMS Group LLC realizó una inversión de $1.11 millones en Monster Beverage Corporation, señalando movimiento de capital institucional en uno de los mayores productores de bebidas energéticas del mercad",
+      "companies": [
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Vinos Q incorpora Paragraph a su selección de vinos desalcolizados",
+      "summary": "Vinos Q incorporará a su portafolio de distribución Paragraph, un vino desalcolizado tipo Tempranillo español a partir de julio de 2026. Esta adición responde a la creciente demanda de bebidas alcohól",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "non_alcoholic_beverages"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Pernod Ricard Stock - long-term spirits strategy on a quiet news day - AD HOC NEWS",
+      "summary": "Pernod Ricard comunica sobre su estrategia de largo plazo en spirits en un contexto de mercado con pocas noticias relevantes. La noticia cubre movimientos estratégicos del segundo mayor grupo de bebid",
+      "companies": [
+        "Pernod Ricard"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Asahi Group partners with Varun Beverages to launch CALPIS dairy-based drinks in India - Dairy Business Middle East & Africa",
+      "summary": "Asahi Group expandió su portafolio de bebidas lácteas CALPIS en India a través de una alianza estratégica con Varun Beverages, uno de los mayores embotelladores del país. Esta asociación posiciona a C",
+      "companies": [
+        "Asahi Group"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Suntory Beverage & Food (TSE:2587) Stock Could Be 56% Below Fair Value After Australia Launch - simplywall.st",
+      "summary": "Suntory Beverage & Food amplía su presencia geográfica con entrada al mercado australiano, operación que analistas valúan como significativamente subpreciada en bolsa (potencial upside de 56%). La exp",
+      "companies": [
+        "Suntory Beverage & Food"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Ambev Stock: Don’t Ignore This High-Quality Beverage Leader (NYSE:ABEV) - Seeking Alpha",
+      "summary": "Análisis de valoración de Ambev (NYSE:ABEV), uno de los mayores productores de bebidas a nivel mundial, destacando su posición como empresa de alta calidad en el sector. La nota enfatiza la importanci",
+      "companies": [
+        "Ambev"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Brown-Forman Stock - long-term whiskey business under scrutiny after cash flow update - AD HOC NEWS",
+      "summary": "Brown-Forman enfrenta escrutinio del mercado tras un reporte de flujo de caja que cuestiona la sostenibilidad de su negocio de whisky a largo plazo. La noticia afecta a un competidor clave en spirits,",
+      "companies": [
+        "Brown-Forman"
+      ],
+      "segments": [
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Thai Beverage Stock - Saturday look at long-term strategy and earnings drivers - AD HOC NEWS",
+      "summary": "Thai Beverage presenta un análisis de su estrategia de largo plazo y drivers de ganancias. Como uno de los mayores productores de bebidas en Asia del Sureste, cualquier comunicación sobre estrategia c",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Ireland's sugar tax on soft drinks worked — now it's time to make it even tougher, researchers say - The Journal",
+      "summary": "Irlanda reporta resultados positivos de su impuesto a bebidas azucaradas, con investigadores recomendando incrementar la presión fiscal. Este precedente regulatorio en Europa es crítico para empresas ",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "regulation_tax_policy"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Beta-Amylase Enzyme Market Forecast Points Higher Toward 2035, Driven by Beverage Processing Demand - IndexBox",
+      "summary": "El mercado global de enzimas beta-amilasa crecerá hacia 2035 impulsado por la demanda de procesamiento en bebidas. Esta enzima es crítica en la producción de bebidas fermentadas y destiladas, mejorand",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Menos vino, más experiencias: la industria chilena se reinventa para enfrentar la caída histórica del consumo - Portafolio.co",
+      "summary": "La industria vinícola chilena enfrenta una caída histórica del consumo y pivota su estrategia hacia experiencias complementarias (enoturismo, eventos, educación) para retener valor y relevancia. Este ",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Coca-Cola Europacific Partners Stock - Long-term bottling strategy in focus - AD HOC NEWS",
+      "summary": "Coca-Cola Europacific Partners (CCEP) enfatiza su estrategia de embotellamiento a largo plazo como foco central. CCEP es el principal embotellador de Coca-Cola en Europa, Asia Pacífico y Sudáfrica, cu",
+      "companies": [
+        "The Coca-Cola Company",
+        "Coca-Cola Europacific Partners"
+      ],
+      "segments": [
         "distribution_execution"
       ],
       "region": "Mundial"
