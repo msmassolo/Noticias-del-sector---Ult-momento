@@ -14,7 +14,7 @@ No hay backend ni base de datos. El estado operativo vive en archivos versionado
 - `published_urls.json`: deduplicación rolling (7 días) de URLs y títulos publicados.
 - `weekly_log.json`: artículos publicados acumulados (rolling 7 días), base del resumen semanal.
 - `weekly_summary.json`: resumen semanal generado por LLM (se regenera los viernes o al cruzar 4 días mínimos).
-- `data/*.json`: intermedios y diagnósticos por corrida (no commiteado). Incluye `candidates.json`, `accepted_candidates.json`, `articles.json`, `diagnostics.json`, `llm_cache.json` y `google_cse_usage.json`.
+- `data/*.json`: intermedios y diagnósticos por corrida (no commiteado). Incluye `candidates.json`, `accepted_candidates.json`, `articles.json`, `diagnostics.json` y `llm_cache.json`.
 - `index.html`: salida web generada.
 
 ## Volumen esperado
@@ -33,8 +33,8 @@ Argumentos:
 - `--limit`: máximo de candidatos que se intentan extraer. Default: `120`.
 - `--target-count`: tope superior flexible. Default: `50`.
 - `--min-per-region`: piso por Local/Regional/Mundial cuando hay calidad. Default: `4`.
-- `--max-search-queries`: límite de búsquedas (Google CSE o Google News RSS). Default: `90`.
-- `--no-search`: desactiva búsqueda activa (CSE y Google News RSS).
+- `--max-search-queries`: límite de búsquedas (Google News RSS). Default: `90`.
+- `--no-search`: desactiva búsqueda activa (Google News RSS).
 - `--min-body-length`: mínimo de caracteres de body para publicar. Default: `80`.
 - `--production`: activa defaults de producción (limit=120, target=50, local=8, regional=8, mundial=34, queries=90).
 - `--debug`: logging debug.
@@ -44,7 +44,7 @@ Argumentos:
 Orquestación en [beverage_news/pipeline.py](beverage_news/pipeline.py):
 
 1. Carga `sources`, `companies` y `keywords`.
-2. `discover_candidates` recolecta candidatos (RSS + secciones + Google CSE o Google News RSS).
+2. `discover_candidates` recolecta candidatos (RSS + secciones + Google News RSS).
 3. Escribe `data/candidates.json`.
 4. `filter_candidates` rechaza ruido, viejos, duplicados, off-topic, etc.
 5. `rank_items` calcula score por candidato.
@@ -70,8 +70,7 @@ Canales:
 - RSS explícitos declarados en `sources.json`.
 - RSS detectados desde `<link rel="alternate">`.
 - Secciones HTML configuradas (recorre `<a>`).
-- **Google Custom Search API** (CSE) si `GOOGLE_API_KEY` y `GOOGLE_CSE_ID` están en `.env`. Quota guard: cap en 95 queries/día (free tier = 100), rastreado en `data/google_cse_usage.json`. Si quota agotada, cae automáticamente a Google News RSS. Ante **HTTP 403** (típicamente "Custom Search JSON API" no habilitada en el proyecto GCP de la key, key inválida o restricción referer/IP) aborta el CSE en la primera query —no reintenta las ~28— y cae a RSS; el motivo real de Google se guarda en `diagnostics.search_errors[].api_reason` / `api_message`. Habilitar la API: https://console.cloud.google.com/apis/library/customsearch.googleapis.com
-- **Google News RSS** como fallback si CSE no configurado o quota agotada.
+- **Google News RSS** como canal de búsqueda activa (gratuito, sin API key). Se usó Google Custom Search API (CSE) hasta 2026-06-23; se descartó porque Google exige una cuenta de facturación vinculada al proyecto GCP incluso para el tramo gratuito (100 queries/día), y se decidió no vincular tarjeta. Si en el futuro se reconsidera, el código de referencia quedó en el historial de git (commit antes de `revert: eliminar integración Google CSE`).
 
 Para Google News se parsea el HTML del item RSS y se prefiere el primer enlace al medio original antes que el redirect `news.google.com`.
 
@@ -160,8 +159,6 @@ GITHUB_TOKEN=...
 GITHUB_OWNER=...
 GITHUB_REPO=...
 ANTHROPIC_API_KEY=...
-GOOGLE_API_KEY=...       # Google Custom Search API (opcional, 100 queries/día gratis)
-GOOGLE_CSE_ID=...        # ID del Custom Search Engine
 ```
 
 Las mismas variables deben existir como **GitHub Secrets** para que el workflow de Actions funcione.
@@ -177,12 +174,6 @@ Campos: `name`, `country`, `segments`, `aliases`, `requires_industry_context` (o
 ### `config/keywords.json`
 
 Diccionario `categoría → términos`. 12 categorías. Matching accent-insensitive. Incluye términos en español, inglés y portugués. Categorías estratégicas con mayor peso en ranking: `financial_results`, `ma_and_strategy`, `risk_crisis_reputation`.
-
-## Google Custom Search API
-
-CSE configurado con los 40 dominios de mayor prioridad (sin RSS propio o RSS débil). El plan gratuito permite 50 sitios máximo en el CSE.
-
-Quota guard: `data/google_cse_usage.json` registra `{date, count}`. Límite operativo: 95 queries/día. Si se agota o Google devuelve 429, el pipeline cae automáticamente a Google News RSS para esa corrida. Al día siguiente el contador se resetea.
 
 ## Diagnóstico operativo
 
@@ -218,7 +209,7 @@ Modelo de amenaza: el pipeline ingiere contenido no confiable (RSS, scraping, re
 | XSS almacenado | Todo contenido dinámico vía `html.escape`; `href` vía `_safe_url` (solo `http`/`https`). | `web.py` |
 | SSRF | `_is_safe_url`: solo `http`/`https`, bloqueo de IPs privadas/loopback/link-local/reservadas. Cap de respuesta 5 MB. | `http.py` |
 | Crecimiento sin límite | Ventanas rolling podadas: `published_urls.json` y `weekly_log.json` a 7 días en cada guardado. | `pipeline.py` |
-| Quota / costo APIs | CSE: cap 95 queries/día (`google_cse_usage.json`), fallback a Google News RSS al agotarse o ante 429. Anthropic: delay 13 s entre llamadas; volumen acotado por `--target-count`; caché diaria `llm_cache.json`. | `discovery.py`, `llm.py` |
+| Quota / costo APIs | Anthropic: delay 13 s entre llamadas; volumen acotado por `--target-count`; caché diaria `llm_cache.json`. Google News RSS no requiere API key ni tiene costo. | `llm.py` |
 
 **Residuales conocidos (aceptados):**
 

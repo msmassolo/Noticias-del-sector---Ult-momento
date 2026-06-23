@@ -1,12 +1,9 @@
 import email.utils
-import json
 import logging
-import os
 import re
 import xml.etree.ElementTree as ET
 from datetime import datetime, timedelta, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from pathlib import Path
 from urllib.parse import quote_plus
 
 from bs4 import BeautifulSoup
@@ -20,37 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 GOOGLE_NEWS_RSS = "https://news.google.com/rss/search?q={query}&hl={hl}&gl={gl}&ceid={ceid}"
-GOOGLE_CSE_URL = "https://www.googleapis.com/customsearch/v1"
 
-# Free tier: 100 queries/day. We cap at 95 to leave 5 of safety buffer.
-_CSE_DAILY_LIMIT = 95
-_CSE_USAGE_FILE = Path("data/google_cse_usage.json")
-
-
-def _cse_load_usage() -> dict:
-    if not _CSE_USAGE_FILE.exists():
-        return {"date": "", "count": 0}
-    try:
-        with open(_CSE_USAGE_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except Exception:
-        return {"date": "", "count": 0}
-
-
-def _cse_save_usage(count: int) -> None:
-    _CSE_USAGE_FILE.parent.mkdir(exist_ok=True)
-    today = datetime.now(timezone.utc).date().isoformat()
-    with open(_CSE_USAGE_FILE, "w", encoding="utf-8") as f:
-        json.dump({"date": today, "count": count}, f)
-
-
-def _cse_remaining_quota() -> int:
-    """Returns how many CSE queries we can still make today."""
-    today = datetime.now(timezone.utc).date().isoformat()
-    usage = _cse_load_usage()
-    if usage.get("date") != today:
-        return _CSE_DAILY_LIMIT  # New day, full quota
-    return max(0, _CSE_DAILY_LIMIT - usage.get("count", 0))
 REGION_LOCALES = {
     "local": ("es-419", "AR", "AR:es-419"),
     "regional": ("es-419", "CL", "CL:es-419"),
@@ -496,188 +463,6 @@ def discover_from_google_news(companies, keywords, sources, diagnostics, max_que
     return candidates
 
 
-def discover_from_google_cse(companies, keywords, sources, diagnostics, max_queries=50):
-    """
-    Discover candidates via Google Custom Search JSON API.
-    Requires GOOGLE_API_KEY and GOOGLE_CSE_ID env vars.
-    Free tier: 100 queries/day. Hard cap at 95 to leave safety buffer.
-    Returns (candidates, quota_exhausted: bool).
-    """
-    api_key = os.environ.get("GOOGLE_API_KEY", "").strip()
-    cse_id = os.environ.get("GOOGLE_CSE_ID", "").strip()
-    if not api_key or not cse_id:
-        logger.warning("Google CSE: GOOGLE_API_KEY or GOOGLE_CSE_ID not set — skipping CSE discovery")
-        return [], False
-
-    remaining = _cse_remaining_quota()
-    if remaining == 0:
-        logger.warning("Google CSE: daily quota exhausted (limit=%d) — skipping CSE, will use Google News RSS", _CSE_DAILY_LIMIT)
-        return [], True  # Signal caller to fall back
-
-    source_by_domain = {domain_of(source.url): source for source in sources}
-
-    # High-priority queries: local Argentine + key companies + strategic
-    queries = []
-
-    # Local Argentine queries (highest priority — weakest coverage from RSS)
-    local_queries = [
-        ('"bebidas" Argentina resultados OR lanzamiento OR estrategia', "Local"),
-        ('"cerveza" Argentina noticias OR novedades', "Local"),
-        ('"vino" Argentina exportaciones OR bodega OR resultados', "Local"),
-        ('"mosto" OR "mosto concentrado" Argentina exportacion', "Local"),
-        ('"Grupo Cepas" OR "Gancia" OR "Terma" Argentina', "Local"),
-        ('"Quilmes" cerveza Argentina', "Local"),
-        ('"Coca-Cola" OR "PepsiCo" Argentina bebidas', "Local"),
-        ('"gaseosas" OR "bebidas sin alcohol" Argentina consumo', "Local"),
-        ('"distribucion" bebidas Argentina canal', "Local"),
-        ('"vitivinicola" OR "bodega" Argentina novedades', "Local"),
-    ]
-    queries.extend(local_queries)
-
-    # Key company queries (top global players)
-    priority_companies = [
-        "AB InBev", "Diageo", "Pernod Ricard", "Heineken", "Campari Group",
-        "The Coca-Cola Company", "PepsiCo", "Constellation Brands", "Monster Beverage",
-        "Red Bull", "Coca-Cola FEMSA", "Ambev",
-    ]
-    for company_name in priority_companies:
-        queries.append((f'"{company_name}" beverage news results acquisition', "Mundial"))
-
-    # Strategic global terms
-    strategic = [
-        ("beverage industry M&A acquisition 2026", "Mundial"),
-        ("beer spirits wine earnings results 2026", "Mundial"),
-        ("beverage innovation launch functional drink", "Mundial"),
-        ("alcohol regulation sugar tax beverage policy", "Mundial"),
-        ("bebidas LATAM resultados lanzamiento", "Regional"),
-        ("cerveza vino LATAM tendencias mercado", "Regional"),
-    ]
-    queries.extend(strategic)
-
-    # Respect both the configured max and the remaining daily quota
-    effective_max = min(max_queries, remaining)
-    queries = queries[:effective_max]
-
-    today = datetime.now(timezone.utc).date().isoformat()
-    usage = _cse_load_usage()
-    used_count = usage.get("count", 0) if usage.get("date") == today else 0
-
-    candidates = []
-    errors = 0
-    quota_exhausted = False
-
-    for query_text, region in queries:
-        try:
-            params = {
-                "key": api_key,
-                "cx": cse_id,
-                "q": query_text,
-                "num": 10,
-                "dateRestrict": "d2",
-                "sort": "date",
-            }
-            resp = SESSION.get(GOOGLE_CSE_URL, params=params, timeout=10)
-
-            if resp.status_code == 429:
-                # Google returned quota-exceeded — stop immediately and fall back
-                logger.warning("Google CSE: 429 quota exceeded — stopping, falling back to Google News RSS")
-                diagnostics["search_errors"].append({"region": region, "query": query_text, "reason": "cse_quota_429"})
-                _cse_save_usage(_CSE_DAILY_LIMIT)  # Mark as exhausted for the rest of the day
-                quota_exhausted = True
-                break
-
-            if resp.status_code != 200:
-                # Extract Google's real error reason from the body (e.g. API not enabled,
-                # invalid key, referer restriction) instead of an opaque http_403.
-                api_reason, api_message = "", ""
-                try:
-                    err = resp.json().get("error", {})
-                    api_message = err.get("message", "")
-                    api_errors = err.get("errors") or []
-                    api_reason = (api_errors[0].get("reason", "") if api_errors else "") or err.get("status", "")
-                except Exception:
-                    pass
-                diagnostics["search_errors"].append({
-                    "region": region, "query": query_text,
-                    "reason": f"http_{resp.status_code}",
-                    "api_reason": api_reason, "api_message": api_message,
-                })
-                # A 403 means a project/key misconfiguration that affects every query
-                # (API disabled, key invalid, referer/IP restriction). Retrying the
-                # remaining queries just burns time and never succeeds — abort to RSS.
-                if resp.status_code == 403:
-                    logger.warning(
-                        "Google CSE: 403 %s — %s. Aborting CSE (check that Custom Search API "
-                        "is enabled for this key's GCP project). Falling back to Google News RSS.",
-                        api_reason or "forbidden", api_message or "no message",
-                    )
-                    break
-                errors += 1
-                continue
-
-            # Successful query — count it
-            used_count += 1
-            _cse_save_usage(used_count)
-
-            data = resp.json()
-            items = data.get("items") or []
-            diagnostics.setdefault("search_queries", []).append({"region": region, "query": query_text, "source": "cse"})
-
-            for item in items:
-                title = clean_text(item.get("title", ""))
-                link = item.get("link", "")
-                snippet = clean_text(item.get("snippet", ""))
-                if not title or not link:
-                    continue
-                # Try to get publish date from pagemap metatags
-                published = ""
-                pagemap = item.get("pagemap") or {}
-                for metatag in (pagemap.get("metatags") or []):
-                    pub = metatag.get("article:published_time") or metatag.get("date") or ""
-                    if pub:
-                        published = pub
-                        break
-
-                domain = domain_of(link)
-                matched_source = next(
-                    (src for src_domain, src in source_by_domain.items() if src_domain in domain),
-                    None,
-                )
-                candidates.append(
-                    Candidate(
-                        title=title,
-                        url=normalize_url("", link),
-                        source=matched_source.name if matched_source else (domain or "Google CSE"),
-                        source_url=matched_source.url if matched_source else "",
-                        country=matched_source.country if matched_source else (
-                            "Argentina" if region == "Local" else region
-                        ),
-                        region=matched_source.region if matched_source else region,
-                        language=matched_source.language if matched_source else (
-                            "es" if region in ("Local", "Regional") else "en"
-                        ),
-                        published=published,
-                        summary=snippet,
-                        discovery=f"google_cse:{query_text[:60]}",
-                        trade_source=matched_source.trade if matched_source else False,
-                        require_section=matched_source.require_section if matched_source else False,
-                    )
-                )
-
-        except Exception as exc:
-            diagnostics["search_errors"].append({"region": region, "query": query_text, "reason": str(exc)[:80]})
-            errors += 1
-            if errors >= 5:
-                logger.warning("Google CSE: %d consecutive errors — aborting", errors)
-                break
-
-    logger.info(
-        "Google CSE: %d candidates from %d queries (quota usado hoy: %d/%d)",
-        len(candidates), len(queries), used_count, _CSE_DAILY_LIMIT,
-    )
-    return candidates, quota_exhausted
-
-
 def discover_candidates(companies, keywords, sources, enable_search=True, max_search_queries=55):
     diagnostics = {
         "source_counts": {},
@@ -698,32 +483,13 @@ def discover_candidates(companies, keywords, sources, enable_search=True, max_se
 
     if enable_search:
         before_search = len(candidates)
-        api_key = os.environ.get("GOOGLE_API_KEY", "").strip()
-        cse_id = os.environ.get("GOOGLE_CSE_ID", "").strip()
-        use_rss_fallback = True
-
-        if api_key and cse_id:
-            cse_results, quota_exhausted = discover_from_google_cse(
-                companies, keywords, sources, diagnostics, max_queries=max_search_queries
-            )
-            candidates.extend(cse_results)
-            logger.info("Discovery: %d candidates from Google CSE", len(candidates) - before_search)
-            # Fall back to Google News RSS if quota exhausted OR CSE returned nothing (errors, blocks, etc.)
-            use_rss_fallback = quota_exhausted or len(cse_results) == 0
-            if quota_exhausted:
-                logger.info("Discovery: CSE quota exhausted — falling back to Google News RSS for this run")
-            elif len(cse_results) == 0:
-                logger.info("Discovery: CSE returned 0 candidates — falling back to Google News RSS")
-
-        if use_rss_fallback:
-            before_rss = len(candidates)
-            candidates.extend(discover_from_google_news(companies, keywords, sources, diagnostics, max_queries=max_search_queries))
-            logger.info("Discovery: %d candidates from Google News RSS", len(candidates) - before_rss)
+        candidates.extend(discover_from_google_news(companies, keywords, sources, diagnostics, max_queries=max_search_queries))
+        logger.info("Discovery: %d candidates from Google News RSS", len(candidates) - before_search)
 
     if diagnostics["source_errors"]:
         logger.warning("Discovery: %d RSS source errors", len(diagnostics["source_errors"]))
     if diagnostics["search_errors"]:
-        logger.warning("Discovery: %d search errors (CSE + Google News)", len(diagnostics["search_errors"]))
+        logger.warning("Discovery: %d search errors (Google News)", len(diagnostics["search_errors"]))
 
     diagnostics["candidates_found"] = len(candidates)
     logger.info("Discovery: %d total candidates found", len(candidates))
