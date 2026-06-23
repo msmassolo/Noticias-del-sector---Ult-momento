@@ -119,10 +119,10 @@ Post-extracción rechaza:
 
 ### `llm.py`
 
-Cuatro funciones principales, todas con prompt caching:
+Cinco funciones principales, todas con prompt caching:
 
 - **`classify_and_summarize(articles)`** — Haiku 4.5. Clasifica relevancia ejecutiva y genera resumen de 3-5 oraciones. Caché local por URL en `data/llm_cache.json` (invalida al día siguiente). Rate limit: 13s entre llamadas.
-- **`semantic_dedup_articles(articles)`** — Haiku 4.5. Batch único que detecta artículos del mismo evento. Agrupa por empresa (incluyendo menciones en título). Retry automático en fallo de API.
+- **`semantic_dedup_articles(articles)`** — Haiku 4.5. Batch único que detecta artículos del mismo evento. Agrupa por empresa (incluyendo menciones en título). Retry automático en fallo de API. **Contrato de formato (crítico):** el system prompt (`_DEDUP_SYSTEM`), el user message y el parser `_resolve` deben coincidir en el formato de salida `"grupo.posición"` (ej. `[["3.1","3.3"]]`). Si se cambia uno, cambiar los tres. Un desajuste hace que `_resolve` falle con `IndexError` (capturado y logueado) y la corrida termine con `dedup_merged=0` sin mergear nada — clusters obvios del mismo evento quedan como tarjetas separadas. El `except` loguea el `pair` que no pudo resolver.
 - **`review_dashboard(articles)`** — Sonnet 4.6. QA editorial: detecta dominancia de empresa, ausencia de temas clave, baja calidad general.
 - **`generate_area_briefings(articles)`** — Sonnet 4.6. Una llamada genera briefing para las 4 áreas (Finanzas, Marketing, Supply Chain, Ventas). Input: título + tópico + empresa de cada artículo.
 - **`generate_weekly_summary(weekly_log)`** — Sonnet 4.6. Resumen semanal con top eventos priorizados por importancia. Solo se genera con ≥ 4 días de datos (`WEEKLY_SUMMARY_MIN_DAYS = 4`).
