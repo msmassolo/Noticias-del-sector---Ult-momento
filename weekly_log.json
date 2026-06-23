@@ -1995,18 +1995,31 @@
   ],
   "2026-06-23": [
     {
-      "title": "Vino sin alcohol y enoturismo, la apuesta de Chile para enfrentar caída global del consumo - Interempresas.net",
-      "summary": "Chile está pivotando hacia vinos sin alcohol y experiencias de enoturismo como estrategia ante la contracción global del consumo de bebidas alcohólicas tradicionales. Esta iniciativa refleja cómo comp",
-      "companies": [],
+      "title": "Um brasileiro vai comandar a Heineken — com um toque de AB Inbev",
+      "summary": "Heineken nombró al brasileño Rafael Oliveira (51 años) como nuevo CEO, reemplazando al liderazgo anterior en contexto de caída de volúmenes de venta. Oliveira proviene de Kraft Heinz y Goldman Sachs, ",
+      "companies": [
+        "AB InBev",
+        "Heineken"
+      ],
       "segments": [
-        "consumer_market_trends",
-        "non_alcoholic_beverages"
+        "company_news"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Sumaré fortalece parceria com a Heineken em visita ao CDA da empresa - Novo Momento",
+      "summary": "Sumaré (municipalidad o entidad local de Brasil) fortaleció su relación con Heineken mediante una visita al Centro de Distribución y Atención (CDA) de la empresa. Este movimiento refleja profundizació",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "company_news"
       ],
       "region": "Regional"
     },
     {
       "title": "PopSips Expands Its Spiked Prebiotic Soda Into 2,000 Target, Walmart, Kroger, Safeway, and Sprouts Stores",
-      "summary": "PopSips, líder en bebidas alcohólicas prebióticas, expandió su presencia a 2,000 tiendas minoristas (Target, Walmart, Kroger, Safeway, Albertsons, HEB, Sprouts) multiplicando por seis su distribución ",
+      "summary": "PopSips, marca de soda prebiótica con alcohol, expandió su distribución a más de 2,000 puntos de venta en cadenas mayoristas estadounidenses (Target, Walmart, Kroger, Safeway, Sprouts) representando u",
       "companies": [
         "Poppi",
         "Walmart"
@@ -2019,7 +2032,7 @@
     },
     {
       "title": "Poppi launch drives prebiotic soda sales boom",
-      "summary": "Poppi, marca de bebidas prebióticas respaldada por PepsiCo, lideró un explosivo crecimiento en el segmento de sodas prebióticas y probióticas del mercado británico. La categoría alcanzó £13,7 millones",
+      "summary": "Poppi, marca de soda prebiótica respaldada por PepsiCo, lanzada en marzo en el mercado británico, se convirtió en líder de categoría con £8,5M en ventas retail en 52 semanas. La categoría de sodas pre",
       "companies": [
         "Poppi"
       ],
@@ -2031,7 +2044,7 @@
     },
     {
       "title": "Bacardi becomes sole owner of Teeling Irish whiskey",
-      "summary": "Bacardi completó la adquisición del 100% de Teeling Irish Whiskey, consolidando su estrategia en el segmento premium de destilados tras comprar la participación minoritaria restante de los fundadores ",
+      "summary": "Bacardi completó la adquisición del 100% de Teeling Irish Whiskey, tras comprar inicialmente una participación minoritaria en 2017 y convertirse en accionista mayoritario en 2023. Los fundadores herma",
       "companies": [
         "Bacardi"
       ],
@@ -2043,7 +2056,7 @@
     },
     {
       "title": "Bacardi shakes up regional leadership team",
-      "summary": "Bacardi, el mayor productor privado de bebidas alcohólicas a nivel mundial, reestructuró su liderazgo regional asignando a Ignacio Del Valle como presidente exclusivo de América Latina y el Caribe (LA",
+      "summary": "Bacardi, el mayor productor privado de bebidas espirituosas a nivel mundial, reorganiza su liderazgo regional designando a Ignacio Del Valle como presidente regional de América Latina y el Caribe (LAC",
       "companies": [
         "Bacardi"
       ],
@@ -2054,7 +2067,7 @@
     },
     {
       "title": "Heineken Names JDE Peet’s Leader Rafael Oliveira as Next CEO | Brewbound",
-      "summary": "Heineken anuncia a Rafael Oliveira, actual líder de JDE Peet's, como próximo CEO a partir del 1 de octubre, sujeto a aprobación accionaria en agosto. Este cambio de liderazgo en el gigante holandés ma",
+      "summary": "Heineken designó a Rafael Oliveira, actual líder de JDE Peet's (negocios de café y bebidas), como próximo CEO a partir del 1 de octubre, sujeto a aprobación accionaria en agosto. Este cambio estratégi",
       "companies": [
         "Heineken"
       ],
@@ -2064,19 +2077,20 @@
       "region": "Mundial"
     },
     {
-      "title": "Coca-Cola edges higher before July earnings, S&P 500 consumer staple draws analyst support - AD HOC NEWS",
-      "summary": "Coca-Cola cotiza al alza previo a la publicación de resultados de julio, reflejando confianza del mercado. Los analistas mantienen apoyo al sector de bienes de consumo masivo dentro del S&P 500, indic",
+      "title": "Beer Sales Are Going Flat Everywhere But Guinness Keeps Growing: 'It's a 267-Year-Old Overnight Success.' - entrepreneur.com",
+      "summary": "Las ventas de cerveza se estancan globalmente, pero Guinness experimenta crecimiento sostenido, atribuido a su estrategia de posicionamiento premium y diferenciación en un mercado saturado. El caso de",
       "companies": [
-        "The Coca-Cola Company"
+        "Diageo"
       ],
       "segments": [
+        "consumer_market_trends",
         "financial_results"
       ],
       "region": "Mundial"
     },
     {
       "title": "US breweries reignite trend for mid-strength beer",
-      "summary": "Cervecerías estadounidenses están revitalizando la tendencia de cervezas de potencia media (4-5% ABV) para diferenciarse de marcas light y sin alcohol. Después de 15 años donde la industria se polariz",
+      "summary": "Cervecerías estadounidenses están revitalizando la categoría de cerveza de fuerza media (4-5% ABV) como estrategia de diferenciación frente a cervezas light y sin alcohol. El movimiento representa un ",
       "companies": [],
       "segments": [
         "consumer_market_trends",
@@ -2086,7 +2100,7 @@
     },
     {
       "title": "Winners And Losers Of Q3: Brown-Forman (NYSE:BF.B) Vs The Rest Of The Beverages, Alcohol, and Tobacco Stocks - StockStory",
-      "summary": "Brown-Forman presentó resultados de Q3 que lo posicionan como ganador relativo dentro del sector de bebidas, alcohol y tabaco. La noticia analiza el desempeño comparativo de la compañía versus competi",
+      "summary": "Brown-Forman reportó resultados de Q3 con desempeño comparativo frente a competidores en bebidas, alcohol y tabaco. El análisis identifica ganadores y perdedores del trimestre en el sector, proporcion",
       "companies": [
         "Brown-Forman"
       ],
@@ -2098,7 +2112,7 @@
     },
     {
       "title": "Keurig Dr Pepper (NASDAQ: KDP) reaffirms 2026 guidance amid coffee leadership change - Stock Titan",
-      "summary": "Keurig Dr Pepper reafirmó su guidance para 2026 en medio de cambios en la dirección de su división de café. La compañía mantiene sus objetivos financieros a pesar de la transición gerencial, lo que su",
+      "summary": "Keurig Dr Pepper confirmó su guidance para 2026 en medio de un cambio en el liderazgo de su división de café, su categoría más importante. La empresa mantiene confianza en sus objetivos financieros pe",
       "companies": [
         "Keurig Dr Pepper"
       ],
@@ -2109,8 +2123,19 @@
       "region": "Mundial"
     },
     {
+      "title": "Heineken names first outsider CEO to lead turnaround amid sales slump - The Business Times",
+      "summary": "Heineken designó su primer CEO externo para liderar un proceso de transformación ante caída de ventas. Este cambio de liderazgo representa una estrategia defensiva de la cervecera holandesa frente a p",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "Danone expands APAC dairy and functional beverage presence with twin acquisitions - Food Ingredients First",
-      "summary": "Danone ejecuta dos adquisiciones simultáneas en la región Asia-Pacífico para fortalecer su portafolio de bebidas lácteas y funcionales. Esta estrategia de M&A responde a la creciente demanda de produc",
+      "summary": "Danone ejecutó dos adquisiciones en Asia-Pacífico para fortalecer su portafolio de bebidas lácteas y funcionales en la región. Esta estrategia de crecimiento inorgánico consolida la posición de la emp",
       "companies": [
         "Danone"
       ],
@@ -2121,106 +2146,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Coca-Cola’s $20 Billion Tax Case is Headed to Appeals Court, WSJ Reports - Yahoo Finance",
-      "summary": "Coca-Cola enfrenta un caso tributario de $20 mil millones que será revisado en una corte de apelaciones, según reporta WSJ. Este litigio representa un riesgo material para la estructura financiera del",
-      "companies": [
-        "The Coca-Cola Company"
-      ],
-      "segments": [
-        "regulation_tax_policy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "British EUDR? UK government to introduce anti-deforestation rules",
-      "summary": "El gobierno británico implementará normas anti-deforestación similares a EUDR, requiriendo que importadores verifiquen que sus cadenas de suministro no contribuyan a deforestación ilegal. Esta regulac",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "regulation_tax_policy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Corona Cero from Anheuser-Busch InBev - 0.0% beach beer targets mindful drinkers - AD HOC NEWS",
-      "summary": "Anheuser-Busch InBev lanza Corona Cero, una cerveza sin alcohol (0.0%) posicionada para consumidores conscientes de su salud. Este lanzamiento responde a la tendencia global creciente de bebidas de ba",
-      "companies": [
-        "AB InBev"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Morgan Stanley Keeps Coca-Cola as Its Preferred Beverage Sector Pick - Yahoo Finance",
-      "summary": "Morgan Stanley mantiene a Coca-Cola como su pick preferida en el sector de bebidas, reafirmando la confianza del mercado en la compañía. Esta designación de analista top-tier valida la estrategia y de",
-      "companies": [
-        "The Coca-Cola Company"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Jobs Under Threat At Diageo, As Drinks Giant Informs Government Of Potential Lay Offs - kfmradio.com",
-      "summary": "Diageo, uno de los mayores productores globales de bebidas alcohólicas, notificó al gobierno sobre potenciales despidos, indicando una reestructuración organizacional significativa. Este movimiento re",
-      "companies": [
-        "Diageo"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Monster Beverage stock hits 52-week high at 94.88 USD By Investing.com - Investing.com India",
-      "summary": "Monster Beverage alcanzó un máximo de 52 semanas en USD 94.88, reflejando fuerte desempeño bursátil. Este movimiento señala confianza del mercado en la estrategia y ejecución del principal competidor ",
-      "companies": [
-        "Monster Beverage"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Heineken names first outsider CEO to lead turnaround amid sales slump - The Business Times",
-      "summary": "Heineken designó su primer CEO externo a la compañía para liderar un plan de transformación en medio de una caída de ventas. Este cambio estratégico de liderazgo refleja la necesidad de la cervecera h",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Heineken names JDE Peet’s chief Rafael Oliveira as next CEO | FoodBev Media",
-      "summary": "Heineken designó a Rafael Oliveira, actual CEO de JDE Peet's, como próximo CEO de la empresa cervecera holandesa, con asunción prevista para octubre de 2026 sujeta a aprobación accionaria. El movimien",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "company_news"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Bacardí takes full ownership of Teeling Whiskey",
-      "summary": "Bacardí completó la adquisición total de Teeling Whiskey, consolidando su control accionario casi una década después de haber tomado una participación minoritaria. Esta movida fortalece el portafolio ",
-      "companies": [
-        "Bacardi"
-      ],
-      "segments": [
-        "company_news"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "Danone acquires MADE Group to expand APAC nutrition portfolio - Food & Beverage Industry News",
-      "summary": "Danone adquirió MADE Group para fortalecer su portafolio de nutrición en la región Asia-Pacífico (APAC). Esta operación de M&A estratégica permite al grupo francés expandir su presencia en uno de los ",
+      "summary": "Danone adquirió MADE Group para fortalecer su portafolio de nutrición en la región APAC (Asia-Pacífico). Esta operación estratégica permite a la multinacional francesa expandir su presencia en uno de ",
       "companies": [
         "Danone"
       ],
@@ -2231,8 +2158,83 @@
       "region": "Mundial"
     },
     {
+      "title": "Yazoo owner FrieslandCampina sees revenue surge over £10m",
+      "summary": "FrieslandCampina UK (propietaria de la marca Yazoo) reportó un crecimiento de ingresos superior a £10m en 2025, con un incremento de 8.2% impulsado principalmente por su portafolio de bebidas y un pic",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Functional alcohol-free beer brand scales retail expansion – The Brewers Journal",
+      "summary": "Impossibrew, marca de cerveza sin alcohol funcional, completó una ronda de financiamiento de £725k para escalar su expansión retail. La empresa alcanzó £3.57m en ingresos de 2025, crecimiento de 9,500",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends",
+        "distribution_execution"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Corona Cero from Anheuser-Busch InBev - 0.0% beach beer targets mindful drinkers - AD HOC NEWS",
+      "summary": "Anheuser-Busch InBev lanza Corona Cero, una cerveza sin alcohol (0.0%) dirigida al segmento de consumidores conscientes y mindfulness. Este movimiento responde a la creciente demanda global de bebidas",
+      "companies": [
+        "AB InBev"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Morgan Stanley Keeps Coca-Cola as Its Preferred Beverage Sector Pick - Yahoo Finance",
+      "summary": "Morgan Stanley mantiene a Coca-Cola como su preferencia en el sector de bebidas, validando el posicionamiento de la empresa como líder del mercado global. Esta recomendación de un analista de tier-1 r",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Jobs Under Threat At Diageo, As Drinks Giant Informs Government Of Potential Lay Offs - kfmradio.com",
+      "summary": "Diageo, el gigante global de bebidas alcohólicas, ha informado al gobierno sobre potenciales despidos. Este movimiento refleja reestructuraciones estratégicas en uno de los mayores competidores intern",
+      "companies": [
+        "Diageo"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Former JDE Peet’s Leader Rafael Oliveira Heads To Heineken - BevNET.com",
+      "summary": "Heineken designó a Rafael Oliveira, exejecutivo de JDE Peet's, como nuevo CEO y presidente del directorio. Este movimiento refleja un cambio estratégico en el liderazgo de uno de los mayores productor",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Bacardí takes full ownership of Teeling Whiskey",
+      "summary": "Bacardí completó la adquisición del 100% de Teeling Whiskey, consolidando una inversión que comenzó hace casi una década con una participación minoritaria. La operación refuerza la estrategia de Bacar",
+      "companies": [
+        "Bacardi"
+      ],
+      "segments": [
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "Danone strengthens beverages portfolio with Asia-Pacific acquisition - BeverageDaily.com",
-      "summary": "Danone adquirió un portafolio de bebidas en Asia-Pacífico, expandiendo su presencia en una región clave de alto crecimiento. La operación refuerza la estrategia de diversificación de Danone más allá d",
+      "summary": "Danone adquirió un portafolio de bebidas en Asia-Pacífico, reforzando su presencia en una región clave de crecimiento. La operación expande su oferta de bebidas más allá de sus líneas tradicionales y ",
       "companies": [
         "Danone"
       ],
