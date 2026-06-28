@@ -1881,7 +1881,7 @@
   "2026-06-28": [
     {
       "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
-      "summary": "La cerveza artesanal enfrenta una crisis con caída significativa del consumo, ajuste de costos y cambios en los patrones de compra de los consumidores. Aunque el fragmento es limitado, este fenómeno a",
+      "summary": "El segmento de cerveza artesanal enfrenta contracción de demanda, presión en costos y transformación de patrones de consumo. Este fenómeno afecta directamente la estrategia de portfolio de bebidas en ",
       "companies": [],
       "segments": [
         "consumer_market_trends"
@@ -1890,7 +1890,7 @@
     },
     {
       "title": "Tetra Pak busca crecer en Perú aprovechando el auge del consumo “on the go” de helados: ¿cómo?",
-      "summary": "Tetra Pak estratégicamente se posiciona en el mercado peruano de helados, aprovechando el crecimiento de consumo 'on the go' que alcanzó CAGR de 10.6% entre 2020-2025. El segmento muestra oportunidade",
+      "summary": "Tetra Pak expande su presencia en Perú enfocándose en el segmento de helados con formato \"on the go\", capitalizing un mercado que creció 10.6% anual entre 2020-2025. El crecimiento fue impulsado por r",
       "companies": [
         "Tetra Pak"
       ],
@@ -1902,7 +1902,7 @@
     },
     {
       "title": "Cencosud entra al negocio mayorista con la compra de 21 tiendas de Makro",
-      "summary": "Cencosud adquiere el 100% de Makro Supermayorista en Colombia, sumando 21 tiendas al portafolio de su filial Cencosud Internacional. La operación representa la entrada estratégica del grupo chileno al",
+      "summary": "Cencosud adquiere 100% de Makro Supermayorista en Colombia con 21 tiendas, diversificando su portafolio retail hacia el formato mayorista en la región. La transacción fortalece la posición del holding",
       "companies": [],
       "segments": [
         "distribution_execution",
@@ -1912,7 +1912,7 @@
     },
     {
       "title": "Cerveza, whisky y “guaro” son las que más crecen en consumo durante el Mundial 2026",
-      "summary": "Durante el Mundial 2026, cerveza, whisky y guaro lideran el crecimiento de consumo en Colombia, impulsados por la participación de la Selección local. El fenómeno genera un efecto multiplicador en adq",
+      "summary": "Durante el Mundial 2026, los licores (cerveza, whisky y guaro) lideran el crecimiento de consumo en Colombia, impulsados por la participación de la Selección local. Este fenómeno de incremento de cons",
       "companies": [],
       "segments": [
         "consumer_market_trends"
@@ -1920,8 +1920,20 @@
       "region": "Regional"
     },
     {
+      "title": "Budweiser Zero from Anheuser-Busch InBev - alcohol-free beer for everyday drinking - Ad-hoc-news.de",
+      "summary": "Anheuser-Busch InBev refuerza su portafolio en el segmento de cervezas sin alcohol con Budweiser Zero, posicionándose en la tendencia global de bebidas de bajo/cero contenido alcohólico que crece a do",
+      "companies": [
+        "AB InBev"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "non_alcoholic_beverages"
+      ],
+      "region": "Mundial"
+    },
+    {
       "title": "The Topo Chico Hard Seltzer from Molson Coors Beverage Co. - agave twist and clean calorie count - Ad-hoc-news.de",
-      "summary": "Molson Coors lanzó Topo Chico Hard Seltzer con un giro de agave y perfil calórico optimizado, posicionándose en el segmento de bebidas alcohólicas bajas en calorías de alto crecimiento. Este movimient",
+      "summary": "Molson Coors lanzó Topo Chico Hard Seltzer con una propuesta diferenciada: twist de agave y bajo contenido calórico. Este movimiento refuerza la posición de Molson Coors en el segmento de hard seltzer",
       "companies": [
         "The Coca-Cola Company",
         "Molson Coors"
@@ -1933,32 +1945,20 @@
       "region": "Mundial"
     },
     {
-      "title": "Budweiser Zero from Anheuser-Busch InBev - alcohol-free beer for everyday drinking - Ad-hoc-news.de",
-      "summary": "Anheuser-Busch InBev refuerza su portafolio con Budweiser Zero, una cerveza sin alcohol posicionada para consumo diario. Esta estrategia responde a la creciente demanda global de bebidas bajas/sin alc",
+      "title": "73,333 Shares in Monster Beverage Corporation $MNST Acquired by OP Asset Management Ltd - MarketBeat",
+      "summary": "OP Asset Management Ltd adquirió 73,333 acciones de Monster Beverage Corporation, reflejo de movimientos de inversión institucional en el líder global de bebidas energéticas. Este tipo de transaccione",
       "companies": [
-        "AB InBev"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "non_alcoholic_beverages"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Monster Beverage, Coca-Cola lead S&P 500 consumer staples stocks by growth grades - MSN",
-      "summary": "Monster Beverage y Coca-Cola encabezan el ranking de acciones de consumo básico del S&P 500 por calificaciones de crecimiento. Este posicionamiento refleja el desempeño relativo de los competidores cl",
-      "companies": [
-        "The Coca-Cola Company",
         "Monster Beverage"
       ],
       "segments": [
-        "consumer_market_trends"
+        "consumer_market_trends",
+        "ma_and_strategy"
       ],
       "region": "Mundial"
     },
     {
       "title": "Morgan Stanley Sees Red Bull Price Increase as Positive for Monster Beverage (MNST) - Yahoo Finance",
-      "summary": "Morgan Stanley analiza positivamente el incremento de precios de Red Bull como una oportunidad para Monster Beverage, sugiriendo que el aumento de precios del competidor directo podría beneficiar la p",
+      "summary": "Morgan Stanley considera positivo el aumento de precios de Red Bull para Monster Beverage, principal competidor en el segmento de bebidas energéticas. El incremento de precios del líder de mercado red",
       "companies": [
         "Red Bull",
         "Monster Beverage"
@@ -1970,7 +1970,7 @@
     },
     {
       "title": "Celsius Sparkling Orange from Celsius Holdings Inc. - zero sugar, bright citrus and steady retail gr - Ad-hoc-news.de",
-      "summary": "Celsius Holdings lanza Celsius Sparkling Orange, una bebida sin azúcar con perfil cítrico. El lanzamiento refuerza la estrategia de expansión de portafolio de la marca en el segmento de bebidas funcio",
+      "summary": "Celsius Holdings lanzó Celsius Sparkling Orange, una bebida sin azúcar con perfil cítrico. El lanzamiento forma parte de la estrategia de expansión de líneas de productos de la marca en el segmento de",
       "companies": [
         "Celsius Holdings"
       ],
@@ -1981,20 +1981,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Heineken 0.0 from Heineken N.V. - alcohol-free lager quietly reshapes the beer shelf - Ad-hoc-news.de",
-      "summary": "Heineken N.V. está consolidando su posición en el segmento de cervezas sin alcohol con Heineken 0.0, redefiniendo la composición del portafolio en los lineales de bebidas. Este movimiento responde a l",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "non_alcoholic_beverages"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "AJE Group Unveils Zero-Sugar Beverage 'CIELO', Expands Product Portfolio in Nigeria - Brand Icon Image",
-      "summary": "AJE Group lanzó CIELO, una bebida sin azúcar, expandiendo su portafolio en Nigeria. Este movimiento responde a la creciente demanda global de bebidas saludables y posiciona al grupo en un segmento de ",
+      "summary": "AJE Group, competidor regional clave, lanzó CIELO, una bebida sin azúcar, expandiendo su portafolio en Nigeria. El movimiento responde a la demanda global de opciones bajas en calorías y posiciona a A",
       "companies": [
         "AJE Group"
       ],
@@ -2005,19 +1993,8 @@
       "region": "Mundial"
     },
     {
-      "title": "Molson Coors refocuses after Q1 beat, sector peers show mixed share performance - Ad-hoc-news.de",
-      "summary": "Molson Coors superó expectativas en Q1, lo que genera una reorientación estratégica en la compañía. El desempeño mixto de pares del sector en bolsa refleja dinámicas diferenciadas en la industria de b",
-      "companies": [
-        "Molson Coors"
-      ],
-      "segments": [
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
       "title": "The Coca-Cola Company updates sustainability goals, stock in long-term focus for investors - Ad-hoc-news.de",
-      "summary": "The Coca-Cola Company actualizó sus objetivos de sustentabilidad, reorientando el enfoque de inversores hacia una perspectiva de largo plazo. Esta acción refleja la creciente presión del mercado y reg",
+      "summary": "Coca-Cola actualizó sus objetivos de sustentabilidad con implicancias estratégicas para inversores de largo plazo. La actualización de metas de sostenibilidad refleja el compromiso corporativo con ESG",
       "companies": [
         "The Coca-Cola Company"
       ],
@@ -2028,7 +2005,7 @@
     },
     {
       "title": "Poppi’s co-founders — who sold their soda company for $1.95B — say this is their biggest financial mistake - MarketWatch",
-      "summary": "Los cofundadores de Poppi vendieron su empresa de bebidas por $1.95B pero ahora reconocen haber cometido un error financiero significativo en esa transacción. Este caso es estratégico para directivos ",
+      "summary": "Los co-fundadores de Poppi vendieron su empresa de bebidas por $1.95B pero reconocen haber cometido un error financiero significativo en la transacción. Este caso de estudio sobre M&A en el sector de ",
       "companies": [
         "Poppi"
       ],
@@ -2039,7 +2016,7 @@
     },
     {
       "title": "Anheuser-Busch InBev sector backdrop and strategy focus, shares in a global beer peer comparison - Ad-hoc-news.de",
-      "summary": "Análisis de Anheuser-Busch InBev en contexto del sector cervecero global, incluyendo comparación de su posición accionaria frente a competidores internacionales. Relevante para monitorear la estrategi",
+      "summary": "Análisis comparativo de Anheuser-Busch InBev (AB InBev) frente a sus competidores globales en la industria cervecera. El reporte contextualiza la posición estratégica del mayor cervecero mundial en re",
       "companies": [
         "AB InBev"
       ],
@@ -2049,25 +2026,36 @@
       "region": "Mundial"
     },
     {
-      "title": "Vio Bio Limo Orange from The Coca-Cola Company - organic twist on a quiet classic - Ad-hoc-news.de",
-      "summary": "The Coca-Cola Company lanza Vio Bio Limo Orange, una variante orgánica de su línea de bebidas. El producto representa la estrategia de Coca-Cola de expandir su portafolio hacia segmentos de crecimient",
+      "title": "Monster Beverage in analyst focus, Morgan Stanley sees upside for the shares - Ad-hoc-news.de",
+      "summary": "Morgan Stanley ha iniciado cobertura analítica sobre Monster Beverage identificando potencial alcista en sus acciones. Esta evaluación de un banco de inversión de primer nivel refleja confianza en la ",
       "companies": [
-        "The Coca-Cola Company"
+        "Monster Beverage"
       ],
       "segments": [
-        "company_news"
+        "consumer_market_trends"
       ],
       "region": "Mundial"
     },
     {
       "title": "The Dr Pepper Original from Keurig Dr Pepper Inc. - classic soda, new zero-sugar push - Ad-hoc-news.de",
-      "summary": "Keurig Dr Pepper impulsa una nueva línea de Dr Pepper sin azúcar, reflejando la tendencia global de reformulación hacia opciones de bajo/cero azúcar. Esta estrategia responde a la presión regulatoria ",
+      "summary": "Keurig Dr Pepper impulsa una estrategia de reformulación con versiones zero-sugar de su marca Dr Pepper Original, respondiendo a la tendencia global de reducción de azúcar en bebidas. Esta iniciativa ",
       "companies": [
         "Keurig Dr Pepper"
       ],
       "segments": [
         "consumer_market_trends",
         "supply_chain_commodities"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Molson Coors Beverage Company $TAP Shares Bought by Skylands Capital LLC - MarketBeat",
+      "summary": "Skylands Capital LLC realizó una compra de acciones de Molson Coors Beverage Company (TAP), uno de los mayores productores de cerveza en América del Norte. Este movimiento de un inversor institucional",
+      "companies": [
+        "Molson Coors"
+      ],
+      "segments": [
+        "consumer_market_trends"
       ],
       "region": "Mundial"
     }
