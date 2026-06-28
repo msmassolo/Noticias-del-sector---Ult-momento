@@ -1,376 +1,4 @@
 {
-  "2026-06-20": [
-    {
-      "title": "Consumo estancado: las ventas en supermercados y mayoristas cerraron el primer cuatrimestre en rojo",
-      "summary": "Las ventas en supermercados y mayoristas argentinos registraron caída de 3,7% en abril en términos reales, extendiendo la contracción del consumo masivo durante el primer cuatrimestre de 2024. Este da",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Local"
-    },
-    {
-      "title": "Horas antes do jogo, clima de Copa movimenta bares paulistanos e impulsiona ativações de marcas",
-      "summary": "Eventos deportivos como la Copa del Mundo generan picos de consumo en bares y espacios de entretenimiento, con marcas aprovechando esas concentraciones de público para activaciones promocionales. Este",
-      "companies": [
-        "The Coca-Cola Company",
-        "AB InBev",
-        "Brown-Forman"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Gol serve chope da Brahma de graça em 1.000 voos por um ano",
-      "summary": "Ambev lanza una alianza estratégica con Gol Linhas Aéreas para distribuir chope Brahma no pasteurizado en vuelos selectos durante 12 meses (aproximadamente 1.000 vuelos). La iniciativa amplía el canal",
-      "companies": [
-        "AB InBev",
-        "Ambev"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Sparky, Walmart’s AI, raises the average ticket: how it transforms digital and physical shopping with data",
-      "summary": "Walmart implementó Sparky, una herramienta de IA que incrementa el ticket promedio en 35% entre usuarios activos. Este desarrollo es estratégico para la industria de bebidas dado que Walmart es un dis",
-      "companies": [
-        "Walmart"
-      ],
-      "segments": [
-        "distribution_execution"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Could The Next Olipop Be a Kid's Drink? Functional & Fun Takes on CPG.",
-      "summary": "El mercado de bebidas funcionales se expande hacia el segmento infantil y formatos innovadores. Se destacan casos como DryWater (hidratación) y Fields Good (cookies funcionales), mostrando oportunidad",
-      "companies": [
-        "Olipop"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Hennessy’s First RTD Cocktail Line Brings Cognac Into a Growing Category | SevenFifty Daily",
-      "summary": "Hennessy lanza su primera línea de cócteles RTD (ready-to-drink) con tres sabores dirigidos al verano, marcando la entrada del coñac en una categoría históricamente dominada por vodka, tequila y gin. ",
-      "companies": [
-        "LVMH Wines & Spirits"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "product_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Is the Diageo UK MD getting ready to leave?",
-      "summary": "Diageo confirma la salida de su director general en el Reino Unido tras menos de un año en el cargo, en un contexto de reestructuración liderada por el CEO Dave Lewis que incluye despidos en la operac",
-      "companies": [
-        "Diageo"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Blade and Bow debuts 12YO Solera Reserve",
-      "summary": "Diageo lanzó Blade and Bow 12YO Solera Reserve, un whiskey americano de edición limitada anual producido en la Destilería Stitzel-Weller de Louisville. El producto utiliza un proceso de solera con aca",
-      "companies": [
-        "Diageo"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Heineken impulsa Ladrón con una versión 0,0 para ganar terreno fuera de la cerveza",
-      "summary": "Heineken España lanzó Ladrón de Verano 0,0, expandiendo su portafolio de bebidas sin alcohol más allá de la cerveza tradicional. La iniciativa responde a la creciente demanda de opciones 0,0 y consumo",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "consumer_market_trends",
-        "non_alcoholic_beverages"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Mount Gay reveals first age-statement rums",
-      "summary": "Mount Gay (propiedad de Rémy Cointreau) lanzó su primera colección de rones añejados con expresiones de 15 y 25 años, dirigidas al mercado premium del Reino Unido, el más dinámico de Europa. Los rones",
-      "companies": [
-        "Remy Cointreau"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "PepsiCo, Danone & Nestlé: how AI is powering F&B growth",
-      "summary": "PepsiCo, Danone y Nestlé implementan inteligencia artificial para impulsar crecimiento en la industria de alimentos y bebidas. Las empresas utilizan AI agéntica para mejorar productividad y tomar deci",
-      "companies": [
-        "PepsiCo",
-        "Danone"
-      ],
-      "segments": [
-        "packaging_sustainability"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Coca-Cola Europacific Partners Stock - Long-term bottling strategy in focus - AD HOC NEWS",
-      "summary": "Coca-Cola Europacific Partners (CCEP), embotellador clave de Coca-Cola en la región Asia-Pacífico y Europa, enfoca su estrategia de largo plazo en optimizar su red de embotelladoras. Este movimiento e",
-      "companies": [
-        "The Coca-Cola Company",
-        "Coca-Cola Europacific Partners"
-      ],
-      "segments": [
-        "distribution_execution"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Circana New Product Pacesetters reveals shift in how consumers discover, choose products",
-      "summary": "Circana publicó su informe 2025 New Product Pacesetters y Top 200, revelando cómo los fabricantes están adaptando sus estrategias para conectar con consumidores en contextos específicos. El estudio in",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "financial_results"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Pájaro Agave Spirits enters US",
-      "summary": "Pájaro Agave Spirits, marca de mezcal sustentable de Oaxaca, ingresa al mercado estadounidense mediante alianza con Helmsman Imports como distribuidor oficial. Helmsman gestionará compliance federal y",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "packaging_sustainability"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Arca Continental Stock - Weekly review in the Latin American beverages sector - AD HOC NEWS",
-      "summary": "Análisis semanal del desempeño accionario de Arca Continental en el contexto del sector de bebidas en Latinoamérica. Arca Continental es uno de los mayores embotelladoras de Coca-Cola en la región, po",
-      "companies": [
-        "Arca Continental"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Argea shows the business sense in pushing sustainability",
-      "summary": "Argea, la mayor empresa vinícola privada de Italia, lanzó su reporte de sustentabilidad 2025 titulado 'Habitat', demostrando el impacto positivo de iniciativas ESG en rentabilidad empresarial. El repo",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "packaging_sustainability"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Are RTDs a threat or necessity to the gin category?",
-      "summary": "La categoría de bebidas listas para consumir (RTD) representa un dilema estratégico para el sector del gin. Durante la conferencia Ginposium de The Gin Guild, expertos debatieron si los RTD constituye",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "packaging_sustainability"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Restaurant Owners Try To Keep Hemp On The Menu | Brewbound",
-      "summary": "Dueños de restaurantes presionan al Congreso estadounidense para postergar una prohibición regulatoria sobre productos de cáñamo intoxicante en alimentos y bebidas prevista para el 12 de noviembre. La",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "regulation_tax_policy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Chobani expands zero-sugar creamer line with new flavour | FoodBev Media",
-      "summary": "Chobani lanzó una nueva variante permanente de su línea de cremers sin azúcar: Vanilla Cinnamon, elaborada con crema y leche. La expansión del portafolio responde a la demanda creciente de productos b",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "New Products: Benson Boone Brings Dragon Fruit to Caliwater, Alani Adds Purple Cotton Candy - BevNET.com",
-      "summary": "Caliwater lanza Dragon Fruit como nuevo sabor de verano, acompañado por Health Ade, oHy y Cure Hydration con variantes de raspberry y frutas tropicales. Alani suma Purple Cotton Candy a su portfolio. ",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "India planta cara al privilegio fiscal de las bebidas importadas",
-      "summary": "La Confederación de Empresas Indias de Bebidas Alcohólicas solicita a gobiernos estatales indios eliminar ventajas fiscales a bebidas importadas antes de la entrada en vigor del acuerdo comercial Indi",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "ma_and_strategy"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Tipple abre la venta directa de bebidas al canal profesional en seis países de la UE",
-      "summary": "Tipple, plataforma de distribución digital, lanzó funcionalidad de venta directa al canal profesional (horeca, retail) en seis países europeos (Alemania, Francia, Italia, Bélgica, Países Bajos, Luxemb",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "CLSA backs Varun Beverages with ₹654 target on Asahi-CALPIS India launch - scanx.trade",
-      "summary": "CLSA emitió una recomendación alcista para Varun Beverages con target de ₹654, respaldada por el lanzamiento de Asahi-CALPIS en India. Esta expansión de portfolio con marcas internacionales de alto va",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Why is Molson Coors (NYSE:TAP) tracking S&P 500 beverage shift trends? - Kalkine Media",
-      "summary": "Molson Coors, como componente del S&P 500, está siendo analizada por su alineación con las tendencias de cambio del sector de bebidas. La empresa enfrenta una industria en transformación donde los con",
-      "companies": [
-        "Molson Coors"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Molson Coors Beverage (TAP) Stock Could Be 15.5% Below Fair Value on Growth Narrative - simplywall.st",
-      "summary": "Molson Coors (TAP) está cotizando con descuento de 15.5% respecto a su valor justo según análisis de Simply Wall Street, sugiriendo oportunidad de revaluación basada en su narrativa de crecimiento. La",
-      "companies": [
-        "Molson Coors"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "RTD y conveniencia: el ‘match’ perfecto que enfrenta a la cerveza, ¿mercado se reconfigura?",
-      "summary": "Los RTD (bebidas alcohólicas listas para consumir) están ganando terreno en el mercado de bebidas alcohólicas, desafiando la tradicional hegemonía de la cerveza. Un estudio de Impronta Research indica",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "product_innovation"
-      ],
-      "region": "Regional"
-    },
-    {
-      "title": "Varun Beverages Partners Asahi Group To Launch CALPIS In India; Shares Gain 0.52% - HDFC Sky",
-      "summary": "Varun Beverages, principal distribuidor de bebidas en India, estableció una alianza con Asahi Group para lanzar CALPIS en el mercado indio. CALPIS es una bebida funcional japonesa con presencia global",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Asahi Group enters India’s beverage market with CALPIS, teams up with Varun Beverages - bestmediainfo.com",
-      "summary": "Asahi Group, uno de los mayores grupos de bebidas de Japón, ingresa al mercado indio mediante una alianza estratégica con Varun Beverages para la marca CALPIS. Esta expansión representa una apuesta po",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Varun Beverages enters alliance with Japan’s Asahi Group to launch CALPIS in India in 2026; check stock performance - Upstox",
-      "summary": "Varun Beverages Limited, principal embotellador de PepsiCo en India, establecerá una alianza estratégica con el grupo japonés Asahi para lanzar CALPIS, bebida láctea fermentada de origen japonés, en e",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "How Heineken’s Lagunitas is seeking growth in a shrinking craft beer market - Ad Age",
-      "summary": "Lagunitas, subsidiaria de Heineken, implementa estrategias de crecimiento para contrarrestar la contracción del mercado de cerveza artesanal. La marca busca expandir su portafolio y penetración en can",
-      "companies": [
-        "Heineken"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Japan's Asahi Group forays into India in partnership with Varun Beverages - India Retailing",
-      "summary": "Asahi Group, gigante japonés de bebidas, ingresa al mercado indio a través de una asociación con Varun Beverages, el segundo embotellador más grande de India. Esta expansión estratégica permite a Asah",
-      "companies": [
-        "Asahi Group"
-      ],
-      "segments": [
-        "consumer_market_trends"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Moritz convierte la cerveza en caipiriña con una edición limitada en Barcelona",
-      "summary": "Moritz lanza Caipiripa, una cerveza artesanal de edición limitada que fusiona cerveza con caipiriña, producida en su microcervecería de Barcelona. La distribución es exclusiva en espacios propios de l",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "marketing_innovation"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "Italia plantea incentivos fiscales para llevar más vino DOP local a los restaurantes",
-      "summary": "Italia evalúa incentivos fiscales para restaurantes que incorporen vinos DOP locales en sus cartas, iniciativa propuesta por Le Donne del Vino. La medida busca revertir la caída de consumo de vino de ",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Mundial"
-    },
-    {
-      "title": "El vino italiano se juega su valor en la batalla del canal Horeca",
-      "summary": "Distribuidor italiano de vinos advierte sobre la importancia crítica del canal Horeca (hoteles, restaurantes, bares) en medio de caída de volúmenes y tensiones entre bodegas y operadores de restauraci",
-      "companies": [],
-      "segments": [
-        "consumer_market_trends",
-        "distribution_execution"
-      ],
-      "region": "Mundial"
-    }
-  ],
   "2026-06-21": [
     {
       "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
@@ -2246,6 +1874,200 @@
       "segments": [
         "consumer_market_trends",
         "marketing_innovation"
+      ],
+      "region": "Mundial"
+    }
+  ],
+  "2026-06-28": [
+    {
+      "title": "Crisis en la cerveza artesanal: caída del consumo, ajuste de costos y cambio de hábitos - DeGremiales.com",
+      "summary": "La cerveza artesanal enfrenta una crisis con caída significativa del consumo, ajuste de costos y cambios en los patrones de compra de los consumidores. Aunque el fragmento es limitado, este fenómeno a",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Local"
+    },
+    {
+      "title": "Tetra Pak busca crecer en Perú aprovechando el auge del consumo “on the go” de helados: ¿cómo?",
+      "summary": "Tetra Pak estratégicamente se posiciona en el mercado peruano de helados, aprovechando el crecimiento de consumo 'on the go' que alcanzó CAGR de 10.6% entre 2020-2025. El segmento muestra oportunidade",
+      "companies": [
+        "Tetra Pak"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Cencosud entra al negocio mayorista con la compra de 21 tiendas de Makro",
+      "summary": "Cencosud adquiere el 100% de Makro Supermayorista en Colombia, sumando 21 tiendas al portafolio de su filial Cencosud Internacional. La operación representa la entrada estratégica del grupo chileno al",
+      "companies": [],
+      "segments": [
+        "distribution_execution",
+        "ma_and_strategy"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "Cerveza, whisky y “guaro” son las que más crecen en consumo durante el Mundial 2026",
+      "summary": "Durante el Mundial 2026, cerveza, whisky y guaro lideran el crecimiento de consumo en Colombia, impulsados por la participación de la Selección local. El fenómeno genera un efecto multiplicador en adq",
+      "companies": [],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Regional"
+    },
+    {
+      "title": "The Topo Chico Hard Seltzer from Molson Coors Beverage Co. - agave twist and clean calorie count - Ad-hoc-news.de",
+      "summary": "Molson Coors lanzó Topo Chico Hard Seltzer con un giro de agave y perfil calórico optimizado, posicionándose en el segmento de bebidas alcohólicas bajas en calorías de alto crecimiento. Este movimient",
+      "companies": [
+        "The Coca-Cola Company",
+        "Molson Coors"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "product_innovation"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Budweiser Zero from Anheuser-Busch InBev - alcohol-free beer for everyday drinking - Ad-hoc-news.de",
+      "summary": "Anheuser-Busch InBev refuerza su portafolio con Budweiser Zero, una cerveza sin alcohol posicionada para consumo diario. Esta estrategia responde a la creciente demanda global de bebidas bajas/sin alc",
+      "companies": [
+        "AB InBev"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "non_alcoholic_beverages"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Monster Beverage, Coca-Cola lead S&P 500 consumer staples stocks by growth grades - MSN",
+      "summary": "Monster Beverage y Coca-Cola encabezan el ranking de acciones de consumo básico del S&P 500 por calificaciones de crecimiento. Este posicionamiento refleja el desempeño relativo de los competidores cl",
+      "companies": [
+        "The Coca-Cola Company",
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Morgan Stanley Sees Red Bull Price Increase as Positive for Monster Beverage (MNST) - Yahoo Finance",
+      "summary": "Morgan Stanley analiza positivamente el incremento de precios de Red Bull como una oportunidad para Monster Beverage, sugiriendo que el aumento de precios del competidor directo podría beneficiar la p",
+      "companies": [
+        "Red Bull",
+        "Monster Beverage"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Celsius Sparkling Orange from Celsius Holdings Inc. - zero sugar, bright citrus and steady retail gr - Ad-hoc-news.de",
+      "summary": "Celsius Holdings lanza Celsius Sparkling Orange, una bebida sin azúcar con perfil cítrico. El lanzamiento refuerza la estrategia de expansión de portafolio de la marca en el segmento de bebidas funcio",
+      "companies": [
+        "Celsius Holdings"
+      ],
+      "segments": [
+        "distribution_execution",
+        "supply_chain_commodities"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Heineken 0.0 from Heineken N.V. - alcohol-free lager quietly reshapes the beer shelf - Ad-hoc-news.de",
+      "summary": "Heineken N.V. está consolidando su posición en el segmento de cervezas sin alcohol con Heineken 0.0, redefiniendo la composición del portafolio en los lineales de bebidas. Este movimiento responde a l",
+      "companies": [
+        "Heineken"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "non_alcoholic_beverages"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "AJE Group Unveils Zero-Sugar Beverage 'CIELO', Expands Product Portfolio in Nigeria - Brand Icon Image",
+      "summary": "AJE Group lanzó CIELO, una bebida sin azúcar, expandiendo su portafolio en Nigeria. Este movimiento responde a la creciente demanda global de bebidas saludables y posiciona al grupo en un segmento de ",
+      "companies": [
+        "AJE Group"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "ma_and_strategy"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Molson Coors refocuses after Q1 beat, sector peers show mixed share performance - Ad-hoc-news.de",
+      "summary": "Molson Coors superó expectativas en Q1, lo que genera una reorientación estratégica en la compañía. El desempeño mixto de pares del sector en bolsa refleja dinámicas diferenciadas en la industria de b",
+      "companies": [
+        "Molson Coors"
+      ],
+      "segments": [
+        "financial_results"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "The Coca-Cola Company updates sustainability goals, stock in long-term focus for investors - Ad-hoc-news.de",
+      "summary": "The Coca-Cola Company actualizó sus objetivos de sustentabilidad, reorientando el enfoque de inversores hacia una perspectiva de largo plazo. Esta acción refleja la creciente presión del mercado y reg",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "packaging_sustainability"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Poppi’s co-founders — who sold their soda company for $1.95B — say this is their biggest financial mistake - MarketWatch",
+      "summary": "Los cofundadores de Poppi vendieron su empresa de bebidas por $1.95B pero ahora reconocen haber cometido un error financiero significativo en esa transacción. Este caso es estratégico para directivos ",
+      "companies": [
+        "Poppi"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Anheuser-Busch InBev sector backdrop and strategy focus, shares in a global beer peer comparison - Ad-hoc-news.de",
+      "summary": "Análisis de Anheuser-Busch InBev en contexto del sector cervecero global, incluyendo comparación de su posición accionaria frente a competidores internacionales. Relevante para monitorear la estrategi",
+      "companies": [
+        "AB InBev"
+      ],
+      "segments": [
+        "consumer_market_trends"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "Vio Bio Limo Orange from The Coca-Cola Company - organic twist on a quiet classic - Ad-hoc-news.de",
+      "summary": "The Coca-Cola Company lanza Vio Bio Limo Orange, una variante orgánica de su línea de bebidas. El producto representa la estrategia de Coca-Cola de expandir su portafolio hacia segmentos de crecimient",
+      "companies": [
+        "The Coca-Cola Company"
+      ],
+      "segments": [
+        "company_news"
+      ],
+      "region": "Mundial"
+    },
+    {
+      "title": "The Dr Pepper Original from Keurig Dr Pepper Inc. - classic soda, new zero-sugar push - Ad-hoc-news.de",
+      "summary": "Keurig Dr Pepper impulsa una nueva línea de Dr Pepper sin azúcar, reflejando la tendencia global de reformulación hacia opciones de bajo/cero azúcar. Esta estrategia responde a la presión regulatoria ",
+      "companies": [
+        "Keurig Dr Pepper"
+      ],
+      "segments": [
+        "consumer_market_trends",
+        "supply_chain_commodities"
       ],
       "region": "Mundial"
     }
